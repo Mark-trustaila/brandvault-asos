@@ -1,0 +1,5099 @@
+{
+  "tenant": "asos",
+  "count": 81,
+  "trademarks": [
+    {
+      "id": "asos-0001-8777-3077",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS",
+      "application_number": "UK0001000",
+      "application_date": "2000-06-01T00:00:00Z",
+      "registration_number": "UKR0001000",
+      "registration_date": "2001-03-15T00:00:00Z",
+      "status_date": "2001-03-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-03-15T00:00:00Z",
+      "publication_date": "2000-12-15T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2001-03-15T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-e241dd",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-c29290",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services; online retail of clothing and fashion accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0002-fe2b-4e75",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS",
+      "application_number": "EU0001001",
+      "application_date": "2003-04-10T00:00:00Z",
+      "registration_number": "EUR0001001",
+      "registration_date": "2004-02-20T00:00:00Z",
+      "status_date": "2004-02-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-02-20T00:00:00Z",
+      "publication_date": "2003-11-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2004-02-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-431f2c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-18",
+            "number": 18,
+            "name": "Leather goods and bags",
+            "description": "Bags/Accessories",
+            "search_classes": "18"
+          },
+          "text": "Bags, luggage and leather goods"
+        },
+        {
+          "id": "gs-d8acee",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-a2ac08",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail and e-commerce services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0003-8ce6-7dc4",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS",
+      "application_number": "US0001002",
+      "application_date": "2004-09-01T00:00:00Z",
+      "registration_number": "USR0001002",
+      "registration_date": "2006-05-10T00:00:00Z",
+      "status_date": "2006-05-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2036-05-10T00:00:00Z",
+      "publication_date": "2006-02-09T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2006-05-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-d582af",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-dcb9a0",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail store services featuring clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0004-1c60-b594",
+      "registry_id": "reg-wipo",
+      "registry_name": "WIPO",
+      "registry_official_name": "World Intellectual Property Organization",
+      "registry_description": "International",
+      "mark_text": "ASOS",
+      "application_number": "WO0001003",
+      "application_date": "2008-01-15T00:00:00Z",
+      "registration_number": "WOR0001003",
+      "registration_date": "2008-09-20T00:00:00Z",
+      "status_date": "2008-09-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-madrid",
+      "registration_type_name": "Madrid Protocol",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2028-01-15T00:00:00Z",
+      "publication_date": "2008-06-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2008-09-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "Designations: AU, CA, JP, SG, IN, CN",
+      "good_and_services": [
+        {
+          "id": "gs-1eb93d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing and fashion wear"
+        },
+        {
+          "id": "gs-66d8d9",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0005-a4c3-1a46",
+      "registry_id": "reg-ipau",
+      "registry_name": "IP Australia",
+      "registry_official_name": "IP Australia",
+      "registry_description": "Australia",
+      "mark_text": "ASOS",
+      "application_number": "AU0001004",
+      "application_date": "2008-09-20T00:00:00Z",
+      "registration_number": "AUR0001004",
+      "registration_date": "2009-06-01T00:00:00Z",
+      "status_date": "2009-06-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2029-06-01T00:00:00Z",
+      "publication_date": "2009-03-03T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2009-06-01T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-d1442c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-cce8cb",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0006-a90b-ecb0",
+      "registry_id": "reg-ipos",
+      "registry_name": "IPOS",
+      "registry_official_name": "Intellectual Property Office of Singapore",
+      "registry_description": "Singapore",
+      "mark_text": "ASOS",
+      "application_number": "SG0001005",
+      "application_date": "2009-03-01T00:00:00Z",
+      "registration_number": "SGR0001005",
+      "registration_date": "2010-01-10T00:00:00Z",
+      "status_date": "2010-01-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-01-10T00:00:00Z",
+      "publication_date": "2009-10-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2010-01-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-206ae2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-bbc85d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail and e-commerce services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0007-b375-3423",
+      "registry_id": "reg-inpi",
+      "registry_name": "INPI",
+      "registry_official_name": "Institut National de la Propri\u00e9t\u00e9 Industrielle",
+      "registry_description": "France",
+      "mark_text": "ASOS",
+      "application_number": "FR0001006",
+      "application_date": "2005-07-20T00:00:00Z",
+      "registration_number": "FRR0001006",
+      "registration_date": "2006-04-15T00:00:00Z",
+      "status_date": "2006-04-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2026-04-15T00:00:00Z",
+      "publication_date": "2006-01-15T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2006-04-15T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-d8cb82",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "V\u00eatements, chaussures, chapellerie"
+        },
+        {
+          "id": "gs-826e41",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Services de vente au d\u00e9tail de v\u00eatements"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0008-52b0-4bb8",
+      "registry_id": "reg-cipo",
+      "registry_name": "CIPO",
+      "registry_official_name": "Canadian Intellectual Property Office",
+      "registry_description": "Canada",
+      "mark_text": "ASOS",
+      "application_number": "CA0001007",
+      "application_date": "2009-05-10T00:00:00Z",
+      "registration_number": "CAR0001007",
+      "registration_date": "2010-08-22T00:00:00Z",
+      "status_date": "2010-08-22T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-08-22T00:00:00Z",
+      "publication_date": "2010-05-24T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2010-08-22T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-1bc032",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-d80a55",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail services for clothing and fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0009-1e79-c2e8",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS.COM",
+      "application_number": "UK0001008",
+      "application_date": "2001-02-01T00:00:00Z",
+      "registration_number": "UKR0001008",
+      "registration_date": "2002-01-10T00:00:00Z",
+      "status_date": "2002-01-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2032-01-10T00:00:00Z",
+      "publication_date": "2001-10-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2002-01-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-2cc3d2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail services for clothing, footwear and fashion accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0010-9e28-fa41",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS.COM",
+      "application_number": "EU0001009",
+      "application_date": "2003-08-05T00:00:00Z",
+      "registration_number": "EUR0001009",
+      "registration_date": "2004-07-12T00:00:00Z",
+      "status_date": "2004-07-12T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-07-12T00:00:00Z",
+      "publication_date": "2004-04-13T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2004-07-12T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-b212a8",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "E-commerce retail services for clothing and fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0011-f17f-4024",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS.COM",
+      "application_number": "US0001010",
+      "application_date": "2005-03-14T00:00:00Z",
+      "registration_number": "USR0001010",
+      "registration_date": "2007-02-06T00:00:00Z",
+      "status_date": "2007-02-06T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2037-02-06T00:00:00Z",
+      "publication_date": "2006-11-08T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2007-02-06T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-4b0b8a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail store services featuring clothing, footwear and accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0012-2db2-48b5",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS",
+      "application_number": "UK0001011",
+      "application_date": "2010-04-01T00:00:00Z",
+      "registration_number": "UKR0001011",
+      "registration_date": "2011-02-14T00:00:00Z",
+      "status_date": "2011-02-14T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2031-02-14T00:00:00Z",
+      "publication_date": "2010-11-16T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2011-02-14T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-95030a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-9364f4",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0013-c103-682e",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS",
+      "application_number": "EU0001012",
+      "application_date": "2010-05-10T00:00:00Z",
+      "registration_number": "EUR0001012",
+      "registration_date": "2011-04-20T00:00:00Z",
+      "status_date": "2011-04-20T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2031-04-20T00:00:00Z",
+      "publication_date": "2011-01-20T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2011-04-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-6e421d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-18",
+            "number": 18,
+            "name": "Leather goods and bags",
+            "description": "Bags/Accessories",
+            "search_classes": "18"
+          },
+          "text": "Bags and leather goods"
+        },
+        {
+          "id": "gs-4e1c9c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-e2abef",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0014-43a5-64e3",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS",
+      "application_number": "US0001013",
+      "application_date": "2011-01-15T00:00:00Z",
+      "registration_number": "USR0001013",
+      "registration_date": "2012-08-07T00:00:00Z",
+      "status_date": "2012-08-07T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Published",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2032-08-07T00:00:00Z",
+      "publication_date": "2012-05-09T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2012-08-07T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-db8f8e",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear, headgear"
+        },
+        {
+          "id": "gs-6b11ec",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail store services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0015-8f61-a114",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS DESIGN",
+      "application_number": "UK0001014",
+      "application_date": "2012-06-01T00:00:00Z",
+      "registration_number": "UKR0001014",
+      "registration_date": "2013-04-10T00:00:00Z",
+      "status_date": "2013-04-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2033-04-10T00:00:00Z",
+      "publication_date": "2013-01-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2013-04-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-45dac4",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0016-e91c-835a",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS DESIGN",
+      "application_number": "EU0001015",
+      "application_date": "2013-02-14T00:00:00Z",
+      "registration_number": "EUR0001015",
+      "registration_date": "2014-01-20T00:00:00Z",
+      "status_date": "2014-01-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-01-20T00:00:00Z",
+      "publication_date": "2013-10-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2014-01-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-94e27e",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-7630b6",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0017-7f3b-5d11",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS DESIGN",
+      "application_number": "US0001016",
+      "application_date": "2018-09-03T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2018-09-03T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-003f2a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0018-60ec-d6c4",
+      "registry_id": "reg-ipau",
+      "registry_name": "IP Australia",
+      "registry_official_name": "IP Australia",
+      "registry_description": "Australia",
+      "mark_text": "ASOS DESIGN",
+      "application_number": "AU0001017",
+      "application_date": "2014-03-01T00:00:00Z",
+      "registration_number": "AUR0001017",
+      "registration_date": "2015-01-08T00:00:00Z",
+      "status_date": "2015-01-08T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-01-08T00:00:00Z",
+      "publication_date": "2014-10-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2015-01-08T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-86e38f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0019-1a04-e3aa",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS EDITION",
+      "application_number": "UK0001018",
+      "application_date": "2016-03-01T00:00:00Z",
+      "registration_number": "UKR0001018",
+      "registration_date": "2017-01-14T00:00:00Z",
+      "status_date": "2017-01-14T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2037-01-14T00:00:00Z",
+      "publication_date": "2016-10-16T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2017-01-14T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-5dfc16",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0020-1f93-2ec0",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS EDITION",
+      "application_number": "EU0001019",
+      "application_date": "2016-06-10T00:00:00Z",
+      "registration_number": "EUR0001019",
+      "registration_date": "2017-05-22T00:00:00Z",
+      "status_date": "2017-05-22T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2037-05-22T00:00:00Z",
+      "publication_date": "2017-02-21T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2017-05-22T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-ef23b5",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium clothing and footwear"
+        },
+        {
+          "id": "gs-5696a2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for premium fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0021-a570-5629",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS EDITION",
+      "application_number": "US0001020",
+      "application_date": "2019-04-15T00:00:00Z",
+      "registration_number": "USR0001020",
+      "registration_date": "2021-02-02T00:00:00Z",
+      "status_date": "2021-02-02T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-02-02T00:00:00Z",
+      "publication_date": "2020-11-04T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2021-02-02T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-20a150",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear; premium fashion wear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0022-2a26-84a2",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS 4505",
+      "application_number": "UK0001021",
+      "application_date": "2017-05-10T00:00:00Z",
+      "registration_number": "UKR0001021",
+      "registration_date": "2018-04-03T00:00:00Z",
+      "status_date": "2018-04-03T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2038-04-03T00:00:00Z",
+      "publication_date": "2018-01-03T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2018-04-03T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-e02f5a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Activewear; sportswear; athletic clothing and footwear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0023-390a-7d38",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS 4505",
+      "application_number": "EU0001022",
+      "application_date": "2017-07-20T00:00:00Z",
+      "registration_number": "EUR0001022",
+      "registration_date": "2018-06-14T00:00:00Z",
+      "status_date": "2018-06-14T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2038-06-14T00:00:00Z",
+      "publication_date": "2018-03-16T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2018-06-14T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-3bda05",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Activewear and sportswear"
+        },
+        {
+          "id": "gs-eb6011",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for activewear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0024-2030-9260",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS 4505",
+      "application_number": "US0001023",
+      "application_date": "2018-02-01T00:00:00Z",
+      "registration_number": "USR0001023",
+      "registration_date": "2019-11-12T00:00:00Z",
+      "status_date": "2019-11-12T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2029-11-12T00:00:00Z",
+      "publication_date": "2019-08-14T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-11-12T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-1d91b0",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Athletic and activewear clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0025-d80a-d434",
+      "registry_id": "reg-wipo",
+      "registry_name": "WIPO",
+      "registry_official_name": "World Intellectual Property Organization",
+      "registry_description": "International",
+      "mark_text": "ASOS 4505",
+      "application_number": "WO0001024",
+      "application_date": "2018-08-10T00:00:00Z",
+      "registration_number": "WOR0001024",
+      "registration_date": "2019-05-20T00:00:00Z",
+      "status_date": "2019-05-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-madrid",
+      "registration_type_name": "Madrid Protocol",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2029-05-20T00:00:00Z",
+      "publication_date": "2019-02-19T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-05-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "Designations: AU, CA, SG",
+      "good_and_services": [
+        {
+          "id": "gs-5da20b",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Activewear and sportswear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0026-7c8f-0e50",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "FACE + BODY",
+      "application_number": "UK0001025",
+      "application_date": "2016-09-01T00:00:00Z",
+      "registration_number": "UKR0001025",
+      "registration_date": "2017-08-10T00:00:00Z",
+      "status_date": "2017-08-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2037-08-10T00:00:00Z",
+      "publication_date": "2017-05-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2017-08-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-bf8c7d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Cosmetics; skincare preparations; beauty products; personal care products"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0027-9f1b-8e23",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "FACE + BODY",
+      "application_number": "EU0001026",
+      "application_date": "2017-01-15T00:00:00Z",
+      "registration_number": "EUR0001026",
+      "registration_date": "2018-01-03T00:00:00Z",
+      "status_date": "2018-01-03T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2038-01-03T00:00:00Z",
+      "publication_date": "2017-10-05T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2018-01-03T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-91a045",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Cosmetics and beauty preparations"
+        },
+        {
+          "id": "gs-e15653",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for cosmetics and beauty products"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0028-cadb-ed69",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "FACE + BODY",
+      "application_number": "US0001027",
+      "application_date": "2019-06-10T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2019-06-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-f10f78",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Cosmetics; skin care preparations; beauty products"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0029-7143-1d4b",
+      "registry_id": "reg-ipau",
+      "registry_name": "IP Australia",
+      "registry_official_name": "IP Australia",
+      "registry_description": "Australia",
+      "mark_text": "FACE + BODY",
+      "application_number": "AU0001028",
+      "application_date": "2018-03-05T00:00:00Z",
+      "registration_number": "AUR0001028",
+      "registration_date": "2019-02-11T00:00:00Z",
+      "status_date": "2019-02-11T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2039-02-11T00:00:00Z",
+      "publication_date": "2018-11-13T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-02-11T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-cc84dc",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Cosmetics, skincare and beauty products"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0030-da94-38c4",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "COLLUSION",
+      "application_number": "UK0001029",
+      "application_date": "2018-01-10T00:00:00Z",
+      "registration_number": "UKR0001029",
+      "registration_date": "2018-12-04T00:00:00Z",
+      "status_date": "2018-12-04T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2038-12-04T00:00:00Z",
+      "publication_date": "2018-09-05T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2018-12-04T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-e72aed",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-b508f3",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0031-e802-5b9e",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "COLLUSION",
+      "application_number": "EU0001030",
+      "application_date": "2018-04-20T00:00:00Z",
+      "registration_number": "EUR0001030",
+      "registration_date": "2019-03-18T00:00:00Z",
+      "status_date": "2019-03-18T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2039-03-18T00:00:00Z",
+      "publication_date": "2018-12-18T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-03-18T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-f729f1",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-ddec29",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail and e-commerce services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0032-f91d-5396",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "COLLUSION",
+      "application_number": "US0001031",
+      "application_date": "2019-02-14T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2019-02-14T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-0fd133",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0033-c195-8ae7",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "RECLAIMED VINTAGE",
+      "application_number": "UK0001032",
+      "application_date": "2015-03-01T00:00:00Z",
+      "registration_number": "UKR0001032",
+      "registration_date": "2016-01-19T00:00:00Z",
+      "status_date": "2016-01-19T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2036-01-19T00:00:00Z",
+      "publication_date": "2015-10-21T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2016-01-19T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-3fea0f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear; vintage-inspired fashion wear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0034-4225-1a4d",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "RECLAIMED VINTAGE",
+      "application_number": "EU0001033",
+      "application_date": "2015-06-15T00:00:00Z",
+      "registration_number": "EUR0001033",
+      "registration_date": "2016-05-23T00:00:00Z",
+      "status_date": "2016-05-23T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2036-05-23T00:00:00Z",
+      "publication_date": "2016-02-23T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2016-05-23T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-063954",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-904e16",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0035-6882-b089",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "TOPSHOP",
+      "application_number": "UK0001034",
+      "application_date": "2000-04-05T00:00:00Z",
+      "registration_number": "UKR0001034",
+      "registration_date": "2001-03-01T00:00:00Z",
+      "status_date": "2001-03-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-03-01T00:00:00Z",
+      "publication_date": "2000-12-01T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2001-03-01T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-1f5e07",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-b0e475",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for clothing and fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0036-9ef8-907d",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPSHOP",
+      "application_number": "EU0001035",
+      "application_date": "2003-10-01T00:00:00Z",
+      "registration_number": "EUR0001035",
+      "registration_date": "2004-09-08T00:00:00Z",
+      "status_date": "2004-09-08T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-09-08T00:00:00Z",
+      "publication_date": "2004-06-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2004-09-08T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-a9dd7b",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-18",
+            "number": 18,
+            "name": "Leather goods and bags",
+            "description": "Bags/Accessories",
+            "search_classes": "18"
+          },
+          "text": "Bags and leather goods"
+        },
+        {
+          "id": "gs-d26609",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-a3336f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0037-95ae-553d",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "TOPSHOP",
+      "application_number": "US0001036",
+      "application_date": "2005-06-15T00:00:00Z",
+      "registration_number": "USR0001036",
+      "registration_date": "2007-04-10T00:00:00Z",
+      "status_date": "2007-04-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2027-04-10T00:00:00Z",
+      "publication_date": "2007-01-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2007-04-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-e7721c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-076498",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail store services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0038-69f8-5c3c",
+      "registry_id": "reg-wipo",
+      "registry_name": "WIPO",
+      "registry_official_name": "World Intellectual Property Organization",
+      "registry_description": "International",
+      "mark_text": "TOPSHOP",
+      "application_number": "WO0001037",
+      "application_date": "2007-02-01T00:00:00Z",
+      "registration_number": "WOR0001037",
+      "registration_date": "2007-10-15T00:00:00Z",
+      "status_date": "2007-10-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-madrid",
+      "registration_type_name": "Madrid Protocol",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2027-02-01T00:00:00Z",
+      "publication_date": "2007-07-17T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2007-10-15T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "Designations: AU, CA, JP, SG, IN",
+      "good_and_services": [
+        {
+          "id": "gs-3adbd9",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-1db535",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0039-b6f1-9a95",
+      "registry_id": "reg-ipau",
+      "registry_name": "IP Australia",
+      "registry_official_name": "IP Australia",
+      "registry_description": "Australia",
+      "mark_text": "TOPSHOP",
+      "application_number": "AU0001038",
+      "application_date": "2007-10-15T00:00:00Z",
+      "registration_number": "AUR0001038",
+      "registration_date": "2008-09-02T00:00:00Z",
+      "status_date": "2008-09-02T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2028-09-02T00:00:00Z",
+      "publication_date": "2008-06-04T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2008-09-02T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-da42be",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0040-dc21-6c54",
+      "registry_id": "reg-ipos",
+      "registry_name": "IPOS",
+      "registry_official_name": "Intellectual Property Office of Singapore",
+      "registry_description": "Singapore",
+      "mark_text": "TOPSHOP",
+      "application_number": "SG0001039",
+      "application_date": "2008-01-10T00:00:00Z",
+      "registration_number": "SGR0001039",
+      "registration_date": "2009-01-05T00:00:00Z",
+      "status_date": "2009-01-05T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2029-01-05T00:00:00Z",
+      "publication_date": "2008-10-07T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2009-01-05T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-6c6a96",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-64e228",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0041-0f57-f43c",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "TOPSHOP",
+      "application_number": "UK0001040",
+      "application_date": "2005-02-01T00:00:00Z",
+      "registration_number": "UKR0001040",
+      "registration_date": "2006-01-10T00:00:00Z",
+      "status_date": "2006-01-10T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2036-01-10T00:00:00Z",
+      "publication_date": "2005-10-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2006-01-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-4103aa",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0042-9dbf-282f",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPSHOP",
+      "application_number": "EU0001041",
+      "application_date": "2005-05-10T00:00:00Z",
+      "registration_number": "EUR0001041",
+      "registration_date": "2006-04-18T00:00:00Z",
+      "status_date": "2006-04-18T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2036-04-18T00:00:00Z",
+      "publication_date": "2006-01-18T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2006-04-18T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-b1bd15",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-1f8c55",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0043-964f-b8b9",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "TOPSHOP UNIQUE",
+      "application_number": "UK0001042",
+      "application_date": "2008-06-01T00:00:00Z",
+      "registration_number": "UKR0001042",
+      "registration_date": "2009-05-12T00:00:00Z",
+      "status_date": "2009-05-12T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2039-05-12T00:00:00Z",
+      "publication_date": "2009-02-11T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2009-05-12T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-644304",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium clothing and fashion wear; designer clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0044-9990-f703",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPSHOP UNIQUE",
+      "application_number": "EU0001043",
+      "application_date": "2009-01-15T00:00:00Z",
+      "registration_number": "EUR0001043",
+      "registration_date": "2010-01-03T00:00:00Z",
+      "status_date": "2010-01-03T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-01-03T00:00:00Z",
+      "publication_date": "2009-10-05T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2010-01-03T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-0b6001",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium designer clothing"
+        },
+        {
+          "id": "gs-5796c8",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for premium fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0045-448b-e1b9",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "TOPMAN",
+      "application_number": "UK0001044",
+      "application_date": "2000-04-05T00:00:00Z",
+      "registration_number": "UKR0001044",
+      "registration_date": "2001-03-01T00:00:00Z",
+      "status_date": "2001-03-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-03-01T00:00:00Z",
+      "publication_date": "2000-12-01T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2001-03-01T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-0bb17c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Menswear, clothing and footwear"
+        },
+        {
+          "id": "gs-bc7624",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for menswear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0046-f4b5-437c",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPMAN",
+      "application_number": "EU0001045",
+      "application_date": "2003-10-01T00:00:00Z",
+      "registration_number": "EUR0001045",
+      "registration_date": "2004-09-08T00:00:00Z",
+      "status_date": "2004-09-08T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-09-08T00:00:00Z",
+      "publication_date": "2004-06-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2004-09-08T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-91d67f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Menswear, clothing and footwear"
+        },
+        {
+          "id": "gs-f218d2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for menswear and fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0047-5884-ff93",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "TOPMAN",
+      "application_number": "US0001046",
+      "application_date": "2006-03-20T00:00:00Z",
+      "registration_number": "USR0001046",
+      "registration_date": "2008-01-15T00:00:00Z",
+      "status_date": "2008-01-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2028-01-15T00:00:00Z",
+      "publication_date": "2007-10-17T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2008-01-15T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-e50b5b",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Menswear; clothing, footwear and headgear for men"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0048-d2c3-1101",
+      "registry_id": "reg-wipo",
+      "registry_name": "WIPO",
+      "registry_official_name": "World Intellectual Property Organization",
+      "registry_description": "International",
+      "mark_text": "TOPMAN",
+      "application_number": "WO0001047",
+      "application_date": "2008-05-10T00:00:00Z",
+      "registration_number": "WOR0001047",
+      "registration_date": "2009-02-20T00:00:00Z",
+      "status_date": "2009-02-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-madrid",
+      "registration_type_name": "Madrid Protocol",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2029-05-10T00:00:00Z",
+      "publication_date": "2008-11-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2009-02-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "Designations: AU, CA, JP",
+      "good_and_services": [
+        {
+          "id": "gs-96ae3a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Menswear and clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0049-0f40-9ece",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "TOPMAN DESIGN",
+      "application_number": "UK0001048",
+      "application_date": "2010-02-01T00:00:00Z",
+      "registration_number": "UKR0001048",
+      "registration_date": "2011-01-10T00:00:00Z",
+      "status_date": "2011-01-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-01-10T00:00:00Z",
+      "publication_date": "2010-10-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2011-01-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-0489db",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium menswear; designer clothing for men"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0050-dea5-48e6",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPMAN DESIGN",
+      "application_number": "EU0001049",
+      "application_date": "2010-05-15T00:00:00Z",
+      "registration_number": "EUR0001049",
+      "registration_date": "2011-04-22T00:00:00Z",
+      "status_date": "2011-04-22T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2031-04-22T00:00:00Z",
+      "publication_date": "2011-01-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2011-04-22T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-7f3f6a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium menswear; designer clothing and accessories for men"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0051-f9d3-b2ad",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "MISS SELFRIDGE",
+      "application_number": "UK0001050",
+      "application_date": "2002-03-01T00:00:00Z",
+      "registration_number": "UKR0001050",
+      "registration_date": "2003-02-10T00:00:00Z",
+      "status_date": "2003-02-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2033-02-10T00:00:00Z",
+      "publication_date": "2002-11-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2003-02-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-cc085b",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's clothing, footwear and headgear"
+        },
+        {
+          "id": "gs-51b4ee",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for women's fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0052-2bc1-e8b4",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "MISS SELFRIDGE",
+      "application_number": "EU0001051",
+      "application_date": "2004-07-10T00:00:00Z",
+      "registration_number": "EUR0001051",
+      "registration_date": "2005-06-20T00:00:00Z",
+      "status_date": "2005-06-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-06-20T00:00:00Z",
+      "publication_date": "2005-03-22T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2005-06-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-aecae8",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-18",
+            "number": 18,
+            "name": "Leather goods and bags",
+            "description": "Bags/Accessories",
+            "search_classes": "18"
+          },
+          "text": "Bags and leather goods for women"
+        },
+        {
+          "id": "gs-eb0564",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's clothing and footwear"
+        },
+        {
+          "id": "gs-418e97",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for women's fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0053-06a9-8405",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "MISS SELFRIDGE",
+      "application_number": "US0001052",
+      "application_date": "2006-09-01T00:00:00Z",
+      "registration_number": "USR0001052",
+      "registration_date": "2008-07-14T00:00:00Z",
+      "status_date": "2008-07-14T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2028-07-14T00:00:00Z",
+      "publication_date": "2008-04-15T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2008-07-14T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-728f26",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0054-88dc-6473",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "MISS SELFRIDGE",
+      "application_number": "UK0001053",
+      "application_date": "2006-01-10T00:00:00Z",
+      "registration_number": "UKR0001053",
+      "registration_date": "2007-01-03T00:00:00Z",
+      "status_date": "2007-01-03T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2037-01-03T00:00:00Z",
+      "publication_date": "2006-10-05T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2007-01-03T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-cbc0b2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0055-42f6-a803",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "HIIT",
+      "application_number": "UK0001054",
+      "application_date": "2019-03-01T00:00:00Z",
+      "registration_number": "UKR0001054",
+      "registration_date": "2020-02-10T00:00:00Z",
+      "status_date": "2020-02-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-02-10T00:00:00Z",
+      "publication_date": "2019-11-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2020-02-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-aba9dd",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Sports and activewear; athletic clothing and footwear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0056-62e9-4806",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "HIIT",
+      "application_number": "EU0001055",
+      "application_date": "2019-06-15T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2019-06-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-7cab5f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Sports and activewear; athletic clothing and footwear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0057-bd88-36d2",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS MARKETPLACE",
+      "application_number": "UK0001056",
+      "application_date": "2013-08-01T00:00:00Z",
+      "registration_number": "UKR0001056",
+      "registration_date": "2014-07-10T00:00:00Z",
+      "status_date": "2014-07-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2034-07-10T00:00:00Z",
+      "publication_date": "2014-04-11T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2014-07-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-41d5c5",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online marketplace services for clothing and fashion"
+        },
+        {
+          "id": "gs-17b91a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-42",
+            "number": 42,
+            "name": "Scientific and technological services",
+            "description": "Technology/Software",
+            "search_classes": "42"
+          },
+          "text": "Platform services for fashion retailers and boutiques"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0058-df2f-1254",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS MARKETPLACE",
+      "application_number": "EU0001057",
+      "application_date": "2020-02-01T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2020-02-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-040b96",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online marketplace services"
+        },
+        {
+          "id": "gs-251aac",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-42",
+            "number": 42,
+            "name": "Scientific and technological services",
+            "description": "Technology/Software",
+            "search_classes": "42"
+          },
+          "text": "Platform and e-commerce technology services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0059-706e-d75f",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "MR P",
+      "application_number": "UK0001058",
+      "application_date": "2018-07-01T00:00:00Z",
+      "registration_number": "UKR0001058",
+      "registration_date": "2019-06-12T00:00:00Z",
+      "status_date": "2019-06-12T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2039-06-12T00:00:00Z",
+      "publication_date": "2019-03-14T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-06-12T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-62c5a8",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium menswear; tailored clothing, footwear and accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0060-43cd-58f8",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "MR P",
+      "application_number": "EU0001059",
+      "application_date": "2018-10-15T00:00:00Z",
+      "registration_number": "EUR0001059",
+      "registration_date": "2019-09-22T00:00:00Z",
+      "status_date": "2019-09-22T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2039-09-22T00:00:00Z",
+      "publication_date": "2019-06-24T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2019-09-22T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-441ef1",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium menswear"
+        },
+        {
+          "id": "gs-b8121c",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for premium menswear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0061-211d-0101",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "PARK LANE",
+      "application_number": "UK0001060",
+      "application_date": "2014-04-01T00:00:00Z",
+      "registration_number": "UKR0001060",
+      "registration_date": "2015-03-10T00:00:00Z",
+      "status_date": "2015-03-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-03-10T00:00:00Z",
+      "publication_date": "2014-12-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2015-03-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-a9035b",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-14",
+            "number": 14,
+            "name": "Precious metals and jewellery",
+            "description": "Jewellery",
+            "search_classes": "14"
+          },
+          "text": "Jewellery, costume jewellery, watches and accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0062-75a8-b998",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "PARK LANE",
+      "application_number": "EU0001061",
+      "application_date": "2014-08-10T00:00:00Z",
+      "registration_number": "EUR0001061",
+      "registration_date": "2015-07-20T00:00:00Z",
+      "status_date": "2015-07-20T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-07-20T00:00:00Z",
+      "publication_date": "2015-04-21T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2015-07-20T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-441d80",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-14",
+            "number": 14,
+            "name": "Precious metals and jewellery",
+            "description": "Jewellery",
+            "search_classes": "14"
+          },
+          "text": "Jewellery and costume jewellery"
+        },
+        {
+          "id": "gs-ba4bda",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for jewellery and accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0063-5d8d-1c9a",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "WHITLOW",
+      "application_number": "UK0001062",
+      "application_date": "2016-11-01T00:00:00Z",
+      "registration_number": "UKR0001062",
+      "registration_date": "2017-10-09T00:00:00Z",
+      "status_date": "2017-10-09T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2037-10-09T00:00:00Z",
+      "publication_date": "2017-07-11T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2017-10-09T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-ac9b2d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-18",
+            "number": 18,
+            "name": "Leather goods and bags",
+            "description": "Bags/Accessories",
+            "search_classes": "18"
+          },
+          "text": "Bags, purses and leather goods"
+        },
+        {
+          "id": "gs-232e83",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing and fashion accessories"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0064-95f9-fc02",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS LUXE",
+      "application_number": "UK0001063",
+      "application_date": "2019-05-01T00:00:00Z",
+      "registration_number": "UKR0001063",
+      "registration_date": "2020-04-10T00:00:00Z",
+      "status_date": "2020-04-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-04-10T00:00:00Z",
+      "publication_date": "2020-01-11T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2020-04-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-53f72d",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium and luxury clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0065-24f3-17f1",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS LUXE",
+      "application_number": "EU0001064",
+      "application_date": "2019-08-20T00:00:00Z",
+      "registration_number": "EUR0001064",
+      "registration_date": "2020-07-28T00:00:00Z",
+      "status_date": "2020-07-28T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2030-07-28T00:00:00Z",
+      "publication_date": "2020-04-29T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2020-07-28T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-69be31",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium clothing and footwear"
+        },
+        {
+          "id": "gs-d521b2",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for luxury fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0066-cb2d-3bce",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "ASOS LUXE",
+      "application_number": "US0001065",
+      "application_date": "2021-01-10T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2021-01-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-00c8ff",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Luxury clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0067-505f-14af",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "LITTLE MISTRESS",
+      "application_number": "UK0001066",
+      "application_date": "2011-05-01T00:00:00Z",
+      "registration_number": "UKR0001066",
+      "registration_date": "2012-04-08T00:00:00Z",
+      "status_date": "2012-04-08T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2032-04-08T00:00:00Z",
+      "publication_date": "2012-01-09T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2012-04-08T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-f13781",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's clothing, dresses and fashion wear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0068-22d5-fd9f",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "LITTLE MISTRESS",
+      "application_number": "EU0001067",
+      "application_date": "2012-03-10T00:00:00Z",
+      "registration_number": "EUR0001067",
+      "registration_date": "2013-02-18T00:00:00Z",
+      "status_date": "2013-02-18T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2033-02-18T00:00:00Z",
+      "publication_date": "2012-11-20T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2013-02-18T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-a0b12f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Women's fashion clothing"
+        },
+        {
+          "id": "gs-ed8f6e",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for women's fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0069-0b4a-15f7",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS WHITE",
+      "application_number": "UK0001068",
+      "application_date": "2012-09-01T00:00:00Z",
+      "registration_number": "UKR0001068",
+      "registration_date": "2013-08-12T00:00:00Z",
+      "status_date": "2013-08-12T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2033-08-12T00:00:00Z",
+      "publication_date": "2013-05-14T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2013-08-12T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-b2d978",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Premium clothing; minimalist fashion wear; clothing, footwear and headgear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0070-762f-3154",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS INSIDER",
+      "application_number": "UK0001069",
+      "application_date": "2015-01-10T00:00:00Z",
+      "registration_number": "UKR0001069",
+      "registration_date": "2015-12-03T00:00:00Z",
+      "status_date": "2015-12-03T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-12-03T00:00:00Z",
+      "publication_date": "2015-09-04T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2015-12-03T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-c5ef40",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-38",
+            "number": 38,
+            "name": "Telecommunications",
+            "description": "Telecommunications",
+            "search_classes": "38"
+          },
+          "text": "Online community platform services"
+        },
+        {
+          "id": "gs-172506",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-42",
+            "number": 42,
+            "name": "Scientific and technological services",
+            "description": "Technology/Software",
+            "search_classes": "42"
+          },
+          "text": "Digital content and social media services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0071-62bc-a1ff",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS PREMIER",
+      "application_number": "UK0001070",
+      "application_date": "2014-06-01T00:00:00Z",
+      "registration_number": "UKR0001070",
+      "registration_date": "2015-05-10T00:00:00Z",
+      "status_date": "2015-05-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2035-05-10T00:00:00Z",
+      "publication_date": "2015-02-09T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2015-05-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-eed4bd",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Subscription retail services"
+        },
+        {
+          "id": "gs-b82822",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-38",
+            "number": 38,
+            "name": "Telecommunications",
+            "description": "Telecommunications",
+            "search_classes": "38"
+          },
+          "text": "Delivery and fulfilment services for online retail"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0072-fca3-6b53",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS PREMIER",
+      "application_number": "EU0001071",
+      "application_date": "2021-03-01T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2021-03-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-377e59",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Subscription-based retail and delivery services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0073-1997-eedf",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS AI",
+      "application_number": "UK0001072",
+      "application_date": "2024-06-01T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2024-06-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-13dd7a",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-42",
+            "number": 42,
+            "name": "Scientific and technological services",
+            "description": "Technology/Software",
+            "search_classes": "42"
+          },
+          "text": "Artificial intelligence services; machine learning for fashion recommendation; AI-powered retail technology"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0074-d048-dd3e",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS STUDIO",
+      "application_number": "UK0001073",
+      "application_date": "2024-09-10T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2024-09-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-aea553",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing designed with sustainable materials"
+        },
+        {
+          "id": "gs-587b17",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Online retail services"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0075-b356-be44",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "ASOS STUDIO",
+      "application_number": "EU0001074",
+      "application_date": "2024-11-01T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2024-11-01T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-eae1fb",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Sustainable clothing and fashion wear"
+        },
+        {
+          "id": "gs-987dfc",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "E-commerce retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0076-b4df-4e3c",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS CARE",
+      "application_number": "UK0001075",
+      "application_date": "2024-08-15T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2024-08-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-a97c2e",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Eco-friendly and sustainable beauty products"
+        },
+        {
+          "id": "gs-6648e9",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for sustainable personal care products"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0077-b8c3-6550",
+      "registry_id": "reg-euipo",
+      "registry_name": "EUIPO",
+      "registry_official_name": "European Union Intellectual Property Office",
+      "registry_description": "European Union",
+      "mark_text": "TOPSHOP",
+      "application_number": "EU0001076",
+      "application_date": "2022-05-01T00:00:00Z",
+      "registration_number": "EUR0001076",
+      "registration_date": "2023-04-10T00:00:00Z",
+      "status_date": "2023-04-10T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Published",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": "2033-04-10T00:00:00Z",
+      "publication_date": "2023-01-10T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2023-04-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-33c7b7",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear (post-acquisition refiling)"
+        },
+        {
+          "id": "gs-a86f9e",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-35",
+            "number": 35,
+            "name": "Advertising and retail services",
+            "description": "Retail Services",
+            "search_classes": "35"
+          },
+          "text": "Retail services for clothing"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0078-8b6f-8703",
+      "registry_id": "reg-uspto",
+      "registry_name": "USPTO",
+      "registry_official_name": "United States Patent and Trademark Office",
+      "registry_description": "United States",
+      "mark_text": "TOPSHOP",
+      "application_number": "US0001077",
+      "application_date": "2023-02-14T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2023-02-14T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-0f67a0",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear; fashion wear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0079-ed79-8fc2",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "ASOS DESIGN STUDIO",
+      "application_number": "UK0001078",
+      "application_date": "2025-01-15T00:00:00Z",
+      "registration_number": null,
+      "registration_date": null,
+      "status_date": "2025-01-15T00:00:00Z",
+      "mark_feature": "Word",
+      "status": "Pending",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-word",
+      "trademark_type_name": "Word",
+      "expiry_date": null,
+      "publication_date": null,
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": null,
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-536712",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Designer clothing and fashion wear"
+        },
+        {
+          "id": "gs-45d7bf",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-42",
+            "number": 42,
+            "name": "Scientific and technological services",
+            "description": "Technology/Software",
+            "search_classes": "42"
+          },
+          "text": "Creative and design services for fashion"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0080-1e54-f85b",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "FACE + BODY",
+      "application_number": "UK0001079",
+      "application_date": "2023-07-01T00:00:00Z",
+      "registration_number": "UKR0001079",
+      "registration_date": "2024-06-10T00:00:00Z",
+      "status_date": "2024-06-10T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2034-06-10T00:00:00Z",
+      "publication_date": "2024-03-12T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2024-06-10T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-ec939f",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-3",
+            "number": 3,
+            "name": "Cosmetics and cleaning preparations",
+            "description": "Cosmetics/Beauty",
+            "search_classes": "3"
+          },
+          "text": "Cosmetics, skincare and beauty preparations"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    },
+    {
+      "id": "asos-0081-0077-7c01",
+      "registry_id": "reg-ukipo",
+      "registry_name": "UKIPO",
+      "registry_official_name": "UK Intellectual Property Office",
+      "registry_description": "United Kingdom",
+      "mark_text": "COLLUSION",
+      "application_number": "UK0001080",
+      "application_date": "2022-03-01T00:00:00Z",
+      "registration_number": "UKR0001080",
+      "registration_date": "2023-02-14T00:00:00Z",
+      "status_date": "2023-02-14T00:00:00Z",
+      "mark_feature": "Device",
+      "status": "Registered",
+      "registration_type_id": "rt-national",
+      "registration_type_name": "National",
+      "trademark_type_id": "tt-device",
+      "trademark_type_name": "Device",
+      "expiry_date": "2033-02-14T00:00:00Z",
+      "publication_date": "2022-11-16T00:00:00Z",
+      "declaration_date": null,
+      "office_action_date": null,
+      "grant_date": "2023-02-14T00:00:00Z",
+      "client_agent_id": "agent-asos",
+      "client_agent_name": "ASOS PLC Legal Department",
+      "publication_notes": "",
+      "good_and_services": [
+        {
+          "id": "gs-6fadf5",
+          "language": {
+            "id": "lang-en",
+            "name": "English",
+            "short_name": "en",
+            "is_available_for_ui": true
+          },
+          "search_class": {
+            "id": "cl-25",
+            "number": 25,
+            "name": "Clothing, footwear and headgear",
+            "description": "Clothing",
+            "search_classes": "25"
+          },
+          "text": "Clothing, footwear and headgear; streetwear"
+        }
+      ],
+      "image_url": null,
+      "notes": "",
+      "do_not_create_file": false,
+      "user_id": "user-asos",
+      "user_user_name": "trademarks@asos.com",
+      "trademark_url_on_ipo": null,
+      "exclude_from_auto_updates": false
+    }
+  ],
+  "fetchedAt": "2026-03-04T12:00:00Z"
+}

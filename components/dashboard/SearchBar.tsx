@@ -1,0 +1,45 @@
+'use client';
+import { useState, useEffect } from 'react';
+import styles from './SearchBar.module.css';
+import { useDashboard } from '../../context/DashboardContext';
+
+export default function SearchBar() {
+  const { searchQuery, setSearchQuery, data, filteredTrademarks } = useDashboard();
+  // Local input value updates immediately for responsive feel;
+  // the actual searchQuery (which drives filtering) is debounced 300ms.
+  const [inputValue, setInputValue] = useState(searchQuery);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setSearchQuery(inputValue), 300);
+    return () => clearTimeout(timer);
+  }, [inputValue, setSearchQuery]);
+
+  // Keep local value in sync if searchQuery is cleared externally (e.g. clear button)
+  useEffect(() => {
+    if (searchQuery === '') setInputValue('');
+  }, [searchQuery]);
+
+  const matched = filteredTrademarks.length;
+
+  return (
+    <div className={styles.searchBar}>
+      <span className={styles.icon}>🔍</span>
+      <input
+        type="text"
+        className={styles.input}
+        placeholder="Search marks, registries, application numbers…"
+        value={inputValue}
+        onChange={e => setInputValue(e.target.value)}
+      />
+      {inputValue && (
+        <span className={styles.count}>{matched}/{data?.count ?? 0}</span>
+      )}
+      <button
+        className={`${styles.clear} ${inputValue ? styles.clearVisible : ''}`}
+        onClick={() => { setInputValue(''); setSearchQuery(''); }}
+      >
+        ✕
+      </button>
+    </div>
+  );
+}

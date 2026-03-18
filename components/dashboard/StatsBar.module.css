@@ -1,0 +1,46 @@
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid #e8e5e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  background: #fff;
+}
+
+.card {
+  padding: 12px 18px;
+  border-right: 1px solid #e8e5e0;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.card:hover { background: #fbfbfa; }
+.card:last-child { border-right: none; }
+
+.alertTop { border-top: 3px solid #eb5757; }
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9b9a97;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #37352f;
+}
+
+.valueAlert { color: #eb5757; }
+
+.sublabel {
+  font-size: 11px;
+  color: #0f7b6c;
+  margin-top: 1px;
+}
+
+.sublabelDown { color: #eb5757; }
