@@ -4,17 +4,87 @@ import styles from './ReportPanel.module.css';
 import { useDashboard } from '../../context/DashboardContext';
 import { formatDate, getStatusStyle } from '../../lib/utils';
 
+const IconPortfolio = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="3" width="14" height="18" rx="2"/>
+    <path d="M9 3v2h6V3"/>
+    <line x1="9" y1="10" x2="15" y2="10"/>
+    <line x1="9" y1="14" x2="15" y2="14"/>
+    <line x1="9" y1="18" x2="12" y2="18"/>
+  </svg>
+);
+
+const IconRenewals = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="5" width="18" height="16" rx="2"/>
+    <line x1="3" y1="10" x2="21" y2="10"/>
+    <line x1="8" y1="3" x2="8" y2="7"/>
+    <line x1="16" y1="3" x2="16" y2="7"/>
+    <circle cx="16" cy="16" r="3"/>
+    <polyline points="16 14.5 16 16 17 17"/>
+  </svg>
+);
+
+const IconRegistered = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <polyline points="8 12 11 15 16 9"/>
+  </svg>
+);
+
+const IconPending = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 3h14v3.5c0 3.5-3 5.5-7 8-4-2.5-7-4.5-7-8V3z"/>
+    <line x1="12" y1="14.5" x2="12" y2="17"/>
+    <circle cx="12" cy="19" r="0.5" fill="currentColor"/>
+  </svg>
+);
+
+const IconCSV = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="8" y1="13" x2="16" y2="13"/>
+    <line x1="8" y1="17" x2="16" y2="17"/>
+  </svg>
+);
+
+const IconPDF = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <path d="M9 13h1.5a1 1 0 0 1 0 2H9v-4h1.5a1 1 0 0 1 0 2"/>
+    <path d="M14 11h1a2 2 0 0 1 0 4h-1v-4z"/>
+  </svg>
+);
+
+const IconJSON = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="4 7 4 4 20 4 20 7"/>
+    <line x1="9" y1="20" x2="15" y2="20"/>
+    <line x1="12" y1="4" x2="12" y2="20"/>
+  </svg>
+);
+
+const IconReport = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/>
+    <line x1="12" y1="20" x2="12" y2="4"/>
+    <line x1="6" y1="20" x2="6" y2="14"/>
+  </svg>
+);
+
 const PRESETS = [
-  { id: 'portfolio',  icon: '📋', name: 'Full Portfolio',      desc: 'All marks across all registries' },
-  { id: 'renewals',   icon: '⏰', name: 'Renewal Schedule',     desc: 'Upcoming renewals and deadlines' },
-  { id: 'registered', icon: '✅', name: 'Registered Marks',     desc: 'Active registered trademarks only' },
-  { id: 'pending',    icon: '⏳', name: 'Pending Applications', desc: 'In-prosecution marks' },
+  { id: 'portfolio',  icon: <IconPortfolio />, name: 'Full Portfolio',      desc: 'All marks across all registries' },
+  { id: 'renewals',   icon: <IconRenewals />,  name: 'Renewal Schedule',    desc: 'Upcoming renewals and deadlines' },
+  { id: 'registered', icon: <IconRegistered />,name: 'Registered Marks',    desc: 'Active registered trademarks only' },
+  { id: 'pending',    icon: <IconPending />,   name: 'Pending Applications',desc: 'In-prosecution marks' },
 ];
 
 const FORMATS = [
-  { id: 'csv',  icon: '📄', label: 'CSV',  desc: 'Spreadsheet' },
-  { id: 'pdf',  icon: '📕', label: 'PDF',  desc: 'Formatted report' },
-  { id: 'json', icon: '{ }', label: 'JSON', desc: 'Raw data' },
+  { id: 'csv',  icon: <IconCSV />,  label: 'CSV',  desc: 'Spreadsheet' },
+  { id: 'pdf',  icon: <IconPDF />,  label: 'PDF',  desc: 'Formatted report' },
+  { id: 'json', icon: <IconJSON />, label: 'JSON', desc: 'Raw data' },
 ];
 
 export default function ReportPanel() {
@@ -113,7 +183,7 @@ export default function ReportPanel() {
       <div className={styles.backdrop} onClick={() => setShowReport(false)} />
       <div className={styles.panel}>
         <div className={styles.header}>
-          <div className={styles.headerTitle}>📊 Generate Report</div>
+          <div className={styles.headerTitle}><IconReport /> Generate Report</div>
           <button className={styles.closeBtn} onClick={() => setShowReport(false)}>×</button>
         </div>
 
