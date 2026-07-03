@@ -71,3 +71,17 @@ six-phase sequenced plan. Phases 1-3 are the MEV:
 - Don't repeat failed approaches — change tack.
 - Take corrections immediately.
 - Never invent names or details not in the codebase or project docs.
+
+## GitHub accounts
+
+This repo is under the **Mark-trustaila** account, but the gh/terminal default is
+**Markk-w**, which has only *read* access here. Pushing or opening PRs requires
+switching first:
+
+```bash
+gh auth switch --user Mark-trustaila   # push / PR on this repo
+gh auth switch --user Markk-w          # switch back (default; LawPanel repos)
+```
+
+If Mark-trustaila isn't authenticated, add it once with `gh auth login`.
+`git fetch`/clone work as Markk-w without switching — only writes need Mark-trustaila.
