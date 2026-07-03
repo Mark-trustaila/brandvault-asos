@@ -1,0 +1,390 @@
+BRANDVAULT — MEV BUILD PLAN
+================================================================================
+
+Based on code review of brandvault-asos repo (July 2026) and product decisions
+made in this project. This is a sequenced build plan, not a spec — each phase
+has a clear deliverable and can be demonstrated to a prospective customer.
+
+Repo: github.com/Mark-trustaila/brandvault-asos
+Stack: Next.js 14 / React 18 / TypeScript on Vercel (frontend)
+       Azure App Service .NET + Azure MySQL (backend — to build)
+       Clerk (auth — to integrate)
+       Slack API (Bree — to build)
+
+CSS: Existing components use CSS Modules (retain as-is). All new components
+     use Tailwind. Design tokens extracted into tailwind.config. Never mix
+     both approaches within a single component.
+
+
+================================================================================
+WHAT EXISTS TODAY
+================================================================================
+
+The prototype is a read-only dashboard on 81 static ASOS marks across 8
+registries (UKIPO, EUIPO, WIPO, USPTO, CIPO, INPI, IPOS, IP Australia).
+Data snapshot from LawPanel Firms API, March 2026.
+
+Reusable as-is:
+  - Dashboard layout (two-zone: actions left, intelligence right)
+  - StatsBar (portfolio/registered/pending/attention counts)
+  - ActionsTab (marks sorted by urgency, colour-coded badges)
+  - ByMarkTab (trademark family grouping by mark name, expandable)
+  - ByRegistryTab (jurisdiction grouping, expandable)
+  - PipelineTab (status bubble diagram with click-to-filter)
+  - DetailPanel (full rights record, goods & services, key dates, notes)
+  - ReportPanel (4 presets, 3 export formats, registry filtering, preview)
+  - SearchBar (text search across 6 fields)
+  - Deadline engine (jurisdiction-specific renewal rules for 7 registries,
+    window calculation, urgency flags, overdue detection)
+
+Needs replacing or refactoring:
+  - Static JSON data source → real API + database
+  - localStorage notes → server-side persistence
+  - Hardcoded "ASOS plc" / "Mark Kingsley-Williams" → Clerk auth + tenancy
+  - No outbound notifications → Slack (Bree) + email alerts
+  - No mark editing → CRUD operations on marks
+  - Flat Trademark type → proper family/registration data model
+  - No platform admin role → cross-tenant admin access for onboarding
+
+
+================================================================================
+DATA MODEL (target)
+================================================================================
+
+Companies
+  id, name, slug, clerk_org_id, created_at
+
+Users
+  id, email, name, role (admin | editor | viewer), company_id, clerk_user_id
+
+PlatformAdmins
+  id, user_id, created_at
+  (Cross-tenant access for BrandVault operations — onboarding, data
+  correction, support. Separate from customer roles.)
+
+TrademarkFamilies
+  id, company_id, family_name, created_at
+  (Groups registrations of the same mark across jurisdictions)
+
+Trademarks
+  id, family_id, company_id, registry_name, mark_text,
+  application_number, registration_number, status,
+  filing_date, registration_date, expiry_date, publication_date,
+  client_agent_name, created_at, updated_at
+  (Minimum required fields: mark_text, registry_name, status.
+  All other fields optional — product handles incomplete records gracefully.)
+
+GoodsAndServices
+  id, trademark_id, class_number, text
+
+Notes
+  id, trademark_id, user_id, text, html, link, created_at
+
+Deadlines (derived, recalculated on mark change)
+  id, trademark_id, type, description, due_date, window_start,
+  alert_180_sent, alert_90_sent, alert_30_sent
+  (Skipped for marks missing required dates — flagged as "needs data"
+  rather than failing silently.)
+
+AuditLog
+  id, company_id, user_id, is_platform_admin, action, entity_type,
+  entity_id, reason, detail_json, created_at
+  (Platform admin actions distinguished from customer actions.
+  Reason field mandatory for platform admin edits.)
+
+AlertPreferences
+  id, company_id, slack_channel_id, slack_enabled, email_enabled,
+  threshold_days (JSON array, default [180, 90, 30])
+
+Design notes:
+  - company_id on Trademarks (not just via family) for fast queries
+  - Deadlines table is materialised from the obligation rules already in
+    utils.ts — same logic, persisted for alert scheduling
+  - TrademarkFamilies are explicit entities, not inferred from mark_text
+    matching (the current prototype approach)
+  - Individual legal rights records are NEVER merged — pre/post-Brexit
+    conversion records, Madrid designations, and national registrations
+    remain distinct even when they share a family
+  - Incomplete records are first-class citizens — completeness score per
+    mark, gentle prompts to fill gaps, no blocking on missing fields
+    beyond the three required (mark_text, registry_name, status)
+
+
+================================================================================
+ONBOARDING MODEL
+================================================================================
+
+For the first ~10–15 customers: concierge onboarding. Mark enters data
+manually via the platform admin interface.
+
+Workflow:
+  1. Customer sends portfolio in whatever format they have (spreadsheet,
+     PDF schedule, attorney letter, existing tool export)
+  2. Mark normalises the data using AI as copilot (paste into Claude,
+     restructure to BrandVault schema, review output) — no built-in
+     AI pipeline needed at this stage
+  3. Mark enters data via platform admin interface using bulk entry mode
+  4. Customer logs in to a populated product — first experience is their
+     own portfolio, not an empty dashboard
+
+CSV self-service import built when concierge stops scaling (around customer
+10–15), informed by real portfolio data formats observed during concierge
+phase. AI-powered normalisation pipeline built into the product later still,
+once the patterns are well understood.
+
+
+================================================================================
+BUILD SEQUENCE
+================================================================================
+
+Six phases. Each ends with something demonstrable. Phases 1–3 are the MEV.
+Phases 4–6 are the first post-MEV additions that complete the product for
+early customers.
+
+
+PHASE 1 — BACKEND + AUTH (estimated: 1–2 weeks)
+------------------------------------------------
+
+Goal: Replace static JSON with a real data layer. Platform admin can log in,
+create companies, and populate portfolios.
+
+Build:
+  1. Azure MySQL database with schema above
+  2. .NET API with CRUD endpoints for trademarks, families, notes
+  3. Clerk integration — sign-up, login, organisation creation
+  4. Platform admin role with cross-tenant access
+  5. Wire Next.js frontend to API instead of static JSON
+  6. Seed ASOS data into database for demo continuity
+  7. Replace localStorage notes with API-backed persistence
+  8. Install and configure Tailwind alongside existing CSS Modules
+     — extract colour palette into tailwind.config
+
+Deliverable: Platform admin (Mark) can log in, create a customer company,
+and start entering marks. Customer users can log in and see their own
+company's portfolio. Same UI as today but backed by real data.
+
+Key decisions already made:
+  - Clerk for auth (speed over compliance — rebuild later if needed)
+  - Azure for backend (consistent with existing infra knowledge)
+  - Company-as-customer scoping from day one
+  - Three customer roles: admin, editor, viewer
+  - Platform admin: cross-tenant, audited, reason required for edits
+
+
+PHASE 2 — PLATFORM ADMIN + MARK EDITING (estimated: 1–2 weeks)
+---------------------------------------------------------------
+
+Goal: Mark can onboard customers by entering their portfolio data directly.
+Customers can maintain their own data after onboarding.
+
+Build:
+  1. Platform admin company switcher (select which customer to work on)
+  2. Bulk mark entry mode — table-style input, tab between rows, optimised
+     for rapid data entry (not a modal form per mark)
+  3. Mark editing in DetailPanel:
+     - Edit mode for all fields (status, dates, application/registration
+       numbers, goods & services)
+     - Add new mark manually
+     - Create and assign trademark families
+  4. Completeness indicators per mark (not errors — gentle prompts for
+     missing optional fields like filing date, registration date)
+  5. Deadline recalculation on mark create/edit
+     (reuse getObligationsForTrademark logic, persist to Deadlines table)
+  6. "Needs data" flag for marks where deadlines can't be calculated
+     due to missing dates
+  7. Audit logging for all changes — platform admin edits show as
+     "Updated by BrandVault Support" in customer's activity feed
+
+Deliverable: Complete concierge onboarding workflow. Mark receives a
+customer's portfolio in any format, normalises it externally using AI as
+copilot, enters it via bulk entry, and the customer logs in to a populated
+product with deadlines already calculated.
+
+
+PHASE 3 — BREE (SLACK) + EMAIL ALERTS (estimated: 2–3 weeks)
+-------------------------------------------------------------
+
+Goal: BrandVault comes to the user. Bree is the day-one differentiator.
+
+Build:
+  1. Slack app (Bree):
+     - OAuth install flow for customer's Slack workspace
+     - Company admin designates a channel for alerts
+     - Outbound notifications:
+       * Renewal deadline alerts at configured thresholds (default 180/90/30)
+       * Status change notifications (when marks are updated)
+       * Weekly portfolio digest (summary of upcoming deadlines)
+     - Slash commands:
+       * /bree portfolio — mark count, registered/pending/attention summary
+       * /bree renewals — next 5 upcoming renewals with days remaining
+       * /bree status [mark name] — status and next deadline for a mark
+       * /bree help
+     - Approval flows (foundation — wire fully when agentified actions exist):
+       * Threaded message with Approve / Reject buttons
+       * Action logged to AuditLog
+  2. Scheduled alert job:
+     - Runs daily, checks Deadlines table against thresholds
+     - Sends Slack message to designated channel (if Slack enabled)
+     - Sends email to company admin + editors (if email enabled)
+     - Marks alert as sent to avoid duplicates
+  3. Alert preferences page in web UI:
+     - Enable/disable Slack and email independently
+     - Configure threshold days
+     - Choose Slack channel
+
+Deliverable: A customer is onboarded by Mark, connects Slack, and
+immediately starts receiving deadline alerts from Bree without opening the
+web app again. Bree responds to slash commands with portfolio data. Email
+alerts work as fallback for non-Slack users.
+
+This is the phase that makes BrandVault feel like a colleague, not a tool.
+
+
+--- MEV COMPLETE ---
+
+The product is usable after Phase 3. A customer can:
+  - Log in and see their portfolio (entered by platform admin at onboarding)
+  - See their portfolio organised by mark family, registry, and status
+  - Get automatic deadline calculations for 7 registry jurisdictions
+  - Receive proactive alerts via Slack (Bree) and email
+  - Query their portfolio via Slack slash commands
+  - Edit and maintain their own marks after onboarding
+  - View and generate reports (CSV, PDF, JSON)
+  - Add notes to individual marks
+  - Search across their portfolio
+  - Manage team members with role-based access
+  - See a completeness score for marks with missing data
+
+
+PHASE 4 — CSV SELF-SERVICE IMPORT (estimated: 1–2 weeks)
+---------------------------------------------------------
+
+Goal: Customers can onboard themselves without concierge support.
+
+Build:
+  1. CSV/XLSX upload flow:
+     - Upload page with drag-and-drop
+     - Column mapping UI (map headers → Trademark fields)
+     - Validation with error reporting
+     - Preview of parsed marks before commit
+     - Batch insert to database
+     - Auto-create TrademarkFamilies from mark_text grouping
+  2. Template CSV with example data and column headers
+  3. Later: AI-powered normalisation pipeline (parse any format,
+     map to schema, confidence indicators per field, admin reviews)
+
+Deliverable: Self-service onboarding. Concierge still available for
+customers who prefer it.
+
+
+PHASE 5 — BREE COMMAND SURFACE EXPANSION (estimated: 1–2 weeks)
+----------------------------------------------------------------
+
+Goal: More workflows executable from Slack without opening the web app.
+
+Build:
+  1. /bree add [mark] [registry] [app number] — quick-add a mark
+  2. /bree note [mark] [text] — add a note from Slack
+  3. /bree report [type] — trigger report generation, deliver as file
+  4. Interactive message flows:
+     - Renewal reminder → "Renew / Skip / Remind later" buttons
+     - Decision logged, visible in web UI
+  5. Natural language queries via AI:
+     - "What's expiring in Q3?"
+     - "Show me all EUIPO marks"
+     - "Which marks are in class 25?"
+
+Deliverable: Bree becomes a genuine command surface, not just a notification
+channel. Counsel can manage routine portfolio queries without context-switching.
+
+
+PHASE 6 — MULTI-JURISDICTION RULES + TEAMS (estimated: 1–2 weeks)
+------------------------------------------------------------------
+
+Goal: Broader jurisdiction coverage and Teams support.
+
+Build:
+  1. Jurisdiction rules engine as config (JSON/database) rather than
+     hardcoded in utils.ts
+  2. Add rules for: CIPO (Canada), JPO (Japan), KIPO (Korea), DPMA
+     (Germany), Benelux Office, CNIPA (China), and other territories
+     customers request
+  3. Admin UI to flag registries where rules are unknown — BrandVault
+     alerts user to verify deadline manually rather than guessing
+  4. Teams bot using Bot Framework — same notification and command
+     patterns as Slack
+  5. Abstraction layer so future notification channels are trivial to add
+
+Deliverable: Broader jurisdiction coverage. Teams customers supported.
+Honest about gaps where rules are unknown.
+
+
+================================================================================
+WHAT THIS PLAN DELIBERATELY EXCLUDES
+================================================================================
+
+These are all real product features but wrong to build before MEV is proven
+with paying customers:
+
+  - Live registry data feeds (UKIPO, EUIPO, WIPO) — depends on data project
+  - TMD email import — adds onboarding complexity
+  - AI office action drafting — high build cost, not needed to prove value
+  - Watch service / third-party filing monitoring — v2 after portfolio is solid
+  - Renewal decision-support signals (Trends, social, news) — v2 premium
+  - Registry filing execution — agentify-only, high risk, wrong sequencing
+  - Conflict / clearance search — needs Mark Owen or equivalent engine
+  - Finance system integrations — v2 premium tier
+  - Billing / subscription implementation — manual invoicing for first 10
+  - AI normalisation pipeline — use AI as copilot externally until patterns
+    are understood; build into product when concierge stops scaling
+
+
+================================================================================
+DEPENDENCIES AND RISKS
+================================================================================
+
+Dependency: Azure subscription and App Service provisioned
+Risk: Low — known infrastructure, quick to set up
+
+Dependency: Clerk account and configuration
+Risk: Low — generous free tier, good Next.js integration docs
+
+Dependency: Slack app approval for workspace installation
+Risk: Low for direct install; medium if distributing via Slack App Directory
+(review process). Start with direct install for early customers.
+
+Dependency: ASOS data rights for continued demo use
+Risk: Low — public registry data, used for demonstration only
+
+Dependency: Domain and DNS for API (api.getbrandvault.com or similar)
+Risk: Low — Vercel or Azure DNS, quick to configure
+
+Risk: Clerk's US data residency may concern some in-house legal teams
+Mitigation: Rebuild auth (Auth0 or WorkOS) when a customer's procurement
+process demands it. Tech debt is a positive — means you have customers.
+
+
+================================================================================
+NOTES FOR CLAUDE CODE SESSIONS
+================================================================================
+
+When picking up development work on this codebase:
+
+  - Read this document first
+  - The obligation engine in lib/utils.ts is production-quality — preserve it
+  - TrademarkFamilies are never to be merged — see design note in data model
+  - Existing components use CSS Modules — do not migrate them
+  - All NEW components use Tailwind — design tokens in tailwind.config
+  - Never mix CSS Modules and Tailwind within a single component
+  - Notes currently use localStorage via hooks/useNotes.ts — replace with API
+  - The API route at app/api/trademarks/route.ts reads static JSON — this is
+    the first thing to rewire to the real backend
+  - Package versions: Next 14, React 18, TypeScript 5.5
+  - Bree is the name of the Slack assistant
+  - Minimum required fields for a mark: mark_text, registry_name, status
+  - All other fields optional — handle incomplete records gracefully
+  - Platform admin edits require a reason and show in customer audit trail
+
+
+================================================================================
+End of build plan
