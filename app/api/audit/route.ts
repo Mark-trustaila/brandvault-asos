@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/db';
 import { serializeAudit } from '../../../lib/serializers';
-import { getCurrentCompany } from '../../../lib/tenant';
+import { getActingCompany } from '../../../lib/authz';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-// GET /api/audit — the active org's audit log, newest first (activity feed source).
-export async function GET() {
-  const company = await getCurrentCompany();
+// GET /api/audit — the acting company's audit log, newest first (activity feed).
+export async function GET(req: Request) {
+  const company = await getActingCompany(req);
   if (!company) return NextResponse.json({ entries: [] });
   const entries = await prisma.auditLog.findMany({
     where: { companyId: company.id },

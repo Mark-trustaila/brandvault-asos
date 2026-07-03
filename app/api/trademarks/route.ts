@@ -3,8 +3,7 @@ import type { Prisma } from '@prisma/client';
 import { prisma } from '../../../lib/db';
 import { serializeTrademark } from '../../../lib/serializers';
 import { buildMarkData } from '../../../lib/marks';
-import { getCurrentCompany } from '../../../lib/tenant';
-import { getRequestContext, requireReasonIfAdmin } from '../../../lib/authz';
+import { getActingCompany, getRequestContext, requireReasonIfAdmin } from '../../../lib/authz';
 import { writeAudit } from '../../../lib/audit';
 
 // Hits MySQL at request time — never statically evaluated at build.
@@ -13,8 +12,8 @@ export const runtime = 'nodejs';
 
 // GET /api/trademarks — the active org's portfolio, in the shape the dashboard
 // expects (types/trademark.ts). Empty payload when no org is active.
-export async function GET() {
-  const company = await getCurrentCompany();
+export async function GET(req: Request) {
+  const company = await getActingCompany(req);
   const marks = company
     ? await prisma.trademark.findMany({
         where: { companyId: company.id },

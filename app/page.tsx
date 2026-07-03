@@ -15,12 +15,13 @@ import DetailPanel from '../components/detail/DetailPanel';
 import ReportPanel from '../components/report/ReportPanel';
 import { AuthControls } from '../components/auth/AuthControls';
 import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
+import { bvFetch } from '../lib/client/acting-company';
 
 function Dashboard() {
   const { setData, activeTab } = useDashboard();
 
   useEffect(() => {
-    fetch('/api/trademarks')
+    bvFetch('/api/trademarks')
       .then(r => r.json())
       .then(setData)
       .catch(console.error);

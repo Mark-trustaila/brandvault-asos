@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { bvFetch, getActingCompany, setActingCompany } from '../../lib/client/acting-company';
 
 type Me = {
   isPlatformAdmin: boolean;
   user: { name: string } | null;
-  company: { name: string } | null;
+  company: { id: string; name: string } | null;
 };
-
+type Company = { id: string; name: string; trademarkCount: number };
 type AuditEntry = {
   id: string;
   action: string;
@@ -17,19 +18,21 @@ type AuditEntry = {
 };
 
 /**
- * Platform-admin surface: shows an admin badge and an activity-log flyout
- * backed by /api/audit (where admin actions read as "BrandVault Support").
+ * Platform-admin surface: a cross-tenant company switcher + an activity-log
+ * flyout backed by /api/audit. Selecting a company other than the admin's own
+ * org stores it as the acting company (bvFetch then sends x-bv-company-id on
+ * reads + writes) and reloads so the dashboard shows that company's data.
  * Renders nothing for non-admins. New component: Tailwind only.
- *
- * The cross-tenant company switcher (acting on another company via
- * x-bv-company-id) is the next increment.
  */
 export function PlatformAdminBar() {
   const [me, setMe] = useState<Me | null>(null);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [actingId, setActingId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<AuditEntry[]>([]);
 
   useEffect(() => {
+    setActingId(getActingCompany()?.id ?? null);
     fetch('/api/me')
       .then((r) => r.json())
       .then(setMe)
@@ -37,8 +40,16 @@ export function PlatformAdminBar() {
   }, []);
 
   useEffect(() => {
+    if (!me?.isPlatformAdmin) return;
+    fetch('/api/admin/companies')
+      .then((r) => (r.ok ? r.json() : { companies: [] }))
+      .then((d) => setCompanies(d.companies ?? []))
+      .catch(() => {});
+  }, [me?.isPlatformAdmin]);
+
+  useEffect(() => {
     if (!open) return;
-    fetch('/api/audit')
+    bvFetch('/api/audit')
       .then((r) => r.json())
       .then((d) => setEntries(d.entries ?? []))
       .catch(() => {});
@@ -46,21 +57,55 @@ export function PlatformAdminBar() {
 
   if (!me?.isPlatformAdmin) return null;
 
+  const homeId = me.company?.id ?? '';
+  const currentId = actingId ?? homeId;
+  const crossTenant = Boolean(actingId && actingId !== homeId);
+
+  const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const id = e.target.value;
+    if (!id || id === homeId) {
+      setActingCompany(null);
+    } else {
+      const c = companies.find((x) => x.id === id);
+      if (c) setActingCompany({ id: c.id, name: c.name });
+    }
+    window.location.reload();
+  };
+
   return (
     <div className="fixed bottom-3 left-3 z-50 font-sans">
       <div className="flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 shadow-sm">
         <span className="rounded bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand">Platform admin</span>
+        <select
+          value={currentId}
+          onChange={onSelect}
+          className="max-w-[190px] rounded border border-line bg-surface px-1.5 py-0.5 text-xs text-ink"
+          title="Act on a company"
+        >
+          {companies.length === 0 && <option value={homeId}>{me.company?.name ?? '—'}</option>}
+          {companies.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.id === homeId ? `${c.name} (my org)` : c.name} · {c.trademarkCount}
+            </option>
+          ))}
+        </select>
         <button
           onClick={() => setOpen((o) => !o)}
           className="text-xs text-ink-muted transition-colors hover:text-ink"
         >
-          {open ? 'Hide activity' : 'Activity log'}
+          {open ? 'Hide activity' : 'Activity'}
         </button>
       </div>
 
+      {crossTenant && (
+        <div className="mt-1 inline-block rounded bg-brand/10 px-2 py-0.5 text-[11px] text-brand">
+          Acting cross-tenant
+        </div>
+      )}
+
       {open && (
         <div className="mt-2 max-h-96 w-96 overflow-y-auto rounded-md border border-line bg-surface p-3 shadow-lg">
-          <div className="mb-2 text-xs font-semibold text-ink">Activity — {me.company?.name ?? '—'}</div>
+          <div className="mb-2 text-xs font-semibold text-ink">Activity log</div>
           {entries.length === 0 ? (
             <div className="text-xs text-ink-muted">No activity yet</div>
           ) : (

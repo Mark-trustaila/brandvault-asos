@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '../../../../../lib/db';
 import { serializeNote } from '../../../../../lib/serializers';
-import { getCurrentCompany } from '../../../../../lib/tenant';
-import { getRequestContext } from '../../../../../lib/authz';
+import { getActingCompany, getRequestContext } from '../../../../../lib/authz';
 import { writeAudit } from '../../../../../lib/audit';
 
 export const dynamic = 'force-dynamic';
@@ -19,8 +18,8 @@ async function ownsMark(trademarkId: string, companyId: string): Promise<boolean
 }
 
 // GET /api/trademarks/:id/notes — notes for a mark in the active org, newest first.
-export async function GET(_req: Request, { params }: Params) {
-  const company = await getCurrentCompany();
+export async function GET(req: Request, { params }: Params) {
+  const company = await getActingCompany(req);
   if (!company) return NextResponse.json({ error: 'No active organization' }, { status: 403 });
   if (!(await ownsMark(params.id, company.id))) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });

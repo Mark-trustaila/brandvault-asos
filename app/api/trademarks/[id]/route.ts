@@ -2,8 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../../../lib/db';
 import { serializeTrademark } from '../../../../lib/serializers';
 import { buildMarkData } from '../../../../lib/marks';
-import { getCurrentCompany } from '../../../../lib/tenant';
-import { getRequestContext, requireReasonIfAdmin } from '../../../../lib/authz';
+import { getActingCompany, getRequestContext, requireReasonIfAdmin } from '../../../../lib/authz';
 import { writeAudit } from '../../../../lib/audit';
 
 export const dynamic = 'force-dynamic';
@@ -12,8 +11,8 @@ export const runtime = 'nodejs';
 type Params = { params: { id: string } };
 
 // GET /api/trademarks/:id — a single mark in the active org.
-export async function GET(_req: Request, { params }: Params) {
-  const company = await getCurrentCompany();
+export async function GET(req: Request, { params }: Params) {
+  const company = await getActingCompany(req);
   if (!company) return NextResponse.json({ error: 'No active organization' }, { status: 403 });
   const mark = await prisma.trademark.findFirst({
     where: { id: params.id, companyId: company.id },
