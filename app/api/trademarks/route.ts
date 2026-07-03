@@ -9,14 +9,17 @@ import { getCurrentCompany } from '../../../lib/tenant';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-// GET /api/trademarks — the current company's portfolio, in the shape the
-// dashboard expects (types/trademark.ts). No tenant filtering yet — added with
-// Clerk auth in Phase 1 step 3.
+// GET /api/trademarks — the active org's portfolio, in the shape the dashboard
+// expects (types/trademark.ts). Empty payload when no org is active.
 export async function GET() {
-  const marks = await prisma.trademark.findMany({
-    include: { goodsServices: true },
-    orderBy: { markText: 'asc' },
-  });
+  const company = await getCurrentCompany();
+  const marks = company
+    ? await prisma.trademark.findMany({
+        where: { companyId: company.id },
+        include: { goodsServices: true },
+        orderBy: { markText: 'asc' },
+      })
+    : [];
   const trademarks = marks.map(serializeTrademark);
   return NextResponse.json({
     count: trademarks.length,

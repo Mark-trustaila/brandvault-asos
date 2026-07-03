@@ -46,8 +46,9 @@ async function main() {
     data: {
       name: 'ASOS plc',
       slug: COMPANY_SLUG,
-      // Placeholder until Clerk is wired (Phase 1 step 3).
-      clerkOrgId: 'seed-org-asos-plc',
+      // Links the demo portfolio to a real Clerk org when SEED_CLERK_ORG_ID is
+      // set (so signing into that org shows this data); placeholder otherwise.
+      clerkOrgId: process.env.SEED_CLERK_ORG_ID ?? 'seed-org-asos-plc',
     },
   });
 
