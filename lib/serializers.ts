@@ -1,4 +1,4 @@
-import type { GoodsService, Note, Trademark, User } from '@prisma/client';
+import type { AuditLog, GoodsService, Note, Trademark, User } from '@prisma/client';
 import { getInitials } from './utils';
 
 const iso = (d: Date | null): string | undefined => d?.toISOString();
@@ -43,5 +43,23 @@ export function serializeNote(n: Note & { user: User | null }) {
     author: getInitials(n.user?.name ?? ''),
     authorFull: n.user?.name ?? 'Unknown',
     date: n.createdAt.toISOString(),
+  };
+}
+
+/**
+ * Map a DB audit entry (+ actor) for the customer's activity feed. Platform-
+ * admin actions surface as "BrandVault Support" rather than the operator's name.
+ */
+export function serializeAudit(a: AuditLog & { user: User | null }) {
+  return {
+    id: a.id,
+    action: a.action,
+    entityType: a.entityType,
+    entityId: a.entityId,
+    reason: a.reason ?? undefined,
+    isPlatformAdmin: a.isPlatformAdmin,
+    actor: a.isPlatformAdmin ? 'BrandVault Support' : a.user?.name ?? 'Unknown',
+    detail: a.detailJson ?? undefined,
+    date: a.createdAt.toISOString(),
   };
 }
