@@ -12,7 +12,7 @@ Slack integration, and multi-tenant data.
 
 - **Frontend:** Next.js 14 / React 18 / TypeScript on Vercel
 - **Auth:** Clerk (company-as-customer, roles: admin / editor / viewer + platform admin)
-- **Backend:** Azure App Service (.NET) + Azure MySQL
+- **Backend:** Next.js API routes + Prisma ORM + Azure Database for MySQL
 - **Slack:** Bree (the BrandVault Slack assistant)
 - **Email:** SMTP via Azure (secondary alert channel)
 

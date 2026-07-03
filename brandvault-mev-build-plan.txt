@@ -6,8 +6,8 @@ made in this project. This is a sequenced build plan, not a spec — each phase
 has a clear deliverable and can be demonstrated to a prospective customer.
 
 Repo: github.com/Mark-trustaila/brandvault-asos
-Stack: Next.js 14 / React 18 / TypeScript on Vercel (frontend)
-       Azure App Service .NET + Azure MySQL (backend — to build)
+Stack: Next.js 14 / React 18 / TypeScript on Vercel (frontend + API routes)
+       Prisma ORM + Azure Database for MySQL (data layer — to build)
        Clerk (auth — to integrate)
        Slack API (Bree — to build)
 
@@ -149,8 +149,9 @@ Goal: Replace static JSON with a real data layer. Platform admin can log in,
 create companies, and populate portfolios.
 
 Build:
-  1. Azure MySQL database with schema above
-  2. .NET API with CRUD endpoints for trademarks, families, notes
+  1. Azure Database for MySQL with the schema above (Prisma-managed migrations)
+  2. Next.js API routes (Prisma) with CRUD endpoints for trademarks,
+     families, notes
   3. Clerk integration — sign-up, login, organisation creation
   4. Platform admin role with cross-tenant access
   5. Wire Next.js frontend to API instead of static JSON
@@ -165,7 +166,8 @@ company's portfolio. Same UI as today but backed by real data.
 
 Key decisions already made:
   - Clerk for auth (speed over compliance — rebuild later if needed)
-  - Azure for backend (consistent with existing infra knowledge)
+  - Data layer: Prisma against Azure Database for MySQL; the API runs as
+    Next.js routes on Vercel (no separate backend service)
   - Company-as-customer scoping from day one
   - Three customer roles: admin, editor, viewer
   - Platform admin: cross-tenant, audited, reason required for edits
@@ -343,7 +345,7 @@ with paying customers:
 DEPENDENCIES AND RISKS
 ================================================================================
 
-Dependency: Azure subscription and App Service provisioned
+Dependency: Azure Database for MySQL provisioned
 Risk: Low — known infrastructure, quick to set up
 
 Dependency: Clerk account and configuration
