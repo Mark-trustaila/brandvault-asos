@@ -51,6 +51,17 @@ async function main() {
     },
   });
 
+  // Demo user so notes have an author until Clerk provides real users.
+  const user = await prisma.user.create({
+    data: {
+      email: 'mark@lawpanel.com',
+      name: 'Mark Kingsley-Williams',
+      role: 'admin',
+      companyId: company.id,
+      clerkUserId: 'seed-user-mark',
+    },
+  });
+
   let markCount = 0;
   let goodsCount = 0;
 
@@ -81,6 +92,7 @@ async function main() {
   }
 
   console.log(`Seeded company "${company.name}" (${company.slug})`);
+  console.log(`  user:       ${user.name} <${user.email}>`);
   console.log(`  trademarks: ${markCount}`);
   console.log(`  goods rows: ${goodsCount}`);
 }

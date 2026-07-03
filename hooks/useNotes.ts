@@ -1,43 +1,50 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Note } from '../types/trademark';
 
-const NOTES_KEY = 'brandvault_notes';
-
-const loadAllNotes = (): Record<string, Note[]> => {
-  if (typeof window === 'undefined') return {};
-  try { return JSON.parse(localStorage.getItem(NOTES_KEY) || '{}'); } catch { return {}; }
-};
-
-const saveAllNotes = (notes: Record<string, Note[]>) => {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
-};
-
+/**
+ * Notes for a trademark, backed by the API (was localStorage).
+ *
+ * Same interface as before — { notes, addNote, deleteNote } — so DetailPanel is
+ * unchanged. Author/date now come from the server (the note's User + createdAt)
+ * rather than being hardcoded.
+ */
 export const useNotes = (trademarkId: string) => {
-  const [notes, setNotes] = useState<Note[]>(() => loadAllNotes()[trademarkId] || []);
+  const [notes, setNotes] = useState<Note[]>([]);
 
-  const addNote = useCallback((text: string, link?: string, html?: string) => {
-    const all = loadAllNotes();
-    const newNote: Note = {
-      id: Date.now().toString(36),
-      text, html: html || null, link: link || null,
-      author: 'MK', authorFull: 'Mark Kingsley-Williams',
-      date: new Date().toISOString()
-    };
-    const updated = [newNote, ...(all[trademarkId] || [])];
-    all[trademarkId] = updated;
-    saveAllNotes(all);
-    setNotes(updated);
+  const refresh = useCallback(() => {
+    if (!trademarkId) return;
+    fetch(`/api/trademarks/${trademarkId}/notes`)
+      .then((r) => (r.ok ? r.json() : []))
+      .then(setNotes)
+      .catch(() => {});
   }, [trademarkId]);
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
+
+  const addNote = useCallback(
+    (text: string, link?: string, html?: string) => {
+      if (!trademarkId) return;
+      fetch(`/api/trademarks/${trademarkId}/notes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, link, html }),
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((note: Note | null) => {
+          if (note) setNotes((prev) => [note, ...prev]);
+        })
+        .catch(() => {});
+    },
+    [trademarkId]
+  );
 
   const deleteNote = useCallback((noteId: string) => {
-    const all = loadAllNotes();
-    const updated = (all[trademarkId] || []).filter(n => n.id !== noteId);
-    all[trademarkId] = updated;
-    saveAllNotes(all);
-    setNotes(updated);
-  }, [trademarkId]);
+    setNotes((prev) => prev.filter((n) => n.id !== noteId)); // optimistic
+    fetch(`/api/notes/${noteId}`, { method: 'DELETE' }).catch(() => {});
+  }, []);
 
   return { notes, addNote, deleteNote };
 };

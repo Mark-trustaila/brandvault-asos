@@ -1,44 +1,43 @@
 import { NextResponse } from 'next/server';
+import type { Prisma } from '@prisma/client';
 import { prisma } from '../../../lib/db';
+import { serializeTrademark } from '../../../lib/serializers';
+import { buildMarkData } from '../../../lib/marks';
+import { getCurrentCompany } from '../../../lib/tenant';
 
 // Hits MySQL at request time — never statically evaluated at build.
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-const iso = (d: Date | null): string | undefined => d?.toISOString();
-
-// Serves the trademark portfolio from the database in the shape the dashboard
-// already expects (see types/trademark.ts). Replaces the old static-JSON read.
-// No tenant filtering yet — added with Clerk auth in Phase 1 step 3.
+// GET /api/trademarks — the current company's portfolio, in the shape the
+// dashboard expects (types/trademark.ts). No tenant filtering yet — added with
+// Clerk auth in Phase 1 step 3.
 export async function GET() {
   const marks = await prisma.trademark.findMany({
     include: { goodsServices: true },
     orderBy: { markText: 'asc' },
   });
-
-  const trademarks = marks.map((m) => ({
-    id: m.id,
-    registry_name: m.registryName,
-    mark_text: m.markText,
-    application_number: m.applicationNumber ?? '',
-    registration_number: m.registrationNumber ?? undefined,
-    status: m.status,
-    filing_date: iso(m.filingDate),
-    registration_date: iso(m.registrationDate),
-    expiry_date: iso(m.expiryDate),
-    publication_date: iso(m.publicationDate),
-    client_agent_name: m.clientAgentName ?? undefined,
-    good_and_services: m.goodsServices.map((g) => ({
-      search_class: { number: g.classNumber },
-      text: g.text,
-    })),
-    publication_notes: '',
-  }));
-
+  const trademarks = marks.map(serializeTrademark);
   return NextResponse.json({
     count: trademarks.length,
     trademarks,
     fetchedAt: new Date().toISOString(),
     source: 'database',
   });
+}
+
+// POST /api/trademarks — create a mark for the current company.
+export async function POST(req: Request) {
+  const company = await getCurrentCompany();
+  if (!company) return NextResponse.json({ error: 'No company context' }, { status: 400 });
+
+  const body = await req.json().catch(() => null);
+  const { data, error } = buildMarkData(body, { partial: false });
+  if (error) return NextResponse.json({ error }, { status: 400 });
+
+  const mark = await prisma.trademark.create({
+    data: { ...(data as unknown as Prisma.TrademarkUncheckedCreateInput), companyId: company.id },
+    include: { goodsServices: true },
+  });
+  return NextResponse.json(serializeTrademark(mark), { status: 201 });
 }
