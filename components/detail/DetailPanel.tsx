@@ -242,10 +242,12 @@ function Timeline({ trademark }: { trademark: Trademark }) {
             }}>
               <div style={{
                 width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
-                background: ob.overdue ? '#eb5757' : ob.actionable ? '#f2994a' : '#0f7b6c'
+                background: ob.uncertain ? '#9b9a97' : ob.overdue ? '#eb5757' : ob.actionable ? '#f2994a' : '#0f7b6c'
               }} />
               <span style={{ flex: 1, color: '#37352f', fontWeight: 500 }}>{ob.type}</span>
-              <span style={{ color: '#9b9a97', fontSize: 10 }}>{formatDate(ob.dueDate.toISOString())}</span>
+              <span style={{ color: '#9b9a97', fontSize: 10 }}>
+                {ob.uncertain ? 'date required' : formatDate(ob.dueDate ? ob.dueDate.toISOString() : undefined)}
+              </span>
               {ob.actionable && (
                 <span style={{
                   fontSize: 9, fontWeight: 600, padding: '2px 7px', borderRadius: 8,

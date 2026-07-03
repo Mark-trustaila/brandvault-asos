@@ -1,4 +1,5 @@
 import type { Trademark, Obligation } from '../types/trademark';
+import { getRegistryRule, addTerm, renewalTermYears, type BaseDate } from './renewal-rules';
 
 export const BADGE_COLORS = ['#2e6b8a','#6940a5','#0f7b6c','#c4823f','#8b5e3c','#5a7d5a','#b85450','#4a6fa5'];
 export const NICE_CLASS_COLORS = ['#2e6b8a','#6940a5','#0f7b6c','#c4823f','#8b5e3c'];
@@ -49,52 +50,74 @@ export const matchesSearch = (trademark: Trademark, query: string): boolean => {
   );
 };
 
-const REGISTRY_OBLIGATIONS: Record<string, Array<{
-  type: string; yearsAfterReg: number; window: number;
-  desc: string; critical: boolean; recurring?: number;
-}>> = {
-  'USPTO': [
-    { type: 'Declaration of Use', yearsAfterReg: 5, window: 1, desc: 'Section 8 Declaration of Continued Use (Years 5-6)', critical: true },
-    { type: 'Incontestability', yearsAfterReg: 5, window: 1, desc: 'Section 15 Declaration of Incontestability (Years 5-6)', critical: false },
-    { type: 'Renewal + Declaration', yearsAfterReg: 10, window: 1, desc: 'Section 8 & 9 Combined Renewal and Declaration', critical: true, recurring: 10 }
-  ],
-  'UKIPO': [{ type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Renewal due every 10 years from filing date', critical: true, recurring: 10 }],
-  'EUIPO': [
-    { type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Renewal due every 10 years from filing date', critical: true, recurring: 10 },
-    { type: 'Proof of Use', yearsAfterReg: 5, window: 0, desc: 'Vulnerable to revocation for non-use after 5 years', critical: false }
-  ],
-  'WIPO': [{ type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Madrid Protocol renewal every 10 years', critical: true, recurring: 10 }],
-  'INPI': [{ type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Renewal every 10 years', critical: true, recurring: 10 }],
-  'IPOS': [{ type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Renewal every 10 years', critical: true, recurring: 10 }],
-  'IP Australia': [{ type: 'Renewal', yearsAfterReg: 10, window: 0.5, desc: 'Renewal every 10 years', critical: true, recurring: 10 }],
+// Config-driven obligations. The calculation (window / urgency / overdue /
+// recurring) is unchanged from the original engine — only the data source and
+// the base-date selection (filing vs registration, per registry) have moved
+// into config/renewal-rules.json. See lib/renewal-rules.ts.
+type Job = {
+  type: string; base: BaseDate; dueYears: number;
+  windowMonths: number; critical: boolean; recurringYears?: number; appliesAfter?: string;
 };
 
 export const getObligationsForTrademark = (trademark: Trademark): Obligation[] => {
-  const rules = REGISTRY_OBLIGATIONS[trademark.registry_name] || [];
-  const regDate = trademark.registration_date ? new Date(trademark.registration_date) : null;
-  if (!regDate) return [];
-  const obligations: Obligation[] = [];
-  const now = new Date();
+  const rule = getRegistryRule(trademark.registry_name);
+  if (!rule) return [];
 
-  rules.forEach(rule => {
-    const maxYears = rule.recurring ? 100 : rule.yearsAfterReg;
-    for (let yr = rule.yearsAfterReg; yr <= maxYears; yr += (rule.recurring || maxYears + 1)) {
-      const dueDate = new Date(regDate);
-      dueDate.setFullYear(dueDate.getFullYear() + yr);
+  const filingDate = trademark.filing_date ? new Date(trademark.filing_date) : null;
+  const regDate = trademark.registration_date ? new Date(trademark.registration_date) : null;
+  const now = new Date();
+  const obligations: Obligation[] = [];
+
+  // Primary renewal (recurring), plus any special obligations from config.
+  const jobs: Job[] = [
+    {
+      type: 'Renewal', base: rule.termFrom, dueYears: renewalTermYears(rule, regDate),
+      windowMonths: rule.earlyWindowMonths, critical: true, recurringYears: renewalTermYears(rule, regDate),
+    },
+    ...(rule.obligations ?? []).map((o) => ({
+      type: o.type, base: o.base, dueYears: o.dueYears,
+      windowMonths: o.windowMonths ?? rule.earlyWindowMonths,
+      critical: o.critical ?? true, recurringYears: o.recurringYears, appliesAfter: o.appliesAfter,
+    })),
+  ];
+
+  for (const job of jobs) {
+    const baseDate = job.base === 'registration' ? regDate : filingDate;
+    if (!baseDate) {
+      // Required date missing — flag rather than guess (never estimate one from the other).
+      obligations.push({
+        type: job.type, desc: `renewal date uncertain — ${job.base} date required`,
+        dueDate: null, windowStart: null, daysUntil: null,
+        critical: job.critical, actionable: false, overdue: false, inWindow: false, uncertain: true,
+      });
+      continue;
+    }
+    // Some obligations only apply to marks registered after a cutoff (e.g. Mexico post-Aug-2018).
+    if (job.appliesAfter && regDate && regDate < new Date(job.appliesAfter)) continue;
+
+    const maxYears = job.recurringYears ? 100 : job.dueYears;
+    for (let yr = job.dueYears; yr <= maxYears; yr += job.recurringYears || maxYears + 1) {
+      const dueDate = addTerm(baseDate, yr, rule.calendar);
       const windowStart = new Date(dueDate);
-      windowStart.setMonth(windowStart.getMonth() - (rule.window * 12));
+      windowStart.setMonth(windowStart.getMonth() - job.windowMonths);
       const daysUntil = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
       if (daysUntil < -365) continue;
       if (daysUntil > 365 * 15) break;
       obligations.push({
-        type: rule.type, desc: rule.desc, dueDate, windowStart, daysUntil,
-        critical: rule.critical,
+        type: job.type, desc: job.type, dueDate, windowStart, daysUntil,
+        critical: job.critical,
         actionable: daysUntil <= 180 && daysUntil > 0,
         overdue: daysUntil < 0,
-        inWindow: now >= windowStart && daysUntil > 0
+        inWindow: now >= windowStart && daysUntil > 0,
+        uncertain: false,
       });
     }
-  });
+  }
 
-  return obligations.sort((a, b) => a.daysUntil - b.daysUntil);
+  // Uncertain (no daysUntil) sort last.
+  return obligations.sort((a, b) => {
+    if (a.daysUntil == null) return 1;
+    if (b.daysUntil == null) return -1;
+    return a.daysUntil - b.daysUntil;
+  });
 };

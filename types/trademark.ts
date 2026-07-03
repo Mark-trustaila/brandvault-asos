@@ -40,11 +40,13 @@ export interface Note {
 export interface Obligation {
   type: string;
   desc: string;
-  dueDate: Date;
-  windowStart: Date;
-  daysUntil: number;
+  dueDate: Date | null;
+  windowStart: Date | null;
+  daysUntil: number | null;
   critical: boolean;
   actionable: boolean;
   overdue: boolean;
   inWindow: boolean;
+  // Set when the base date needed to compute the deadline is missing.
+  uncertain?: boolean;
 }

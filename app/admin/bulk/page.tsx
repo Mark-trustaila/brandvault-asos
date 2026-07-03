@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { bvFetch, getActingCompany } from '../../../lib/client/acting-company';
-import { computeRenewalDate } from '../../../lib/client/renewal-rules';
+import { computeRenewalDate } from '../../../lib/renewal-rules';
 
 const STATUSES = ['Registered', 'Pending', 'Published', 'Expired', 'Abandoned'] as const;
 
