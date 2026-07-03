@@ -1,0 +1,10 @@
+/*
+ * Tailwind entry point. Loaded once from app/layout.tsx.
+ *
+ * Preflight is disabled in tailwind.config.ts, so `@tailwind base` emits
+ * almost nothing here — existing CSS-Module components are untouched. New
+ * components use Tailwind utilities; existing ones keep their .module.css.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
