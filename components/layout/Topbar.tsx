@@ -21,7 +21,7 @@ export default function Topbar() {
         </div>
       </div>
       <div className={styles.right}>
-        <div className={styles.badge}>✓ LawPanel Live</div>
+        <div className={styles.badge}>✓ Live</div>
         <button className={styles.btn} onClick={() => setShowReport(true)}><IconReport /> Report</button>
         <button className={`${styles.btn} ${styles.btnDisabled}`}>⚙ Settings</button>
         <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnDisabled}`}>+ New filing</button>
