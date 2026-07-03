@@ -74,3 +74,20 @@
   text-align: center;
   padding: 40px 20px;
 }
+
+.needsDataHeader { margin-top: 28px; }
+
+.needsDataDot {
+  background: #f2994a;
+  box-shadow: 0 0 0 3px rgba(242,153,74,0.12);
+}
+
+.needsDataCount {
+  color: #c4823f;
+  background: rgba(242,153,74,0.10);
+}
+
+.needsDataBadge {
+  background: rgba(242,153,74,0.10);
+  color: #c4823f;
+}
