@@ -51,11 +51,13 @@ export function addTerm(base: Date, years: number, calendar?: string): Date {
   if (calendar === 'hijri') {
     return new Date(base.getTime() + years * HIJRI_YEAR_DAYS * MS_PER_DAY);
   }
+  // UTC methods so the result is timezone/DST-independent (adding years across a
+  // DST boundary with local methods drifts the date by a day).
   const d = new Date(base);
   const whole = Math.trunc(years);
   const months = Math.round((years - whole) * 12);
-  d.setFullYear(d.getFullYear() + whole);
-  d.setMonth(d.getMonth() + months);
+  d.setUTCFullYear(d.getUTCFullYear() + whole);
+  d.setUTCMonth(d.getUTCMonth() + months);
   return d;
 }
 

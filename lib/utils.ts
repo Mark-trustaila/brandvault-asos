@@ -99,7 +99,7 @@ export const getObligationsForTrademark = (trademark: Trademark): Obligation[] =
     for (let yr = job.dueYears; yr <= maxYears; yr += job.recurringYears || maxYears + 1) {
       const dueDate = addTerm(baseDate, yr, rule.calendar);
       const windowStart = new Date(dueDate);
-      windowStart.setMonth(windowStart.getMonth() - job.windowMonths);
+      windowStart.setUTCMonth(windowStart.getUTCMonth() - job.windowMonths);
       const daysUntil = Math.floor((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
       if (daysUntil < -365) continue;
       if (daysUntil > 365 * 15) break;
