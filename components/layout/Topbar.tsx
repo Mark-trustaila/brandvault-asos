@@ -9,14 +9,14 @@ const IconReport = () => (
   </svg>
 );
 export default function Topbar() {
-  const { setShowReport } = useDashboard();
+  const { data, setShowReport } = useDashboard();
 
   return (
     <header className={styles.topbar}>
       <div className={styles.left}>
         <div className={styles.breadcrumb}>
           <span>BrandVault</span>
-          <span>/ ASOS plc</span>
+          <span>/ {data?.company?.name ?? 'BrandVault'}</span>
           <span>/ Dashboard</span>
         </div>
       </div>

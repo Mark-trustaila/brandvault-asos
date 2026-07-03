@@ -25,6 +25,7 @@ export async function GET(req: Request) {
   return NextResponse.json({
     count: trademarks.length,
     trademarks,
+    company: company ? { id: company.id, name: company.name } : null,
     fetchedAt: new Date().toISOString(),
     source: 'database',
   });

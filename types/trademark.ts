@@ -22,6 +22,7 @@ export interface Trademark {
 export interface TrademarkData {
   count: number;
   trademarks: Trademark[];
+  company?: { id: string; name: string } | null;
   fetchedAt: string;
   source?: string;
 }

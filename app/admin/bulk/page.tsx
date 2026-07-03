@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { bvFetch, getActingCompany } from '../../../lib/client/acting-company';
+import { computeRenewalDate } from '../../../lib/client/renewal-rules';
 
 const STATUSES = ['Registered', 'Pending', 'Published', 'Expired', 'Abandoned'] as const;
 
@@ -12,6 +13,7 @@ type Row = {
   filingDate: string;
   registrationDate: string;
   expiryDate: string;
+  expiryTouched: boolean; // true once the user edits expiry directly (stops auto-fill)
 };
 
 const emptyRow = (): Row => ({
@@ -22,6 +24,7 @@ const emptyRow = (): Row => ({
   filingDate: '',
   registrationDate: '',
   expiryDate: '',
+  expiryTouched: false,
 });
 
 type Result = { createdCount: number; errors: Array<{ index: number; error: string }> };
@@ -50,7 +53,23 @@ export default function BulkEntryPage() {
   }, []);
 
   const update = (i: number, field: keyof Row, val: string) =>
-    setRows((rs) => rs.map((r, idx) => (idx === i ? { ...r, [field]: val } : r)));
+    setRows((rs) =>
+      rs.map((r, idx) => {
+        if (idx !== i) return r;
+        const next: Row = { ...r, [field]: val };
+        if (field === 'expiryDate') next.expiryTouched = true;
+        // Auto-fill expiry from registry + filing/registration (+10y) unless the
+        // user has edited it directly. No DB call — rules held in the UI.
+        if (
+          (field === 'registryName' || field === 'filingDate' || field === 'registrationDate') &&
+          !next.expiryTouched
+        ) {
+          const auto = computeRenewalDate(next.registryName, next.filingDate, next.registrationDate);
+          if (auto) next.expiryDate = auto;
+        }
+        return next;
+      })
+    );
   const addRow = () => setRows((rs) => [...rs, emptyRow()]);
   const removeRow = (i: number) => setRows((rs) => (rs.length > 1 ? rs.filter((_, idx) => idx !== i) : rs));
 
@@ -98,7 +117,8 @@ export default function BulkEntryPage() {
         <h1 className="mt-2 text-xl font-semibold">Bulk mark entry</h1>
         <p className="mb-4 text-sm text-ink-muted">
           Entering marks for <span className="font-medium text-ink">{target}</span>. Only mark, registry,
-          and status are required — the rest can be filled in later.
+          and status are required. Expiry auto-fills from the registry + filing/registration date (+10y) —
+          editable if you need to override.
         </p>
 
         <div className="overflow-x-auto rounded-md border border-line bg-surface">

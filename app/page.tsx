@@ -18,7 +18,7 @@ import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
 import { bvFetch } from '../lib/client/acting-company';
 
 function Dashboard() {
-  const { setData, activeTab } = useDashboard();
+  const { data, setData, activeTab } = useDashboard();
 
   useEffect(() => {
     bvFetch('/api/trademarks')
@@ -36,7 +36,7 @@ function Dashboard() {
         <Topbar />
         <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflowY: 'auto', padding: '20px 28px' }}>
-            <h1 style={{ fontSize: 22, fontWeight: 700, color: '#37352f', marginBottom: 2 }}>ASOS plc</h1>
+            <h1 style={{ fontSize: 22, fontWeight: 700, color: '#37352f', marginBottom: 2 }}>{data?.company?.name ?? 'BrandVault'}</h1>
             <p style={{ fontSize: 12, color: '#9b9a97', marginBottom: 14 }}>
               Trademark portfolio overview
             </p>
