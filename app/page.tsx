@@ -13,12 +13,15 @@ import PipelineTab from '../components/tabs/PipelineTab';
 import ByRegistryTab from '../components/tabs/ByRegistryTab';
 import DetailPanel from '../components/detail/DetailPanel';
 import ReportPanel from '../components/report/ReportPanel';
+import { AuthControls } from '../components/auth/AuthControls';
+import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
+import { bvFetch } from '../lib/client/acting-company';
 
 function Dashboard() {
   const { setData, activeTab } = useDashboard();
 
   useEffect(() => {
-    fetch('/api/trademarks')
+    bvFetch('/api/trademarks')
       .then(r => r.json())
       .then(setData)
       .catch(console.error);
@@ -26,6 +29,8 @@ function Dashboard() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", fontSize: 14, color: '#37352f' }}>
+      <AuthControls />
+      <PlatformAdminBar />
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         <Topbar />
