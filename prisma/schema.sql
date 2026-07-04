@@ -1,17 +1,15 @@
 -- BrandVault DDL PREVIEW — generated from prisma/schema.prisma via
 --   prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script
 --
--- This is a human-reviewable snapshot of the target MySQL 8.0 schema. It is
--- NOT the tracked migration. The real migration is created with
--- `npm run db:migrate` (prisma migrate dev) once DATABASE_URL points at a
--- reachable Azure MySQL instance. Regenerate this preview if the schema changes.
+-- Human-reviewable snapshot of the target MySQL 8.0 schema. NOT the tracked
+-- migration (those live in prisma/migrations/). Regenerate if the schema changes.
 
 -- CreateTable
 CREATE TABLE `companies` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `slug` VARCHAR(191) NOT NULL,
-    `clerk_org_id` VARCHAR(191) NOT NULL,
+    `clerk_org_id` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `companies_slug_key`(`slug`),

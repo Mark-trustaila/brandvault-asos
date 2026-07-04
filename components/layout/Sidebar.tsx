@@ -15,7 +15,7 @@ export default function Sidebar() {
       <div className={styles.brand}>
         <div className={styles.logoMark}>Ai</div>
         <div>
-          <div className={styles.orgName}>ASOS plc</div>
+          <div className={styles.orgName}>{data?.company?.name ?? 'BrandVault'}</div>
         </div>
       </div>
 

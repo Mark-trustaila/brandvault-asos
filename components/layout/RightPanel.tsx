@@ -49,8 +49,7 @@ export default function RightPanel() {
         <div className={styles.alertTitle}>Data Source</div>
         <div className={styles.alertCard}>
           <div className={styles.alertText}>
-            Live data from LawPanel Firms API. Last fetched: {data?.fetchedAt ? new Date(data.fetchedAt).toLocaleDateString('en-GB') : '—'}.
-            Run lawpanel-fetch-trademarks.js to refresh.
+            Live from the BrandVault database. Last loaded: {data?.fetchedAt ? new Date(data.fetchedAt).toLocaleDateString('en-GB') : '—'}.
           </div>
         </div>
       </div>

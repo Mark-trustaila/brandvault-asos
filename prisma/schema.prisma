@@ -42,7 +42,9 @@ model Company {
   id         String   @id @default(cuid())
   name       String
   slug       String   @unique
-  clerkOrgId String   @unique @map("clerk_org_id")
+  // Nullable: a company can be created by a platform admin during concierge
+  // onboarding before the customer's Clerk org exists; linked on their first login.
+  clerkOrgId String?  @unique @map("clerk_org_id")
   createdAt  DateTime @default(now()) @map("created_at")
 
   users           User[]

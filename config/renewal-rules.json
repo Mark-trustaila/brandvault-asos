@@ -1,0 +1,38 @@
+{
+  "_comment": "Config-driven renewal rules. Source: trademark-renewal-rules-20-registries_1.md (verified July 2026). WIPO carried forward from the legacy engine (not in the source file). Adding a registry = add an entry here; no code change. termFrom selects the base date (filing/registration). obligations[] are special deadlines beyond the primary renewal.",
+  "aliases": {
+    "IP Australia": "IPAU",
+    "INPI": "INPIBR",
+    "WIPO": "WIPO"
+  },
+  "registries": {
+    "UKIPO":  { "name": "United Kingdom", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "EUIPO":  { "name": "European Union", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "USPTO":  { "name": "United States", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 12, "graceMonths": 6,
+      "obligations": [
+        { "type": "Section 8 Declaration of Use", "base": "registration", "dueYears": 6, "windowMonths": 12, "critical": true }
+      ] },
+    "CNIPA":  { "name": "China", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "JPO":    { "name": "Japan", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "KIPO":   { "name": "South Korea", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "IPINDIA":{ "name": "India", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "INPIBR": { "name": "Brazil", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "IMPI":   { "name": "Mexico", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6,
+      "obligations": [
+        { "type": "Declaration of Use (3yr from grant)", "base": "registration", "dueYears": 3.25, "windowMonths": 6, "critical": true, "appliesAfter": "2018-08-01" }
+      ] },
+    "CIPO":   { "name": "Canada", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 6, "graceMonths": 6,
+      "transitional": { "beforeDate": "2019-06-17", "termYears": 15 } },
+    "IPAU":   { "name": "Australia", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "IPOS":   { "name": "Singapore", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "IPONZ":  { "name": "New Zealand", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "INPIFR": { "name": "France", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "DPMA":   { "name": "Germany", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "BOIP":   { "name": "Benelux", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "TURKPATENT": { "name": "Turkey", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "SAIP":   { "name": "Saudi Arabia", "termYears": 10, "termFrom": "filing", "calendar": "hijri", "earlyWindowMonths": 12, "graceMonths": 6 },
+    "UAEMOE": { "name": "United Arab Emirates", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "DGIP":   { "name": "Indonesia", "termYears": 10, "termFrom": "filing", "earlyWindowMonths": 6, "graceMonths": 6 },
+    "WIPO":   { "name": "WIPO (Madrid Protocol)", "termYears": 10, "termFrom": "registration", "earlyWindowMonths": 6, "graceMonths": 6 }
+  }
+}

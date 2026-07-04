@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
-  title: 'BrandVault — ASOS plc',
+  title: 'BrandVault',
   description: 'Trademark portfolio management',
 };
 

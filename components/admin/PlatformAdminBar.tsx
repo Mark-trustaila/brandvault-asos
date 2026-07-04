@@ -72,6 +72,23 @@ export function PlatformAdminBar() {
     window.location.reload();
   };
 
+  const createCompany = async () => {
+    const name = window.prompt('New customer company name:')?.trim();
+    if (!name) return;
+    const r = await fetch('/api/admin/companies', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name }),
+    });
+    if (r.ok) {
+      const c = await r.json();
+      setActingCompany({ id: c.id, name: c.name }); // act on the new company
+      window.location.reload();
+    } else {
+      window.alert('Could not create company');
+    }
+  };
+
   return (
     <div className="fixed bottom-3 left-3 z-50 font-sans">
       <div className="flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 shadow-sm">
@@ -89,6 +106,15 @@ export function PlatformAdminBar() {
             </option>
           ))}
         </select>
+        <button
+          onClick={createCompany}
+          className="text-xs text-ink-muted transition-colors hover:text-ink"
+        >
+          + Company
+        </button>
+        <a href="/admin/bulk" className="text-xs text-ink-muted transition-colors hover:text-ink">
+          Enter marks
+        </a>
         <button
           onClick={() => setOpen((o) => !o)}
           className="text-xs text-ink-muted transition-colors hover:text-ink"
