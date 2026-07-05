@@ -35,27 +35,51 @@ export async function upcomingRenewals(companyId: string, limit = 5, now = new D
   }));
 }
 
-export async function markStatus(companyId: string, query: string, now = new Date()) {
+export type MarkStatusRow = {
+  registry: string;
+  status: string;
+  nextDeadline?: { type: string; dueDate: string; daysRemaining: number };
+};
+export type MarkStatusGroup = { markText: string; rows: MarkStatusRow[] };
+
+/**
+ * All marks matching `query`, grouped by mark name with one row per registry.
+ * A brand like ASOS is registered separately in UKIPO / EUIPO / USPTO etc; the
+ * user wants to see every registration, not one arbitrary hit.
+ *
+ * Matching is case-insensitive (MySQL collation-independent). An exact name
+ * match wins — "asos" shows the ASOS registrations, not ASOS.COM / ASOS EDITION;
+ * only when nothing matches exactly do we fall back to substring matches
+ * (which may span several names, each its own group).
+ */
+export async function markStatus(companyId: string, query: string, now = new Date()): Promise<MarkStatusGroup[]> {
   const q = query.trim().toLowerCase();
-  if (!q) return null;
-  // Case-insensitive match, independent of the MySQL column collation (Prisma
-  // has no `mode: 'insensitive'` on MySQL). Portfolios are small (tens–low
-  // hundreds), so filtering in code is cheap and correct. Prefer an exact
-  // (case-insensitive) match, then fall back to a substring match.
-  const marks = await prisma.trademark.findMany({ where: { companyId }, orderBy: { markText: 'asc' } });
-  const mark =
-    marks.find((m) => m.markText.toLowerCase() === q) ?? marks.find((m) => m.markText.toLowerCase().includes(q));
-  if (!mark) return null;
-  const next = await prisma.deadline.findFirst({
-    where: { trademarkId: mark.id, dueDate: { gte: now } },
+  if (!q) return [];
+  const marks = await prisma.trademark.findMany({
+    where: { companyId },
+    orderBy: [{ markText: 'asc' }, { registryName: 'asc' }],
+  });
+  const exact = marks.filter((m) => m.markText.toLowerCase() === q);
+  const matched = exact.length ? exact : marks.filter((m) => m.markText.toLowerCase().includes(q));
+  if (!matched.length) return [];
+
+  // Earliest upcoming deadline per matched mark, in one query.
+  const deadlines = await prisma.deadline.findMany({
+    where: { trademarkId: { in: matched.map((m) => m.id) }, dueDate: { gte: now } },
     orderBy: { dueDate: 'asc' },
   });
-  return {
-    markText: mark.markText,
-    registry: mark.registryName,
-    status: mark.status as string,
-    nextDeadline: next
-      ? { type: next.type, dueDate: isoDay(next.dueDate), daysRemaining: daysFrom(next.dueDate, now) }
-      : undefined,
-  };
+  const nextByMark = new Map<string, (typeof deadlines)[number]>();
+  for (const d of deadlines) if (!nextByMark.has(d.trademarkId)) nextByMark.set(d.trademarkId, d);
+
+  const groups = new Map<string, MarkStatusGroup>();
+  for (const m of matched) {
+    if (!groups.has(m.markText)) groups.set(m.markText, { markText: m.markText, rows: [] });
+    const next = nextByMark.get(m.id);
+    groups.get(m.markText)!.rows.push({
+      registry: m.registryName,
+      status: m.status as string,
+      nextDeadline: next ? { type: next.type, dueDate: isoDay(next.dueDate), daysRemaining: daysFrom(next.dueDate, now) } : undefined,
+    });
+  }
+  return Array.from(groups.values());
 }

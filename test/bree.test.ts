@@ -85,7 +85,7 @@ describe('bree message formatters', () => {
       bree.weeklyDigest({ companyName: 'ASOS', upcoming: [] }),
       bree.portfolioSummary({ companyName: 'ASOS', total: 81, registered: 70, pending: 5, published: 6, needsAttention: 3 }),
       bree.renewalsList({ items: [] }),
-      bree.markStatusMsg({ markText: 'ASOS', registry: 'UKIPO', status: 'Registered' }),
+      bree.markStatusMsg({ query: 'ASOS', groups: [{ markText: 'ASOS', rows: [{ registry: 'UKIPO', status: 'Registered' }] }] }),
       bree.help(),
     ];
     for (const m of msgs) {
@@ -99,5 +99,27 @@ describe('bree message formatters', () => {
     expect(m.text).toContain('ASOS');
     expect(m.text).toContain('EUIPO');
     expect(m.text).toContain('30');
+  });
+
+  it('markStatusMsg lists one line per registry and summarises the count', () => {
+    const m = bree.markStatusMsg({
+      query: 'asos',
+      groups: [
+        {
+          markText: 'ASOS',
+          rows: [
+            { registry: 'UKIPO', status: 'Registered', nextDeadline: { type: 'Renewal', dueDate: '2030-06-01', daysRemaining: 1426 } },
+            { registry: 'EUIPO', status: 'Registered' },
+            { registry: 'USPTO', status: 'Pending' },
+          ],
+        },
+      ],
+    });
+    const flat = JSON.stringify(m.blocks);
+    expect(flat).toContain('UKIPO');
+    expect(flat).toContain('EUIPO');
+    expect(flat).toContain('USPTO');
+    expect(flat).toContain('no upcoming deadline'); // EUIPO row has no deadline
+    expect(m.text).toContain('3 registrations'); // one group, three registries
   });
 });

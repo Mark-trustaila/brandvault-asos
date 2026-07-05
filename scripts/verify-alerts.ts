@@ -28,11 +28,17 @@ async function main() {
     console.log(`  ${r.markText} (${r.registry}) — ${r.daysRemaining}d · ${r.dueDate}`);
   }
 
-  console.log('\n== /bree status <first mark> ==');
+  console.log('\n== /bree status <first mark> (grouped by name, all registries) ==');
   const first = await prisma.trademark.findFirst({ where: { companyId: company.id }, orderBy: { markText: 'asc' } });
   if (first) {
     console.log(`  parse -> `, parseBreeCommand(`status ${first.markText}`));
-    console.log(`  result -> `, await markStatus(company.id, first.markText, now));
+    for (const g of await markStatus(company.id, first.markText, now)) {
+      console.log(`  ${g.markText}:`);
+      for (const r of g.rows) {
+        const nd = r.nextDeadline ? `${r.nextDeadline.type} ${r.nextDeadline.dueDate} (${r.nextDeadline.daysRemaining}d)` : 'no upcoming deadline';
+        console.log(`    ${r.registry} — ${r.status} · ${nd}`);
+      }
+    }
   }
 
   // 2. Daily-alert selection (dry run) — how many deadlines sit in each bucket

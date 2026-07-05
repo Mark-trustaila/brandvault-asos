@@ -61,11 +61,26 @@ export function renewalsList(o: { items: { markText: string; registry: string; d
   return withBree(`${o.items.length} upcoming renewals`, [header('🗓️ Next renewals'), section(lines)]);
 }
 
-export function markStatusMsg(o: { markText: string; registry: string; status: string; nextDeadline?: { type: string; dueDate: string; daysRemaining: number } }): BreeMessage {
-  const next = o.nextDeadline
-    ? `\nNext: ${o.nextDeadline.type} *${o.nextDeadline.dueDate}* (${o.nextDeadline.daysRemaining}d)`
-    : '\nNo upcoming deadline.';
-  return withBree(`${o.markText}: ${o.status}`, [section(`*${o.markText}* · ${o.registry}\nStatus: *${o.status}*${next}`)]);
+type StatusRow = { registry: string; status: string; nextDeadline?: { type: string; dueDate: string; daysRemaining: number } };
+type StatusGroup = { markText: string; rows: StatusRow[] };
+
+export function markStatusMsg(o: { query: string; groups: StatusGroup[] }): BreeMessage {
+  const blocks: Block[] = [];
+  for (const g of o.groups) {
+    const lines = g.rows
+      .map((r) => {
+        const d = r.nextDeadline
+          ? `next ${r.nextDeadline.type} *${r.nextDeadline.dueDate}* (${r.nextDeadline.daysRemaining}d)`
+          : 'no upcoming deadline';
+        return `• *${r.registry}* — ${r.status} · ${d}`;
+      })
+      .join('\n');
+    blocks.push(section(`*${g.markText}*\n${lines}`));
+  }
+  const regs = o.groups.reduce((n, g) => n + g.rows.length, 0);
+  const names = o.groups.length;
+  const summary = names === 1 ? `${o.groups[0].markText} — ${regs} registration${regs === 1 ? '' : 's'}` : `${regs} registrations across ${names} marks`;
+  return withBree(summary, [header('🏷️ Mark status'), ...blocks]);
 }
 
 export function notFound(query: string): BreeMessage {

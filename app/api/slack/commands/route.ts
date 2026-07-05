@@ -55,8 +55,8 @@ export async function POST(req: Request) {
       return reply(bree.renewalsList({ items: await upcomingRenewals(companyId, 5) }));
     case 'status': {
       if (!cmd.query) return reply(bree.help());
-      const s = await markStatus(companyId, cmd.query);
-      return reply(s ? bree.markStatusMsg(s) : bree.notFound(cmd.query));
+      const groups = await markStatus(companyId, cmd.query);
+      return reply(groups.length ? bree.markStatusMsg({ query: cmd.query, groups }) : bree.notFound(cmd.query));
     }
     case 'help':
     case 'unknown':
