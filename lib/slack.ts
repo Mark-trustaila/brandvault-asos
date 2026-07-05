@@ -76,3 +76,46 @@ export async function exchangeCode(code: string): Promise<OAuthAccess> {
   });
   return (await res.json()) as OAuthAccess;
 }
+
+// Post a message as Bree. Best-effort — callers log/ignore failures so a Slack
+// outage never blocks a DB write. Returns Slack's {ok,error} response.
+export async function postToSlack(
+  botToken: string,
+  channel: string,
+  msg: { text: string; blocks?: unknown[] }
+): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch('https://slack.com/api/chat.postMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8', Authorization: `Bearer ${botToken}` },
+      body: JSON.stringify({ channel, text: msg.text, blocks: msg.blocks, username: 'Bree' }),
+    });
+    return (await res.json()) as { ok: boolean; error?: string };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+/**
+ * Verify a Slack request signature (v0 scheme) — pure, testable.
+ * Rejects requests older than 5 minutes (replay) and mismatched signatures.
+ * Pass `now` (seconds) for deterministic tests.
+ */
+export function verifySlackSignature(o: {
+  signingSecret: string;
+  timestamp: string;
+  body: string;
+  signature: string;
+  now?: number;
+}): boolean {
+  if (!o.signingSecret || !o.timestamp || !o.signature) return false;
+  const now = o.now ?? Date.now() / 1000;
+  const age = Math.abs(now - Number(o.timestamp));
+  if (!Number.isFinite(age) || age > 300) return false;
+  const expected = 'v0=' + crypto.createHmac('sha256', o.signingSecret).update(`v0:${o.timestamp}:${o.body}`).digest('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(o.signature));
+  } catch {
+    return false;
+  }
+}

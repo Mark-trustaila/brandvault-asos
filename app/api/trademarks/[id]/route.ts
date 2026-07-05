@@ -5,6 +5,7 @@ import { buildMarkData, parseGoods } from '../../../../lib/marks';
 import { getActingCompany, getRequestContext, requireReasonIfAdmin } from '../../../../lib/authz';
 import { writeAudit } from '../../../../lib/audit';
 import { recalcDeadlines } from '../../../../lib/deadlines';
+import { notifyStatusChange } from '../../../../lib/alerts';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -39,7 +40,7 @@ export async function PATCH(req: Request, { params }: Params) {
 
   const owned = await prisma.trademark.findFirst({
     where: { id: params.id, companyId: ctx.company.id },
-    select: { id: true },
+    select: { id: true, status: true },
   });
   if (!owned) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
@@ -50,6 +51,11 @@ export async function PATCH(req: Request, { params }: Params) {
     include: { goodsServices: true },
   });
   mark.needsData = (await recalcDeadlines(mark)).needsData;
+
+  // Best-effort Slack (Bree) status-change notification — never blocks the update.
+  if (data.status && data.status !== owned.status) {
+    await notifyStatusChange(ctx.company.id, mark, owned.status as string, mark.status as string);
+  }
   await writeAudit({
     companyId: ctx.company.id,
     userId: ctx.user.id,
