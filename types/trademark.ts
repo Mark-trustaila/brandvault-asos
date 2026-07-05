@@ -16,6 +16,10 @@ export interface Trademark {
   expiry_date?: string;
   publication_date?: string;
   client_agent_name?: string;
+  owner_name?: string;
+  owner_country?: string;
+  representative_name?: string;
+  representative_reference?: string;
   needs_data?: boolean;
   good_and_services?: GoodsAndServices[];
   publication_notes?: string;

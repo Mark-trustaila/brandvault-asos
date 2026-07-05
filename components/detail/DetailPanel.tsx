@@ -153,6 +153,18 @@ function RightsRecord({ trademark }: { trademark: Trademark }) {
           <div className={styles.fieldLabel}>Expiry Date</div>
           <div className={styles.fieldValue}>{formatDate(trademark.expiry_date)}</div>
         </div>
+        {trademark.owner_name && (
+          <div className={styles.field}>
+            <div className={styles.fieldLabel}>Owner</div>
+            <div className={styles.fieldValue}>{trademark.owner_name}{trademark.owner_country ? ` · ${trademark.owner_country}` : ''}</div>
+          </div>
+        )}
+        {trademark.representative_name && (
+          <div className={styles.field}>
+            <div className={styles.fieldLabel}>Representative</div>
+            <div className={styles.fieldValue}>{trademark.representative_name}{trademark.representative_reference ? ` · ${trademark.representative_reference}` : ''}</div>
+          </div>
+        )}
         {gsClasses.length > 0 && (
           <div className={`${styles.field} ${styles.fieldFull}`}>
             <div className={styles.fieldLabel}>Goods &amp; Services</div>

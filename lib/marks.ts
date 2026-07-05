@@ -20,7 +20,7 @@ export function parseGoods(raw: unknown): { classNumber: number; text: string }[
     .filter((g): g is { classNumber: number; text: string } => g !== null);
 }
 
-const STRING_FIELDS = ['applicationNumber', 'registrationNumber', 'clientAgentName', 'familyId'] as const;
+const STRING_FIELDS = ['applicationNumber', 'registrationNumber', 'clientAgentName', 'familyId', 'ownerName', 'ownerCountry', 'representativeName', 'representativeReference'] as const;
 const DATE_FIELDS = ['filingDate', 'registrationDate', 'expiryDate', 'publicationDate'] as const;
 
 type Body = Record<string, unknown>;

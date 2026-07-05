@@ -24,6 +24,7 @@ export function MarkEditForm() {
   const [f, setF] = useState({
     markText: '', registryName: '', status: 'Pending', applicationNumber: '',
     registrationNumber: '', filingDate: '', registrationDate: '', expiryDate: '', clientAgentName: '', familyId: '',
+    ownerName: '', ownerCountry: '', representativeName: '', representativeReference: '',
   });
   const [expiryTouched, setExpiryTouched] = useState(false);
   const [newFamily, setNewFamily] = useState('');
@@ -43,10 +44,12 @@ export function MarkEditForm() {
         registrationNumber: editing.registration_number ?? '', filingDate: dstr(editing.filing_date),
         registrationDate: dstr(editing.registration_date), expiryDate: dstr(editing.expiry_date),
         clientAgentName: editing.client_agent_name ?? '', familyId: editing.family_id ?? '',
+        ownerName: editing.owner_name ?? '', ownerCountry: editing.owner_country ?? '',
+        representativeName: editing.representative_name ?? '', representativeReference: editing.representative_reference ?? '',
       });
       setGoods((editing.good_and_services ?? []).map((g) => ({ classNumber: String(g.search_class.number), text: g.text })));
     } else {
-      setF({ markText: '', registryName: '', status: 'Pending', applicationNumber: '', registrationNumber: '', filingDate: '', registrationDate: '', expiryDate: '', clientAgentName: '', familyId: '' });
+      setF({ markText: '', registryName: '', status: 'Pending', applicationNumber: '', registrationNumber: '', filingDate: '', registrationDate: '', expiryDate: '', clientAgentName: '', familyId: '', ownerName: '', ownerCountry: '', representativeName: '', representativeReference: '' });
       setGoods([]);
     }
     bvFetch('/api/families').then((r) => r.json()).then((d) => setFamilies(d.families ?? [])).catch(() => {});
@@ -84,6 +87,8 @@ export function MarkEditForm() {
       applicationNumber: f.applicationNumber.trim() || null, registrationNumber: f.registrationNumber.trim() || null,
       filingDate: f.filingDate || null, registrationDate: f.registrationDate || null, expiryDate: f.expiryDate || null,
       clientAgentName: f.clientAgentName.trim() || null, familyId: familyId || null,
+      ownerName: f.ownerName.trim() || null, ownerCountry: f.ownerCountry.trim() || null,
+      representativeName: f.representativeName.trim() || null, representativeReference: f.representativeReference.trim() || null,
       goodsServices: goods.filter((g) => g.classNumber && g.text.trim()).map((g) => ({ classNumber: Number(g.classNumber), text: g.text.trim() })),
       reason: reason.trim() || undefined,
     };
@@ -133,6 +138,12 @@ export function MarkEditForm() {
             </select>
           </div>
           <div><label className={label}>…or new family</label><input className={input} value={newFamily} onChange={(e) => setNewFamily(e.target.value)} placeholder="Create + assign" /></div>
+
+          <div className="col-span-2 mt-1 border-t border-line pt-2 text-xs font-medium text-ink-muted">Owner &amp; representative</div>
+          <div><label className={label}>Owner name</label><input className={input} value={f.ownerName} onChange={(e) => set('ownerName', e.target.value)} /></div>
+          <div><label className={label}>Owner country</label><input className={input} value={f.ownerCountry} onChange={(e) => set('ownerCountry', e.target.value)} /></div>
+          <div><label className={label}>Representative name</label><input className={input} value={f.representativeName} onChange={(e) => set('representativeName', e.target.value)} /></div>
+          <div><label className={label}>Representative reference</label><input className={input} value={f.representativeReference} onChange={(e) => set('representativeReference', e.target.value)} /></div>
         </div>
 
         <div className="mt-4">

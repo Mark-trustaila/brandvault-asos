@@ -117,6 +117,13 @@ model Trademark {
   publicationDate    DateTime? @map("publication_date")
   clientAgentName    String?   @map("client_agent_name")
 
+  // Lightweight owner/representative fields (plain text — replaces LawPanel's
+  // Client/Owner/Representative entity model; populated from imported data).
+  ownerName               String? @map("owner_name")
+  ownerCountry            String? @map("owner_country")
+  representativeName      String? @map("representative_name")
+  representativeReference String? @map("representative_reference")
+
   // Set by the deadline engine when a required date (filing/registration) is
   // missing, so renewal dates can't be computed — surfaced as "needs data".
   needsData Boolean @default(false) @map("needs_data")

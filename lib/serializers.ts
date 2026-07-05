@@ -22,6 +22,10 @@ export function serializeTrademark(m: Trademark & { goodsServices: GoodsService[
     expiry_date: iso(m.expiryDate),
     publication_date: iso(m.publicationDate),
     client_agent_name: m.clientAgentName ?? undefined,
+    owner_name: m.ownerName ?? undefined,
+    owner_country: m.ownerCountry ?? undefined,
+    representative_name: m.representativeName ?? undefined,
+    representative_reference: m.representativeReference ?? undefined,
     needs_data: m.needsData ?? false,
     good_and_services: m.goodsServices.map((g) => ({
       search_class: { number: g.classNumber },
