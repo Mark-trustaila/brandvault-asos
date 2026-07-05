@@ -36,12 +36,15 @@ export async function upcomingRenewals(companyId: string, limit = 5, now = new D
 }
 
 export async function markStatus(companyId: string, query: string, now = new Date()) {
-  const q = query.trim();
+  const q = query.trim().toLowerCase();
   if (!q) return null;
-  const mark = await prisma.trademark.findFirst({
-    where: { companyId, markText: { contains: q } },
-    orderBy: { markText: 'asc' },
-  });
+  // Case-insensitive match, independent of the MySQL column collation (Prisma
+  // has no `mode: 'insensitive'` on MySQL). Portfolios are small (tens–low
+  // hundreds), so filtering in code is cheap and correct. Prefer an exact
+  // (case-insensitive) match, then fall back to a substring match.
+  const marks = await prisma.trademark.findMany({ where: { companyId }, orderBy: { markText: 'asc' } });
+  const mark =
+    marks.find((m) => m.markText.toLowerCase() === q) ?? marks.find((m) => m.markText.toLowerCase().includes(q));
   if (!mark) return null;
   const next = await prisma.deadline.findFirst({
     where: { trademarkId: mark.id, dueDate: { gte: now } },
