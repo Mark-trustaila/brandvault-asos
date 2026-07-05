@@ -7,7 +7,8 @@ type Me = {
   user: { name: string } | null;
   company: { id: string; name: string } | null;
 };
-type Company = { id: string; name: string; trademarkCount: number };
+type Company = { id: string; name: string; trademarkCount: number; linked: boolean };
+type ClerkOrg = { id: string; name: string; linkedTo: string | null };
 type AuditEntry = {
   id: string;
   action: string;
@@ -30,6 +31,7 @@ export function PlatformAdminBar() {
   const [actingId, setActingId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<AuditEntry[]>([]);
+  const [orgs, setOrgs] = useState<ClerkOrg[] | null>(null);
 
   useEffect(() => {
     setActingId(getActingCompany()?.id ?? null);
@@ -60,6 +62,24 @@ export function PlatformAdminBar() {
   const homeId = me.company?.id ?? '';
   const currentId = actingId ?? homeId;
   const crossTenant = Boolean(actingId && actingId !== homeId);
+  const current = companies.find((c) => c.id === currentId);
+
+  const openLink = () => {
+    fetch('/api/admin/clerk-orgs')
+      .then((r) => (r.ok ? r.json() : { orgs: [] }))
+      .then((d) => setOrgs(d.orgs ?? []))
+      .catch(() => setOrgs([]));
+  };
+  const doLink = async (orgId: string) => {
+    if (!current || !orgId) return;
+    const r = await fetch(`/api/admin/companies/${current.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ clerkOrgId: orgId }),
+    });
+    if (r.ok) window.location.reload();
+    else window.alert((await r.json().catch(() => ({}))).error || 'Link failed');
+  };
 
   const onSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const id = e.target.value;
@@ -126,6 +146,28 @@ export function PlatformAdminBar() {
       {crossTenant && (
         <div className="mt-1 inline-block rounded bg-brand/10 px-2 py-0.5 text-[11px] text-brand">
           Acting cross-tenant
+        </div>
+      )}
+
+      {current && !current.linked && (
+        <div className="mt-1 rounded-md border border-line bg-surface p-2 text-xs shadow-sm">
+          <span className="text-ink-muted">“{current.name}” isn’t linked to a Clerk org — customers won’t see it on login. </span>
+          {orgs === null ? (
+            <button onClick={openLink} className="text-brand hover:underline">Link to org</button>
+          ) : (
+            <select
+              className="ml-1 rounded border border-line bg-surface px-1 py-0.5 text-xs"
+              defaultValue=""
+              onChange={(e) => doLink(e.target.value)}
+            >
+              <option value="" disabled>Select org…</option>
+              {orgs.map((o) => (
+                <option key={o.id} value={o.id} disabled={!!o.linkedTo}>
+                  {o.name}{o.linkedTo ? ` (linked: ${o.linkedTo})` : ''}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
       )}
 

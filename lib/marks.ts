@@ -2,6 +2,24 @@ import type { Prisma } from '@prisma/client';
 
 export const MARK_STATUSES = ['Registered', 'Pending', 'Published', 'Expired', 'Abandoned'] as const;
 
+/**
+ * Parse a goods & services array from a request body. Accepts either
+ * { classNumber, text } or the frontend shape { search_class: { number }, text }.
+ * Returns undefined if the field is absent (leave goods untouched), or a
+ * (possibly empty) array to replace them with.
+ */
+export function parseGoods(raw: unknown): { classNumber: number; text: string }[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  return raw
+    .map((g) => {
+      const gg = g as { classNumber?: unknown; search_class?: { number?: unknown }; text?: unknown };
+      const cls = typeof gg.classNumber === 'number' ? gg.classNumber : gg.search_class?.number;
+      if (typeof cls !== 'number') return null;
+      return { classNumber: cls, text: String(gg.text ?? '') };
+    })
+    .filter((g): g is { classNumber: number; text: string } => g !== null);
+}
+
 const STRING_FIELDS = ['applicationNumber', 'registrationNumber', 'clientAgentName', 'familyId'] as const;
 const DATE_FIELDS = ['filingDate', 'registrationDate', 'expiryDate', 'publicationDate'] as const;
 

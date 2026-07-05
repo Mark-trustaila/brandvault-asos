@@ -23,7 +23,7 @@ export async function GET() {
 
   const companies = await prisma.company.findMany({
     orderBy: { name: 'asc' },
-    select: { id: true, name: true, slug: true, _count: { select: { trademarks: true } } },
+    select: { id: true, name: true, slug: true, clerkOrgId: true, _count: { select: { trademarks: true } } },
   });
   return NextResponse.json({
     companies: companies.map((c) => ({
@@ -31,6 +31,7 @@ export async function GET() {
       name: c.name,
       slug: c.slug,
       trademarkCount: c._count.trademarks,
+      linked: Boolean(c.clerkOrgId),
     })),
   });
 }

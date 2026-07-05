@@ -5,6 +5,7 @@ export interface GoodsAndServices {
 
 export interface Trademark {
   id: string;
+  family_id?: string | null;
   registry_name: string;
   mark_text: string;
   application_number: string;
@@ -15,6 +16,7 @@ export interface Trademark {
   expiry_date?: string;
   publication_date?: string;
   client_agent_name?: string;
+  needs_data?: boolean;
   good_and_services?: GoodsAndServices[];
   publication_notes?: string;
 }

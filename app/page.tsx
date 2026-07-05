@@ -13,6 +13,7 @@ import PipelineTab from '../components/tabs/PipelineTab';
 import ByRegistryTab from '../components/tabs/ByRegistryTab';
 import DetailPanel from '../components/detail/DetailPanel';
 import ReportPanel from '../components/report/ReportPanel';
+import { MarkEditForm } from '../components/detail/MarkEditForm';
 import { AuthControls } from '../components/auth/AuthControls';
 import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
 import { bvFetch } from '../lib/client/acting-company';
@@ -55,6 +56,7 @@ function Dashboard() {
       </div>
       <DetailPanel />
       <ReportPanel />
+      <MarkEditForm />
     </div>
   );
 }

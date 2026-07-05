@@ -117,6 +117,10 @@ model Trademark {
   publicationDate    DateTime? @map("publication_date")
   clientAgentName    String?   @map("client_agent_name")
 
+  // Set by the deadline engine when a required date (filing/registration) is
+  // missing, so renewal dates can't be computed — surfaced as "needs data".
+  needsData Boolean @default(false) @map("needs_data")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
