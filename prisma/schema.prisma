@@ -220,6 +220,10 @@ model AlertPreference {
   id             String  @id @default(cuid())
   companyId      String  @unique @map("company_id")
   slackChannelId String? @map("slack_channel_id")
+  // Slack install (Bree). Bot token stored unencrypted for MVP — HARDEN LATER.
+  slackTeamId    String? @map("slack_team_id")
+  slackTeamName  String? @map("slack_team_name")
+  slackBotToken  String? @map("slack_bot_token")
   slackEnabled   Boolean @default(false) @map("slack_enabled")
   emailEnabled   Boolean @default(true) @map("email_enabled")
   // Alert thresholds in days. Default [180, 90, 30] is applied in application
