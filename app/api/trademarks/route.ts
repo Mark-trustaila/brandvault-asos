@@ -2,9 +2,10 @@ import { NextResponse } from 'next/server';
 import type { Prisma } from '@prisma/client';
 import { prisma } from '../../../lib/db';
 import { serializeTrademark } from '../../../lib/serializers';
-import { buildMarkData } from '../../../lib/marks';
+import { buildMarkData, parseGoods } from '../../../lib/marks';
 import { getActingCompany, getRequestContext, requireReasonIfAdmin } from '../../../lib/authz';
 import { writeAudit } from '../../../lib/audit';
+import { recalcDeadlines } from '../../../lib/deadlines';
 
 // Hits MySQL at request time — never statically evaluated at build.
 export const dynamic = 'force-dynamic';
@@ -44,11 +45,17 @@ export async function POST(req: Request) {
 
   const { data, error } = buildMarkData(body, { partial: false });
   if (error) return NextResponse.json({ error }, { status: 400 });
+  const goods = parseGoods(body?.goodsServices);
 
   const mark = await prisma.trademark.create({
-    data: { ...(data as unknown as Prisma.TrademarkUncheckedCreateInput), companyId: ctx.company.id },
+    data: {
+      ...(data as unknown as Prisma.TrademarkUncheckedCreateInput),
+      companyId: ctx.company.id,
+      ...(goods ? { goodsServices: { create: goods } } : {}),
+    },
     include: { goodsServices: true },
   });
+  mark.needsData = (await recalcDeadlines(mark)).needsData;
   await writeAudit({
     companyId: ctx.company.id,
     userId: ctx.user.id,

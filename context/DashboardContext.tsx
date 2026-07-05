@@ -16,6 +16,8 @@ interface DashboardContextType {
   setSelectedTrademark: (t: Trademark | null) => void;
   showReport: boolean;
   setShowReport: (s: boolean) => void;
+  editTarget: Trademark | 'new' | null; // open the edit form (existing mark or a new one)
+  setEditTarget: (t: Trademark | 'new' | null) => void;
   filteredTrademarks: Trademark[];
   focusedMark: string | null;
   setFocusedMark: (mark: string | null) => void;
@@ -31,6 +33,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [selectedTrademark, setSelectedTrademark] = useState<Trademark | null>(null);
   const [showReport, setShowReport] = useState(false);
   const [focusedMark, setFocusedMark] = useState<string | null>(null);
+  const [editTarget, setEditTarget] = useState<Trademark | 'new' | null>(null);
 
   const filteredTrademarks = useMemo(
     () => data?.trademarks.filter(t => matchesSearch(t, searchQuery)) ?? [],
@@ -44,6 +47,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       pipelineFilter, setPipelineFilter,
       selectedTrademark, setSelectedTrademark,
       showReport, setShowReport,
+      editTarget, setEditTarget,
       filteredTrademarks,
       focusedMark, setFocusedMark,
     }}>

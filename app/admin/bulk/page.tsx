@@ -14,6 +14,10 @@ type Row = {
   registrationDate: string;
   expiryDate: string;
   expiryTouched: boolean; // true once the user edits expiry directly (stops auto-fill)
+  ownerName: string;
+  ownerCountry: string;
+  representativeName: string;
+  representativeReference: string;
 };
 
 const emptyRow = (): Row => ({
@@ -25,6 +29,10 @@ const emptyRow = (): Row => ({
   registrationDate: '',
   expiryDate: '',
   expiryTouched: false,
+  ownerName: '',
+  ownerCountry: '',
+  representativeName: '',
+  representativeReference: '',
 });
 
 type Result = { createdCount: number; errors: Array<{ index: number; error: string }> };
@@ -39,6 +47,8 @@ export default function BulkEntryPage() {
   const [target, setTarget] = useState('your organization');
   const [result, setResult] = useState<Result | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [suggestOwners, setSuggestOwners] = useState<string[]>([]);
+  const [suggestReps, setSuggestReps] = useState<string[]>([]);
 
   useEffect(() => {
     const acting = getActingCompany();
@@ -50,6 +60,20 @@ export default function BulkEntryPage() {
         .then((m) => m.company?.name && setTarget(m.company.name))
         .catch(() => {});
     }
+    // autocomplete: owner / representative values already on this company's marks
+    bvFetch('/api/trademarks')
+      .then((r) => r.json())
+      .then((d) => {
+        const owners = new Set<string>();
+        const reps = new Set<string>();
+        (d.trademarks ?? []).forEach((t: { owner_name?: string; representative_name?: string }) => {
+          if (t.owner_name) owners.add(t.owner_name);
+          if (t.representative_name) reps.add(t.representative_name);
+        });
+        setSuggestOwners(Array.from(owners));
+        setSuggestReps(Array.from(reps));
+      })
+      .catch(() => {});
   }, []);
 
   const update = (i: number, field: keyof Row, val: string) =>
@@ -84,6 +108,10 @@ export default function BulkEntryPage() {
         filingDate: r.filingDate || undefined,
         registrationDate: r.registrationDate || undefined,
         expiryDate: r.expiryDate || undefined,
+        ownerName: r.ownerName.trim() || undefined,
+        ownerCountry: r.ownerCountry.trim() || undefined,
+        representativeName: r.representativeName.trim() || undefined,
+        representativeReference: r.representativeReference.trim() || undefined,
       }));
     if (marks.length === 0) {
       window.alert('Add at least one mark with a name and registry.');
@@ -107,6 +135,10 @@ export default function BulkEntryPage() {
   };
 
   const inputCls = 'w-full rounded border border-line bg-surface px-1.5 py-1 text-xs text-ink';
+
+  // autocomplete options: existing company values + anything typed so far this session
+  const ownerOptions = Array.from(new Set([...suggestOwners, ...rows.map((r) => r.ownerName).filter(Boolean)]));
+  const repOptions = Array.from(new Set([...suggestReps, ...rows.map((r) => r.representativeName).filter(Boolean)]));
 
   return (
     <div className="min-h-screen bg-surface-subtle p-8 font-sans text-ink">
@@ -132,6 +164,10 @@ export default function BulkEntryPage() {
                 <th className="p-2 font-medium">Filing</th>
                 <th className="p-2 font-medium">Registration</th>
                 <th className="p-2 font-medium">Expiry</th>
+                <th className="p-2 font-medium">Owner</th>
+                <th className="p-2 font-medium">Owner country</th>
+                <th className="p-2 font-medium">Representative</th>
+                <th className="p-2 font-medium">Rep. ref.</th>
                 <th className="p-2" />
               </tr>
             </thead>
@@ -149,6 +185,10 @@ export default function BulkEntryPage() {
                   <td className="p-1.5"><input type="date" className={inputCls} value={r.filingDate} onChange={(e) => update(i, 'filingDate', e.target.value)} /></td>
                   <td className="p-1.5"><input type="date" className={inputCls} value={r.registrationDate} onChange={(e) => update(i, 'registrationDate', e.target.value)} /></td>
                   <td className="p-1.5"><input type="date" className={inputCls} value={r.expiryDate} onChange={(e) => update(i, 'expiryDate', e.target.value)} /></td>
+                  <td className="p-1.5"><input className={inputCls} list="bulk-owners" value={r.ownerName} onChange={(e) => update(i, 'ownerName', e.target.value)} /></td>
+                  <td className="p-1.5"><input className={`${inputCls} w-24`} value={r.ownerCountry} onChange={(e) => update(i, 'ownerCountry', e.target.value)} /></td>
+                  <td className="p-1.5"><input className={inputCls} list="bulk-reps" value={r.representativeName} onChange={(e) => update(i, 'representativeName', e.target.value)} /></td>
+                  <td className="p-1.5"><input className={`${inputCls} w-24`} value={r.representativeReference} onChange={(e) => update(i, 'representativeReference', e.target.value)} /></td>
                   <td className="p-1.5 text-center">
                     <button onClick={() => removeRow(i)} className="text-ink-subtle hover:text-status-expired" title="Remove row">×</button>
                   </td>
@@ -156,6 +196,8 @@ export default function BulkEntryPage() {
               ))}
             </tbody>
           </table>
+          <datalist id="bulk-owners">{ownerOptions.map((o) => <option key={o} value={o} />)}</datalist>
+          <datalist id="bulk-reps">{repOptions.map((o) => <option key={o} value={o} />)}</datalist>
         </div>
 
         <div className="mt-3 flex items-center gap-3">

@@ -29,3 +29,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Not committing CI workflows yet (needs workflow OAuth scope); re-enable later.
+.github/

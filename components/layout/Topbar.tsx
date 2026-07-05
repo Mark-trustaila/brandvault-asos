@@ -9,7 +9,7 @@ const IconReport = () => (
   </svg>
 );
 export default function Topbar() {
-  const { data, setShowReport } = useDashboard();
+  const { data, setShowReport, setEditTarget } = useDashboard();
 
   return (
     <header className={styles.topbar}>
@@ -24,7 +24,7 @@ export default function Topbar() {
         <div className={styles.badge}>✓ Live</div>
         <button className={styles.btn} onClick={() => setShowReport(true)}><IconReport /> Report</button>
         <button className={`${styles.btn} ${styles.btnDisabled}`}>⚙ Settings</button>
-        <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnDisabled}`}>+ New filing</button>
+        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => setEditTarget('new')}>+ New mark</button>
       </div>
     </header>
   );

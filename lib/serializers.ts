@@ -11,6 +11,7 @@ const iso = (d: Date | null): string | undefined => d?.toISOString();
 export function serializeTrademark(m: Trademark & { goodsServices: GoodsService[] }) {
   return {
     id: m.id,
+    family_id: m.familyId ?? null,
     registry_name: m.registryName,
     mark_text: m.markText,
     application_number: m.applicationNumber ?? '',
@@ -21,6 +22,11 @@ export function serializeTrademark(m: Trademark & { goodsServices: GoodsService[
     expiry_date: iso(m.expiryDate),
     publication_date: iso(m.publicationDate),
     client_agent_name: m.clientAgentName ?? undefined,
+    owner_name: m.ownerName ?? undefined,
+    owner_country: m.ownerCountry ?? undefined,
+    representative_name: m.representativeName ?? undefined,
+    representative_reference: m.representativeReference ?? undefined,
+    needs_data: m.needsData ?? false,
     good_and_services: m.goodsServices.map((g) => ({
       search_class: { number: g.classNumber },
       text: g.text,

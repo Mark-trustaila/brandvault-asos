@@ -5,6 +5,7 @@ import { serializeTrademark } from '../../../../lib/serializers';
 import { buildMarkData } from '../../../../lib/marks';
 import { getRequestContext, requireReasonIfAdmin } from '../../../../lib/authz';
 import { writeAudit } from '../../../../lib/audit';
+import { recalcDeadlines } from '../../../../lib/deadlines';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -37,6 +38,7 @@ export async function POST(req: Request) {
       data: { ...(data as unknown as Prisma.TrademarkUncheckedCreateInput), companyId: ctx.company.id },
       include: { goodsServices: true },
     });
+    mark.needsData = (await recalcDeadlines(mark)).needsData;
     created.push(serializeTrademark(mark));
     await writeAudit({
       companyId: ctx.company.id,

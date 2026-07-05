@@ -14,6 +14,7 @@ import styles from './DetailPanel.module.css';
 import { useDashboard } from '../../context/DashboardContext';
 import { useNotes } from '../../hooks/useNotes';
 import { BADGE_COLORS, NICE_CLASS_COLORS, formatDate, getStatusStyle, getObligationsForTrademark } from '../../lib/utils';
+import { computeCompleteness } from '../../lib/completeness';
 import type { Trademark } from '../../types/trademark';
 
 const NICE_CLASS_NAMES: Record<number, string> = {
@@ -152,6 +153,18 @@ function RightsRecord({ trademark }: { trademark: Trademark }) {
           <div className={styles.fieldLabel}>Expiry Date</div>
           <div className={styles.fieldValue}>{formatDate(trademark.expiry_date)}</div>
         </div>
+        {trademark.owner_name && (
+          <div className={styles.field}>
+            <div className={styles.fieldLabel}>Owner</div>
+            <div className={styles.fieldValue}>{trademark.owner_name}{trademark.owner_country ? ` · ${trademark.owner_country}` : ''}</div>
+          </div>
+        )}
+        {trademark.representative_name && (
+          <div className={styles.field}>
+            <div className={styles.fieldLabel}>Representative</div>
+            <div className={styles.fieldValue}>{trademark.representative_name}{trademark.representative_reference ? ` · ${trademark.representative_reference}` : ''}</div>
+          </div>
+        )}
         {gsClasses.length > 0 && (
           <div className={`${styles.field} ${styles.fieldFull}`}>
             <div className={styles.fieldLabel}>Goods &amp; Services</div>
@@ -263,7 +276,7 @@ function Timeline({ trademark }: { trademark: Trademark }) {
 }
 
 export default function DetailPanel() {
-  const { selectedTrademark, setSelectedTrademark } = useDashboard();
+  const { selectedTrademark, setSelectedTrademark, setEditTarget } = useDashboard();
 
   if (!selectedTrademark) return null;
 
@@ -288,6 +301,23 @@ export default function DetailPanel() {
         </div>
 
         <div className={styles.body}>
+          {(() => {
+            const c = computeCompleteness(selectedTrademark);
+            return (
+              <div style={{ padding: '4px 0 12px', borderBottom: '1px solid #e8e5e0', marginBottom: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#9b9a97', marginBottom: 4 }}>
+                  <span>Completeness</span>
+                  <span>{c.filled}/{c.total} · {c.pct}%</span>
+                </div>
+                <div style={{ height: 4, background: '#f0efec', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ width: `${c.pct}%`, height: '100%', background: c.pct === 100 ? '#0f7b6c' : '#f2994a' }} />
+                </div>
+                {c.missing.length > 0 && (
+                  <div style={{ fontSize: 10, color: '#9b9a97', marginTop: 5 }}>Add: {c.missing.join(', ')}</div>
+                )}
+              </div>
+            );
+          })()}
           {isRegistered ? (
             <>
               <NotesSection trademark={selectedTrademark} />
@@ -304,6 +334,7 @@ export default function DetailPanel() {
         </div>
 
         <div className={styles.footer}>
+          <button className={styles.footerBtn} onClick={() => setEditTarget(selectedTrademark)}>✏️ Edit</button>
           <button className={styles.footerBtn}>📋 Copy details</button>
           <button className={styles.footerBtn}>🔗 LawPanel</button>
         </div>
