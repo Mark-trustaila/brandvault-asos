@@ -1,7 +1,15 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 // Sign-in / sign-up are public; everything else (dashboard + API) requires auth.
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
+// Slack and cron endpoints are also public here — they carry no Clerk session
+// (Slack signs its requests, cron uses CRON_SECRET, and the routes enforce their
+// own auth), so Clerk's auth.protect() must not block them.
+const isPublicRoute = createRouteMatcher([
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+  '/api/slack/(.*)',
+  '/api/cron/(.*)',
+]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (!isPublicRoute(req)) {
