@@ -52,12 +52,21 @@ at MEV — that's built later when concierge stops scaling.
 
 ## Build plan
 
-See `brandvault-mev-build-plan.txt` in the project files for the full
-six-phase sequenced plan. Phases 1-3 are the MEV:
+Status (2026-07-06): **Phases 1–4 complete and live in production**
+(brandvault-asos.vercel.app · Azure Database for MySQL · Clerk). See
+`brandvault-mev-build-plan.txt` for the full plan; Phases 5–7 remain.
 
-1. Backend + Auth + Platform Admin
-2. Platform Admin tools + Mark Editing (bulk entry, completeness indicators)
-3. Bree (Slack) + Email Alerts
+1. Backend + Auth + Platform Admin — ✅
+2. Platform Admin tools + Mark Editing (bulk entry, completeness) — ✅
+3. Bree (Slack) + alerts — ✅ (Slack live; SMTP email deferred)
+4. Email Integration (Bree Inbound) — ✅ forwarding-address ingestion
+   (Postmark) → content-first classification (Claude, claude-sonnet-4-6) →
+   HIGH-confidence auto-actions + renewal reconciliation → Bree Slack alerts →
+   /inbox human review with corpus feedback. Every auto-action audited as
+   actor="Bree". Spec: `brandvault-phase4-email-integration.txt`.
+
+Post-MEV, not started: 5. CSV self-service import · 6. Bree command surface
+expansion · 7. Multi-jurisdiction rules + teams.
 
 ## Naming
 

@@ -137,12 +137,16 @@ once the patterns are well understood.
 BUILD SEQUENCE
 ================================================================================
 
-Six phases. Each ends with something demonstrable. Phases 1–3 are the MEV.
-Phases 4–6 are the first post-MEV additions that complete the product for
-early customers.
+Seven phases. Each ends with something demonstrable. Phases 1–3 are the MEV.
+Phase 4 (Email Integration / Bree Inbound) was prioritised and built next.
+Phases 5–7 (CSV import, Bree command expansion, multi-jurisdiction) are future.
+
+STATUS (2026-07-06): Phases 1–4 COMPLETE and live in production
+(brandvault-asos.vercel.app · Azure Database for MySQL · Clerk). Phases 5–7
+not started.
 
 
-PHASE 1 — BACKEND + AUTH (estimated: 1–2 weeks)
+PHASE 1 — BACKEND + AUTH  — ✅ COMPLETE
 ------------------------------------------------
 
 Goal: Replace static JSON with a real data layer. Platform admin can log in,
@@ -173,7 +177,7 @@ Key decisions already made:
   - Platform admin: cross-tenant, audited, reason required for edits
 
 
-PHASE 2 — PLATFORM ADMIN + MARK EDITING (estimated: 1–2 weeks)
+PHASE 2 — PLATFORM ADMIN + MARK EDITING  — ✅ COMPLETE
 ---------------------------------------------------------------
 
 Goal: Mark can onboard customers by entering their portfolio data directly.
@@ -203,7 +207,7 @@ copilot, enters it via bulk entry, and the customer logs in to a populated
 product with deadlines already calculated.
 
 
-PHASE 3 — BREE (SLACK) + EMAIL ALERTS (estimated: 2–3 weeks)
+PHASE 3 — BREE (SLACK) + EMAIL ALERTS  — ✅ COMPLETE (Slack live; email deferred)
 -------------------------------------------------------------
 
 Goal: BrandVault comes to the user. Bree is the day-one differentiator.
@@ -258,7 +262,56 @@ The product is usable after Phase 3. A customer can:
   - See a completeness score for marks with missing data
 
 
-PHASE 4 — CSV SELF-SERVICE IMPORT (estimated: 1–2 weeks)
+PHASE 4 — EMAIL INTEGRATION (BREE INBOUND)  — ✅ COMPLETE
+---------------------------------------------------------
+
+Spec: brandvault-phase4-email-integration.txt. Bree monitors inbound registry
+correspondence and begins workflows — the bridge from system-of-record to
+event-driven platform. Built and live in production, all four steps:
+
+  1. Classifier + local accuracy harness (no infrastructure):
+     - lib/email-classifier.ts — Claude API (claude-sonnet-4-6, temperature 0),
+       structured output; content-first, sender is a minor signal.
+     - Deterministic reference extraction (UKIPO/EUTM/WIPO), PDF text (unpdf),
+       .eml parsing (mailparser).
+     - harness/ runner + labels + accuracy report. Validated against 27 real
+       UKIPO emails: 96% registry+type, 100% reference recall, ZERO dangerous
+       HIGH-confidence misclassifications.
+  2. Ingestion pipeline (Postmark inbound):
+     - POST /api/email/inbound — shared-secret verification, resolve company by
+       bree-{slug}@ address (fallback for the Postmark hash address), dedup on
+       Message-ID / content hash, store attachments + extracted text.
+     - InboundEmails / EmailAttachments tables; Company.inbound_email_slug.
+  3. Processor + auto-actions:
+     - Classify pending emails → match to a trademark by reference number →
+       route by confidence. HIGH-confidence auto-actions: registration
+       certificate → Registered + renewal deadline; renewal reminder →
+       reconcile vs our calculated deadline (match = confirm, mismatch =
+       high-priority alert); renewal confirmation → complete the deadline.
+     - Alert-only types (examination_report, opposition_notice,
+       opposition_procedural, watch_notice, cancellation_notice,
+       euipo_login_notification) → Bree Slack alert + needs_review;
+       cancellations flag "status change reported — confirm", never silently
+       kill the record. Unmatched → "not in your portfolio". Every automatic
+       action audited as actor="Bree".
+     - Trigger: daily cron (drains inbound then runs the renewal sweep) +
+       POST /api/email/process (CRON_SECRET-guarded) on demand.
+  4. /inbox review UI:
+     - needs_review / unmatched queues, Bree's classification shown,
+       confirm / correct / dismiss; platform admin cross-tenant. Human
+       corrections feed back to the harness corpus as labelled examples
+       (scripts/export-corrections.ts).
+
+Data hygiene: real client correspondence is classified LOCALLY against a
+gitignored corpus and never committed; test rows on the deployed database are
+purged before customer demos.
+
+Deliverable (achieved): a customer forwards registry email to their Bree
+address; Bree classifies it, acts on the safe cases, alerts on the rest, and
+surfaces everything for signoff in /inbox.
+
+
+PHASE 5 — CSV SELF-SERVICE IMPORT (estimated: 1–2 weeks)
 ---------------------------------------------------------
 
 Goal: Customers can onboard themselves without concierge support.
@@ -279,7 +332,7 @@ Deliverable: Self-service onboarding. Concierge still available for
 customers who prefer it.
 
 
-PHASE 5 — BREE COMMAND SURFACE EXPANSION (estimated: 1–2 weeks)
+PHASE 6 — BREE COMMAND SURFACE EXPANSION (estimated: 1–2 weeks)
 ----------------------------------------------------------------
 
 Goal: More workflows executable from Slack without opening the web app.
@@ -300,7 +353,7 @@ Deliverable: Bree becomes a genuine command surface, not just a notification
 channel. Counsel can manage routine portfolio queries without context-switching.
 
 
-PHASE 6 — MULTI-JURISDICTION RULES + TEAMS (estimated: 1–2 weeks)
+PHASE 7 — MULTI-JURISDICTION RULES + TEAMS (estimated: 1–2 weeks)
 ------------------------------------------------------------------
 
 Goal: Broader jurisdiction coverage and Teams support.
