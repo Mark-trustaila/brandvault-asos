@@ -45,6 +45,9 @@ model Company {
   // Nullable: a company can be created by a platform admin during concierge
   // onboarding before the customer's Clerk org exists; linked on their first login.
   clerkOrgId String?  @unique @map("clerk_org_id")
+  // Unique local-part for this company's inbound forwarding address
+  // (bree-{slug}@<domain>). Nullable until provisioned.
+  inboundEmailSlug String? @unique @map("inbound_email_slug")
   createdAt  DateTime @default(now()) @map("created_at")
 
   users           User[]
@@ -52,6 +55,7 @@ model Company {
   trademarks      Trademark[]
   auditLogs       AuditLog[]
   alertPreference AlertPreference?
+  inboundEmails   InboundEmail[]
 
   @@map("companies")
 }
@@ -136,6 +140,7 @@ model Trademark {
   goodsServices GoodsService[]
   notes         Note[]
   deadlines     Deadline[]
+  inboundEmails InboundEmail[]
 
   // company_id is stored on the mark directly (not only via family) so
   // portfolio queries don't need a join. Both FKs indexed.
@@ -233,4 +238,61 @@ model AlertPreference {
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@map("alert_preferences")
+}
+
+// Phase 4 (Bree inbound). Registry correspondence arriving at a company's
+// forwarding address. Step 2 stores it (status=pending); the Step 3 processor
+// classifies + acts. Dedup is enforced by (company_id, content_hash).
+enum InboundEmailStatus {
+  pending
+  processed
+  needs_review
+  unmatched
+  dismissed
+}
+
+model InboundEmail {
+  id                 String             @id @default(cuid())
+  companyId          String             @map("company_id")
+  receivedAt         DateTime           @default(now()) @map("received_at")
+  fromAddress        String             @map("from_address")
+  subject            String             @db.Text
+  bodyText           String             @db.Text @map("body_text")
+  rawHeadersJson     Json?              @map("raw_headers_json")
+  // dedup signals
+  messageId          String?            @map("message_id")
+  contentHash        String             @map("content_hash")
+  // populated by the Step 3 processor
+  classificationJson Json?              @map("classification_json")
+  matchedTrademarkId String?            @map("matched_trademark_id")
+  status             InboundEmailStatus @default(pending)
+  processedAt        DateTime?          @map("processed_at")
+  reviewedByUserId   String?            @map("reviewed_by_user_id")
+  createdAt          DateTime           @default(now()) @map("created_at")
+
+  company          Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  matchedTrademark Trademark?        @relation(fields: [matchedTrademarkId], references: [id], onDelete: SetNull)
+  attachments      EmailAttachment[]
+
+  // Idempotent ingestion: the same content never lands twice for a company.
+  @@unique([companyId, contentHash])
+  @@index([companyId])
+  @@index([status])
+  @@map("inbound_emails")
+}
+
+model EmailAttachment {
+  id             String  @id @default(cuid())
+  inboundEmailId String  @map("inbound_email_id")
+  filename       String
+  mimeType       String  @map("mime_type")
+  // Where the binary lives if retained. v1 keeps only extracted text; raw
+  // binaries are not persisted to the deployed DB.
+  storageRef     String? @map("storage_ref")
+  extractedText  String? @db.Text @map("extracted_text")
+
+  inboundEmail InboundEmail @relation(fields: [inboundEmailId], references: [id], onDelete: Cascade)
+
+  @@index([inboundEmailId])
+  @@map("email_attachments")
 }
