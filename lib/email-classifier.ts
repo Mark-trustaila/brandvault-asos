@@ -23,8 +23,10 @@ communicationType definitions:
 - renewal_reminder: the registry warns a renewal is DUE / upcoming. Auto-actable (reconcile against our own deadline).
 - renewal_confirmation: the registry CONFIRMS a renewal has been PROCESSED/recorded (mark renewed). Distinct from a reminder. Auto-actable (clears the deadline).
 - examination_report: examination report / office action / objection raising grounds. Alert only.
-- opposition_notice: a third-party opposition against the mark. Alert only.
-- cancellation_notice: cancellation / surrender / revocation / removal of the mark. Alert only.
+- opposition_notice: the registry's INITIAL notice that a third party has filed an opposition AGAINST the recipient's mark (e.g. a TM7 has been filed; a TM8 counter-statement / TM9C cooling-off deadline is set). Only the opening notice. Alert only. This is against OUR mark — contrast watch_notice below.
+- opposition_procedural: procedural, hearing, or decision correspondence WITHIN ongoing opposition or cancellation (tribunal) proceedings — hearing notices, evidence-round deadlines, deficiency notices, costs awards, hearing-officer decisions, consolidation letters. Anything after the initial opposition notice. Alert only.
+- watch_notice: a watch alert that SOMEONE ELSE's newly published or filed mark may conflict with the recipient's earlier right, inviting them to consider opposing it. Issued EITHER by the registry (a publication-for-opposition notice) OR by a commercial trademark watch service. The recipient is the potential OPPONENT, not the party being opposed. Alert only.
+- cancellation_notice: a notice that the mark itself is being cancelled / surrendered / revoked / removed (dead-mark detection). Procedural letters inside a cancellation action are opposition_procedural, not this. Alert only.
 - euipo_login_notification: EUIPO "you have a new communication — log in to your User Area" with no substantive content in the email itself. Alert only.
 - ambiguous: not clearly registry correspondence (e.g. a client asking a question). Low confidence, no invented data.
 - other: registry correspondence that fits none of the above.
@@ -80,6 +82,7 @@ export async function classifyEmail(input: EmailInput): Promise<Classification> 
   const res = await anthropic().messages.create({
     model: EMAIL_CLASSIFIER_MODEL,
     max_tokens: 1024,
+    temperature: 0, // deterministic — reproducible classifications + stable harness
     system: SYSTEM,
     tools: [TOOL],
     tool_choice: { type: 'tool', name: TOOL.name },

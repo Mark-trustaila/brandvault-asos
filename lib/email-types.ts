@@ -22,6 +22,13 @@ export const COMMUNICATION_TYPES = [
   'renewal_confirmation',
   'examination_report',
   'opposition_notice',
+  // Procedural / hearing / decision correspondence within opposition or
+  // cancellation (tribunal) proceedings — distinct from the initial notice.
+  'opposition_procedural',
+  // Watch alert: a third party's newly published/filed mark may conflict with
+  // the recipient's earlier right (from the registry OR a commercial watch
+  // service). The recipient is the potential opponent — not against our mark.
+  'watch_notice',
   'cancellation_notice',
   'euipo_login_notification',
   'ambiguous',

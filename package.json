@@ -19,6 +19,7 @@
     "db:seed": "tsx prisma/seed.ts",
     "harness": "tsx harness/run.ts",
     "harness:fixtures": "tsx harness/run.ts --corpus harness/fixtures --labels harness/fixtures/labels.jsonl",
+    "harness:bootstrap": "tsx harness/bootstrap-labels.ts",
     "harness:gen-pdf": "tsx harness/gen-pdf-fixture.ts"
   },
   "prisma": {
