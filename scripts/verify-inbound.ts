@@ -80,10 +80,24 @@ async function main() {
   const j4 = await r4.json();
   check('different content stored separately', j4.deduped === false && j4.id !== j1.id, JSON.stringify(j4));
 
-  // 7. Unknown recipient slug -> acked, not stored.
+  // 7. Unknown recipient slug, no fallback configured -> acked, not stored.
   const r5 = await POST(req({ ...basePayload, OriginalRecipient: 'bree-nobody@inbound.brandvault.app', ToFull: [{ Email: 'bree-nobody@inbound.brandvault.app' }] }));
   const j5 = await r5.json();
   check('unknown slug acked without storing', r5.status === 200 && j5.status === 'no_company_for_slug');
+
+  // 8. Postmark hash address + fallback configured -> routed to the test company.
+  //    (Same content as #2, so it dedups — proves fallback RESOLUTION, no new row.)
+  process.env.INBOUND_FALLBACK_COMPANY_SLUG = SLUG;
+  const r6 = await POST(req({ ...basePayload, OriginalRecipient: 'fe4eabc123@inbound.postmarkapp.com', ToFull: [{ Email: 'fe4eabc123@inbound.postmarkapp.com' }] }));
+  const j6 = await r6.json();
+  check('hash address routed via fallback', r6.status === 200 && j6.ok === true && j6.fallback === true, JSON.stringify(j6));
+  check('  ...and deduped to the existing row (no new row)', j6.id === j1.id);
+  delete process.env.INBOUND_FALLBACK_COMPANY_SLUG;
+
+  // 9. Hash address WITHOUT fallback -> rejected (no company).
+  const r7 = await POST(req({ ...basePayload, OriginalRecipient: 'fe4eabc123@inbound.postmarkapp.com', ToFull: [{ Email: 'fe4eabc123@inbound.postmarkapp.com' }] }));
+  const j7 = await r7.json();
+  check('hash address without fallback -> no_inbound_slug', r7.status === 200 && j7.status === 'no_inbound_slug');
 
   const total = await prisma.inboundEmail.count({ where: { companyId: company.id } });
   check('exactly 2 rows stored for the company', total === 2, `got ${total}`);

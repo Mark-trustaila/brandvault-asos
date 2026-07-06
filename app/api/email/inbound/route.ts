@@ -38,13 +38,27 @@ export async function POST(req: Request) {
   const email = await normalizePostmark(payload);
 
   const slug = slugFromRecipients(email.recipients);
-  if (!slug) {
-    return NextResponse.json({ status: 'no_inbound_slug', recipients: email.recipients });
+  let company = slug
+    ? await prisma.company.findUnique({ where: { inboundEmailSlug: slug }, select: { id: true } })
+    : null;
+
+  // Fallback for testing: Postmark's hash address (…@inbound.postmarkapp.com)
+  // is not a bree-{slug} address, so it won't resolve. When
+  // INBOUND_FALLBACK_COMPANY_SLUG is set, route any unresolved recipient to that
+  // company (its canonical slug) instead of rejecting it. Leave unset in a
+  // real multi-tenant setup so mail can only reach the addressed company.
+  let fallback = false;
+  if (!company && process.env.INBOUND_FALLBACK_COMPANY_SLUG) {
+    company = await prisma.company.findUnique({
+      where: { slug: process.env.INBOUND_FALLBACK_COMPANY_SLUG },
+      select: { id: true },
+    });
+    fallback = Boolean(company);
   }
-  const company = await prisma.company.findUnique({ where: { inboundEmailSlug: slug }, select: { id: true } });
+
   if (!company) {
     // Ack so Postmark stops retrying; nothing to attach it to.
-    return NextResponse.json({ status: 'no_company_for_slug', slug });
+    return NextResponse.json({ status: slug ? 'no_company_for_slug' : 'no_inbound_slug', slug, recipients: email.recipients });
   }
 
   const result = await storeInboundEmail(company.id, {
@@ -57,5 +71,5 @@ export async function POST(req: Request) {
     attachments: email.attachments,
   });
 
-  return NextResponse.json({ ok: true, id: result.id, deduped: result.deduped, status: 'pending' });
+  return NextResponse.json({ ok: true, id: result.id, deduped: result.deduped, status: 'pending', fallback });
 }
