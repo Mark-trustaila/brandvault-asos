@@ -10,6 +10,12 @@ import { extractPdfText, isPdf } from './pdf-text';
 
 export type ParsedAttachment = { filename: string; mimeType: string; extractedText: string };
 
+/** Stable content hash for dedup — identical for the same subject+body whether
+ *  the email arrives as a .eml (harness) or a Postmark webhook (ingestion). */
+export function contentHashOf(subject: string, bodyText: string): string {
+  return crypto.createHash('sha256').update(`${subject}\n${bodyText}`).digest('hex');
+}
+
 export type ParsedEmail = {
   messageId: string | null;
   fromAddress: string;
@@ -33,7 +39,7 @@ export async function parseEml(raw: Buffer | string): Promise<ParsedEmail> {
     attachments.push({ filename, mimeType, extractedText });
   }
 
-  const contentHash = crypto.createHash('sha256').update(`${subject}\n${bodyText}`).digest('hex');
+  const contentHash = contentHashOf(subject, bodyText);
 
   return {
     messageId: mail.messageId ?? null,

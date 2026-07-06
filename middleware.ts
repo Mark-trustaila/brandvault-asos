@@ -9,6 +9,9 @@ const isPublicRoute = createRouteMatcher([
   '/sign-up(.*)',
   '/api/slack/(.*)',
   '/api/cron/(.*)',
+  // Postmark inbound webhook — no Clerk session; verified by its own shared
+  // secret. Must be public or Clerk's auth.protect() would 404 it.
+  '/api/email/(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
