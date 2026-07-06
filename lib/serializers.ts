@@ -64,7 +64,8 @@ export function serializeAudit(a: AuditLog & { user: User | null }) {
     entityId: a.entityId,
     reason: a.reason ?? undefined,
     isPlatformAdmin: a.isPlatformAdmin,
-    actor: a.isPlatformAdmin ? 'BrandVault Support' : a.user?.name ?? 'Unknown',
+    // A non-human actor (e.g. Bree) wins; else support for admin edits, else the user.
+    actor: a.actor ?? (a.isPlatformAdmin ? 'BrandVault Support' : a.user?.name ?? 'Unknown'),
     detail: a.detailJson ?? undefined,
     date: a.createdAt.toISOString(),
   };

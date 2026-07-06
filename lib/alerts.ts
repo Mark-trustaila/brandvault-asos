@@ -42,6 +42,22 @@ export function smtpConfigured(): boolean {
 }
 
 /**
+ * Send a Bree message to a company's Slack channel. Best-effort — returns
+ * whether it was actually delivered; never throws (a Slack outage must not block
+ * a DB write). No-op when the company hasn't connected/enabled Slack.
+ */
+export async function sendBree(companyId: string, msg: { text: string; blocks?: unknown[] }): Promise<boolean> {
+  try {
+    const p = await prisma.alertPreference.findUnique({ where: { companyId } });
+    if (!p?.slackEnabled || !p.slackBotToken || !p.slackChannelId) return false;
+    const res = await postToSlack(p.slackBotToken, p.slackChannelId, msg);
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Notify Slack (Bree) that a mark's status changed. Best-effort — never throws,
  * so a Slack outage can't block the mark update. No-op when status is unchanged
  * or the company hasn't connected/enabled Slack with a channel.

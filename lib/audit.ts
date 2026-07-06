@@ -6,10 +6,11 @@ type AuditInput = {
   userId: string | null;
   isPlatformAdmin: boolean;
   action: string; // e.g. 'trademark.create', 'trademark.update', 'note.delete'
-  entityType: string; // 'Trademark' | 'Note'
+  entityType: string; // 'Trademark' | 'Note' | 'InboundEmail'
   entityId: string;
   reason?: string | null;
   detail?: Prisma.InputJsonValue;
+  actor?: string | null; // non-human actor, e.g. 'Bree' (null = human/user)
 };
 
 /**
@@ -28,6 +29,7 @@ export function writeAudit(a: AuditInput) {
       entityId: a.entityId,
       reason: a.reason ?? null,
       detailJson: a.detail,
+      actor: a.actor ?? null,
     },
   });
 }
