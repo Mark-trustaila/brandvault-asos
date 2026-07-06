@@ -1,0 +1,231 @@
+BRANDVAULT — PHASE 4: EMAIL INTEGRATION (BREE INBOUND)
+================================================================================
+
+Purpose: Bree monitors inbound registry correspondence and begins workflows
+automatically. This is the feature that moves BrandVault from system of
+record to event-driven platform — the bridge to the AiLA model of
+"independent AI that starts and finishes workflows for your signoff."
+
+Read this whole document before writing any code. Tell me your plan first.
+
+
+================================================================================
+ARCHITECTURE DECISIONS (made — do not relitigate)
+================================================================================
+
+1. INGESTION: Dedicated forwarding address per company, NOT Gmail OAuth.
+   Each company gets a unique inbound address (e.g. bree-{slug}@<domain>,
+   or provider-generated). Customers set a forwarding rule for registry
+   emails, or forward manually. Their representative can forward too.
+
+   Why: no OAuth consent friction, works with any email provider (not
+   just Gmail), sidesteps the "whose inbox" question entirely. Gmail
+   OAuth is a v2 upgrade for zero-setup customers.
+
+   Implementation options (CC to evaluate and recommend):
+   - Inbound email webhook service (e.g. Resend, Postmark, SendGrid
+     inbound parse, Cloudflare Email Workers) → POST to a Vercel API
+     route. Prefer whichever has the simplest setup and a free/cheap
+     tier suitable for low volume.
+   - The route receives parsed email (headers, body, attachments) and
+     writes to an InboundEmails table for processing.
+
+2. CLASSIFICATION IS CONTENT-FIRST. Sender address is ONE data point,
+   never the primary signal. Reason: forwarded correspondence is the
+   norm — an external representative forwarding a UKIPO examination
+   report arrives from a law firm domain, not @ipo.gov.uk. The
+   classifier must handle direct, customer-forwarded, and
+   representative-forwarded email identically.
+
+   Signals, in priority order:
+   a. Body + subject content (structure, phrasing, document type)
+   b. Reference numbers in body or attachments (strongest matching
+      signal): UK00003123456 / 3123456 (UKIPO), 018123456 (EUTM),
+      IR 1234567 (WIPO)
+   c. PDF attachments — often the real document; "please see attached"
+      with everything meaningful in the PDF is a NORMAL case. Extract
+      and scan attachment text.
+   d. Forwarding chains — "FW:" subjects, quoted headers in body
+      indicate original source
+   e. Sender address — corroborating weight only
+
+3. CLASSIFICATION ENGINE: Claude API call with structured output.
+   Input: email subject, body text, extracted attachment text.
+   Output JSON: {registry, communication_type, reference_numbers[],
+   deadlines_mentioned[], confidence, summary}.
+   Store the raw classification on the InboundEmails record for audit.
+
+4. CONFIDENCE TIERS:
+   - HIGH: act automatically (update status, create deadline) + Slack
+     notification of what was done
+   - MEDIUM/LOW: no automatic action; queue for human review with
+     Bree's best-guess classification shown
+   - UNMATCHED (no mark found): triage queue. NOT an error state — an
+     email about a mark not in BrandVault means the portfolio is
+     incomplete. Surface as "Bree found correspondence about a mark
+     not in your portfolio" — this is a feature.
+
+5. SCOPE v1 — TWO REGISTRIES, LIMITED EMAIL TYPES:
+   UKIPO + EUIPO only. Both from the start (UK mid-market ICP almost
+   all hold EUTMs post-Brexit; UK-only would look half-finished).
+
+   v1 email types to handle with automatic action (HIGH confidence):
+   - Registration certificates → status to Registered, calculate
+     renewal deadline, Slack confirmation
+   - Renewal reminders from registry → reconcile against BrandVault's
+     own calculated deadline. MATCH → confirm alignment in Slack.
+     MISMATCH → high-priority alert (either portfolio data error or
+     deadline engine bug — both critical). This reconciliation is
+     free QA on the renewal engine using the registry as ground truth.
+
+   v1 email types to classify + alert but NOT auto-act:
+   - Examination reports / office actions → classify objection type,
+     extract response deadline, create action item, Slack alert with
+     urgency. NO drafting in v1.
+   - Opposition notices → high-priority Slack alert, extract deadline
+   - Cancellation/surrender/removal notices → alert + flag mark as
+     "status change reported — confirm" (dead mark detection; do not
+     silently kill the record, human confirms)
+   - EUIPO "you have a new communication — log in to view" notifications
+     → these often contain NO substance (EUIPO uses its User Area).
+     Recognise, alert in Slack ("EUIPO has issued a communication on
+     EUTM 018123456 — retrieve from User Area"), create placeholder
+     action item. Fetching from User Area is NOT v1.
+
+   Everything else → MEDIUM/LOW confidence queue.
+
+6. AUTOMATION FRAMEWORK MAPPING (consistent with the rest of the
+   product):
+   - Email classification + portfolio updates = genuine automation
+   - Draft responses = automation with review gate (NOT v1)
+   - Filing responses = agentify-only (NOT v1, not close)
+
+
+================================================================================
+DATA MODEL ADDITIONS
+================================================================================
+
+InboundEmails
+  id, company_id, received_at, from_address, subject,
+  body_text, raw_headers_json,
+  classification_json (registry, type, refs, deadlines, confidence,
+    summary — as returned by classifier),
+  matched_trademark_id (nullable),
+  status (pending | processed | needs_review | unmatched | dismissed),
+  processed_at, reviewed_by_user_id
+
+EmailAttachments
+  id, inbound_email_id, filename, mime_type, storage_ref,
+  extracted_text (nullable)
+
+Company — add:
+  inbound_email_slug (unique, for the forwarding address)
+
+Reuse existing: Deadlines (reconciliation + new deadlines), AuditLog
+(every automatic action logged with is_platform_admin=false,
+actor="bree"), AlertPreferences (Slack channel for notifications).
+
+
+================================================================================
+TEST HARNESS — BUILD THIS FIRST, BEFORE THE LIVE PIPELINE
+================================================================================
+
+Mark has years of real UKIPO/EUIPO correspondence in Trade Mark Direct's
+archive: examination reports, registration certificates, renewal
+reminders, opposition notices. This is the test corpus.
+
+Approach (mirrors the AiLA DSAR harness pattern):
+
+1. harness/email-corpus/ directory (GITIGNORED — real client data never
+   committed). Mark drops in .eml files or forwarded email exports.
+2. Each email gets a manual label in a labels file: expected registry,
+   expected type, expected mark reference, expected action.
+3. Batch runner: classify all corpus emails, compare to labels, output
+   accuracy report ("47/50 correct; failures: ...").
+4. Prompt changes → re-run corpus → measurable accuracy movement.
+   No anecdotal testing.
+
+Failure modes to include in the corpus deliberately:
+- Email about a mark NOT in the test portfolio (→ unmatched queue)
+- Forwarded email where the reference number is ONLY in the PDF
+- Genuinely ambiguous email (client question, not registry
+  correspondence) → low-confidence, NO false action
+- Same email forwarded twice (dedup behaviour — hash on message-id
+  or content)
+- EUIPO "log in to view" notification with no substance
+
+DATA HYGIENE: TMD correspondence contains real client information.
+Classification testing runs LOCALLY against the corpus directory.
+Real client correspondence does NOT get loaded into the deployed
+Azure database. Only synthetic or ASOS-public data goes near the
+deployed system. If a test company is created on Azure for end-to-end
+pipeline testing, purge it before any customer demo.
+
+
+================================================================================
+BUILD SEQUENCE
+================================================================================
+
+Step 1 — Classifier + harness (no infrastructure, all local):
+  - lib/email-classifier.ts: Claude API call, structured output
+  - Attachment text extraction (PDF → text)
+  - harness/ runner + labels + accuracy report
+  - Iterate prompts against corpus until accuracy is acceptable
+    (target: >90% on HIGH-confidence classifications; misclassifying
+    INTO high-confidence is the dangerous failure, tune conservative)
+
+Step 2 — Ingestion pipeline:
+  - Evaluate + recommend inbound email provider, then wire:
+    provider webhook → /api/email/inbound → InboundEmails +
+    EmailAttachments
+  - Signature/secret verification on the webhook route (add to Clerk
+    public routes in middleware.ts — remember the Slack 404 lesson)
+  - Dedup on message-id/content hash
+
+Step 3 — Processing + actions:
+  - Processor: classify → match to trademark (by reference number,
+    company-scoped) → route by confidence tier
+  - HIGH-confidence actions: status updates, deadline
+    creation/reconciliation, AuditLog entries
+  - Slack notifications via existing Bree sender (lib/slack.ts,
+    Block Kit formatters)
+
+Step 4 — Review UI:
+  - /inbox page: needs_review + unmatched queues, Bree's
+    classification shown, human confirms/corrects/dismisses
+  - Platform admin sees cross-tenant; company users see their own
+  - Correction feeds back: corrected classifications get added to
+    the harness corpus as new labelled examples
+
+Each step is committable and testable on its own. Step 1 has zero
+deployment risk and validates the hard part (classification accuracy)
+before any infrastructure is built.
+
+
+================================================================================
+NON-GOALS FOR v1 (explicitly out)
+================================================================================
+
+- Gmail/Outlook OAuth ingestion (v2)
+- Drafting responses to office actions (later phase, review-gated)
+- EUIPO User Area fetching (later)
+- Registries beyond UKIPO + EUIPO (config-driven expansion later,
+  same pattern)
+- Auto-filing anything (agentify-only, far later)
+- Email sending by Bree (inbound only in this phase)
+
+
+================================================================================
+NOTES
+================================================================================
+
+- The assistant is Bree. Notifications come from Bree via the existing
+  Slack integration.
+- Every automatic action must appear in the AuditLog and be visible in
+  the customer's activity feed. Nothing silent.
+- Trademark records are never merged (standing rule).
+- Minimum-required-fields and needs_data conventions apply to any
+  record updates.
+- Tell me your build plan and provider recommendation before writing
+  code.
+================================================================================
