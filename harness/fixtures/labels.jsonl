@@ -1,0 +1,9 @@
+{"file":"ukipo-registration-certificate.eml","registry":"UKIPO","type":"registration_certificate","refs":["UK00003456789"],"expectHigh":true,"action":"status->Registered; create renewal deadline"}
+{"file":"ukipo-registration-certificate-dup.eml","registry":"UKIPO","type":"registration_certificate","refs":["UK00003456789"],"expectHigh":true,"action":"duplicate of the above; should be skipped by dedup"}
+{"file":"ukipo-renewal-reminder.eml","registry":"UKIPO","type":"renewal_reminder","refs":["UK00003111222"],"expectHigh":true,"action":"reconcile registry renewal date vs our deadline"}
+{"file":"euipo-renewal-confirmation.eml","registry":"EUIPO","type":"renewal_confirmation","refs":["018777888"],"expectHigh":true,"action":"clear/complete the renewal deadline"}
+{"file":"ukipo-examination-report.eml","registry":"UKIPO","type":"examination_report","refs":["UK00003999000"],"expectHigh":false,"action":"alert + action item; extract 11 Aug 2026 response deadline"}
+{"file":"euipo-opposition-notice.eml","registry":"EUIPO","type":"opposition_notice","refs":["018222333"],"expectHigh":false,"action":"high-priority alert; extract deadline"}
+{"file":"euipo-login-notification.eml","registry":"EUIPO","type":"euipo_login_notification","refs":["018444555"],"expectHigh":false,"action":"alert 'retrieve from User Area'; placeholder action item"}
+{"file":"forwarded-ref-in-pdf.eml","registry":"UKIPO","type":"examination_report","refs":["UK00003555444"],"expectHigh":false,"action":"ref only in PDF; alert + extract 30 Sep 2026 deadline"}
+{"file":"ambiguous-client-question.eml","registry":"unknown","type":"ambiguous","refs":[],"expectHigh":false,"action":"no action; low confidence; do not invent a reference"}

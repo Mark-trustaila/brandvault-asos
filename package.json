@@ -16,25 +16,33 @@
     "db:deploy": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "harness": "tsx harness/run.ts",
+    "harness:fixtures": "tsx harness/run.ts --corpus harness/fixtures --labels harness/fixtures/labels.jsonl",
+    "harness:gen-pdf": "tsx harness/gen-pdf-fixture.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@clerk/nextjs": "^6.39.5",
     "@prisma/client": "^6.19.3",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
+    "mailparser": "^3.9.14",
     "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "unpdf": "^1.6.2"
   },
   "devDependencies": {
+    "@types/mailparser": "^3.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.5.2",
+    "pdf-lib": "^1.17.1",
     "postcss": "^8.5.16",
     "prisma": "^6.19.3",
     "tailwindcss": "^3.4.19",
