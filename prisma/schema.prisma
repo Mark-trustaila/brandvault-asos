@@ -272,6 +272,10 @@ model InboundEmail {
   status             InboundEmailStatus @default(pending)
   processedAt        DateTime?          @map("processed_at")
   reviewedByUserId   String?            @map("reviewed_by_user_id")
+  reviewedAt         DateTime?          @map("reviewed_at")
+  // Human correction of Bree's classification (registry/type/matched mark),
+  // captured on confirm/correct. Feeds back to the harness corpus as a label.
+  reviewClassificationJson Json?        @map("review_classification_json")
   createdAt          DateTime           @default(now()) @map("created_at")
 
   company          Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)

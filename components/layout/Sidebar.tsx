@@ -1,9 +1,11 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import styles from './Sidebar.module.css';
 import { useDashboard } from '../../context/DashboardContext';
 
 export default function Sidebar() {
   const { data, setActiveTab, setFocusedMark } = useDashboard();
+  const router = useRouter();
 
   const marksByName: Record<string, number> = {};
   data?.trademarks.forEach(t => {
@@ -45,6 +47,14 @@ export default function Sidebar() {
           <line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
         <span>Search</span>
+      </div>
+
+      <div className={styles.navItem} style={{ cursor: 'pointer' }} onClick={() => router.push('/inbox')}>
+        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2">
+          <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
+          <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+        </svg>
+        <span>Inbox</span>
       </div>
 
       <div className={styles.sectionLabel}>TRADEMARK MARKS</div>

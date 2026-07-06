@@ -20,7 +20,8 @@
     "harness": "tsx harness/run.ts",
     "harness:fixtures": "tsx harness/run.ts --corpus harness/fixtures --labels harness/fixtures/labels.jsonl",
     "harness:bootstrap": "tsx harness/bootstrap-labels.ts",
-    "harness:gen-pdf": "tsx harness/gen-pdf-fixture.ts"
+    "harness:gen-pdf": "tsx harness/gen-pdf-fixture.ts",
+    "harness:export-corrections": "tsx scripts/export-corrections.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
