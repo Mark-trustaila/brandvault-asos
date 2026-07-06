@@ -26,9 +26,15 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+.env.bak*
 
 # vercel
 .vercel
 
 # Not committing CI workflows yet (needs workflow OAuth scope); re-enable later.
 .github/
+
+# Phase 4 email harness: real TMD client correspondence NEVER gets committed.
+# Only the committed synthetic fixtures (harness/fixtures/) are in the repo.
+harness/email-corpus/
+harness/labels.jsonl
