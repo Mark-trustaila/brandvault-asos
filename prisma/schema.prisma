@@ -188,9 +188,11 @@ model Deadline {
   description  String   @db.Text
   dueDate      DateTime @map("due_date")
   windowStart  DateTime @map("window_start")
-  alert180Sent Boolean  @default(false) @map("alert_180_sent")
-  alert90Sent  Boolean  @default(false) @map("alert_90_sent")
-  alert30Sent  Boolean  @default(false) @map("alert_30_sent")
+  alert180Sent Boolean   @default(false) @map("alert_180_sent")
+  alert90Sent  Boolean   @default(false) @map("alert_90_sent")
+  alert30Sent  Boolean   @default(false) @map("alert_30_sent")
+  // Set when a renewal_confirmation email reports the deadline as satisfied.
+  completedAt  DateTime? @map("completed_at")
 
   trademark Trademark @relation(fields: [trademarkId], references: [id], onDelete: Cascade)
 
@@ -204,6 +206,8 @@ model AuditLog {
   companyId       String   @map("company_id")
   userId          String?  @map("user_id")
   isPlatformAdmin Boolean  @default(false) @map("is_platform_admin")
+  // Non-human actor for automated actions (e.g. "Bree"). Null = human/user.
+  actor           String?
   action          String
   entityType      String   @map("entity_type")
   entityId        String   @map("entity_id")

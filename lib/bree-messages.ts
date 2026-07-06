@@ -83,6 +83,93 @@ export function markStatusMsg(o: { query: string; groups: StatusGroup[] }): Bree
   return withBree(summary, [header('🏷️ Mark status'), ...blocks]);
 }
 
+// ---- Inbound-email-driven alerts (Phase 4 Step 3) ----
+
+// Human labels for alert-only communication types.
+const TYPE_LABEL: Record<string, string> = {
+  examination_report: 'Examination report',
+  opposition_notice: 'Opposition filed against your mark',
+  opposition_procedural: 'Opposition/tribunal update',
+  watch_notice: 'Watch alert — a mark may conflict',
+  cancellation_notice: 'Cancellation reported',
+  euipo_login_notification: 'EUIPO communication — retrieve from User Area',
+  ambiguous: 'Correspondence',
+  other: 'Registry correspondence',
+};
+
+const markLine = (markText?: string, registry?: string) =>
+  markText ? `*${markText}*${registry ? ` · ${registry}` : ''}` : '_mark not in your portfolio_';
+
+// registration_certificate → mark set Registered + renewal deadline calculated.
+export function emailRegistered(o: { markText: string; registry: string; renewalDate?: string }): BreeMessage {
+  return withBree(`${o.markText} registered (${o.registry})`, [
+    header('✅ Registration confirmed'),
+    section(
+      `${markLine(o.markText, o.registry)} is now *Registered* per a registry certificate.` +
+        (o.renewalDate ? `\nRenewal deadline set: *${o.renewalDate}*.` : '\n_No renewal date could be calculated (needs data)._')
+    ),
+  ]);
+}
+
+// renewal_reminder reconciliation — registry date agrees with ours.
+export function renewalReconcileMatch(o: { markText: string; registry: string; dueDate: string }): BreeMessage {
+  return withBree(`${o.markText}: renewal date confirmed by registry (${o.dueDate})`, [
+    section(`✅ ${markLine(o.markText, o.registry)}\nRegistry renewal reminder *matches* our deadline: *${o.dueDate}*. No action needed.`),
+  ]);
+}
+
+// renewal_reminder reconciliation — MISMATCH (data error or engine bug).
+export function renewalReconcileMismatch(o: { markText: string; registry: string; ourDate: string | null; theirDate: string | null }): BreeMessage {
+  return withBree(`⚠️ ${o.markText}: renewal date MISMATCH (registry ${o.theirDate ?? '?'} vs ours ${o.ourDate ?? '?'})`, [
+    header('⚠️ Renewal date mismatch — please check'),
+    section(
+      `${markLine(o.markText, o.registry)}\nRegistry says renewal is due *${o.theirDate ?? 'unknown'}*, but our deadline is *${o.ourDate ?? 'none calculated'}*.` +
+        `\nThis is either a portfolio-data error or a deadline-engine issue — both worth checking.`
+    ),
+  ]);
+}
+
+// renewal_confirmation → deadline marked complete.
+export function renewalCompleted(o: { markText: string; registry: string; dueDate?: string }): BreeMessage {
+  return withBree(`${o.markText}: renewal recorded, deadline cleared`, [
+    section(`✅ ${markLine(o.markText, o.registry)}\nRegistry confirmed the renewal was processed — the renewal deadline${o.dueDate ? ` (${o.dueDate})` : ''} is now complete.`),
+  ]);
+}
+
+// Alert-only types → urgency + deadline + human review.
+export function emailAlert(o: {
+  type: string;
+  urgency: 'high' | 'normal';
+  markText?: string;
+  registry?: string;
+  deadline?: string;
+  summary?: string;
+}): BreeMessage {
+  const label = TYPE_LABEL[o.type] ?? 'Registry correspondence';
+  const flag = o.urgency === 'high' ? '🔴' : '🔔';
+  const lines = [`${markLine(o.markText, o.registry)} — *${label}*`];
+  if (o.deadline) lines.push(`Deadline: *${o.deadline}*`);
+  if (o.type === 'cancellation_notice' && o.markText) lines.push(`_Status change reported — please confirm. The record has NOT been changed._`);
+  if (o.summary) lines.push(`_${o.summary}_`);
+  return withBree(`${label}${o.markText ? ` — ${o.markText}` : ''}`, [
+    header(`${flag} ${label}`),
+    section(lines.join('\n')),
+  ]);
+}
+
+// A matched reference points at a mark not in the portfolio (feature, not error).
+export function unmatchedNotice(o: { subject: string; refs: string[]; summary?: string }): BreeMessage {
+  return withBree(`Correspondence about a mark not in your portfolio`, [
+    header('🔎 Mark not in your portfolio'),
+    section(
+      `Bree found registry correspondence referencing ${o.refs.length ? `*${o.refs.join(', ')}*` : 'a mark'} that isn't in BrandVault yet.` +
+        `\n_${o.subject}_` +
+        (o.summary ? `\n${o.summary}` : '') +
+        `\nAdd the mark to bring it under monitoring.`
+    ),
+  ]);
+}
+
 export function notFound(query: string): BreeMessage {
   return withBree(`No mark matching "${query}"`, [section(`🔍 No mark matching *${query}*.`)]);
 }
