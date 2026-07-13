@@ -4,7 +4,7 @@ import { prisma } from '../../../../lib/db';
 import { slackConfig, verifySlackSignature } from '../../../../lib/slack';
 import { parseBreeCommand, type BreeCommand } from '../../../../lib/bree-commands';
 import * as bree from '../../../../lib/bree-messages';
-import { portfolioSummary, upcomingRenewals, markStatus } from '../../../../lib/bree-queries';
+import { answerBree, type BreeAnswer } from '../../../../lib/bree-service';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -23,21 +23,20 @@ async function buildDataReply(teamId: string, cmd: BreeCommand): Promise<BreeMsg
       ],
     };
   }
-  const companyId = pref.companyId;
-  switch (cmd.kind) {
-    case 'portfolio': {
-      const company = await prisma.company.findUnique({ where: { id: companyId } });
-      const data = await portfolioSummary(companyId);
-      return bree.portfolioSummary({ companyName: company?.name ?? 'Your portfolio', ...data });
-    }
+  return renderSlackAnswer(await answerBree(pref.companyId, cmd));
+}
+
+// Map a channel-agnostic BreeAnswer to Slack Block Kit. Preserves the exact
+// prior output (same bree-messages formatters, same data) — no behaviour change.
+function renderSlackAnswer(answer: BreeAnswer): BreeMsg {
+  switch (answer.kind) {
+    case 'portfolio':
+      return bree.portfolioSummary(answer);
     case 'renewals':
-      return bree.renewalsList({ items: await upcomingRenewals(companyId, 5) });
-    case 'status': {
-      if (!cmd.query) return bree.help();
-      const groups = await markStatus(companyId, cmd.query);
-      return groups.length ? bree.markStatusMsg({ query: cmd.query, groups }) : bree.notFound(cmd.query);
-    }
-    default:
+      return bree.renewalsList({ items: answer.items });
+    case 'status':
+      return answer.groups.length ? bree.markStatusMsg({ query: answer.query, groups: answer.groups }) : bree.notFound(answer.query);
+    case 'help':
       return bree.help();
   }
 }

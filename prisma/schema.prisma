@@ -56,6 +56,7 @@ model Company {
   auditLogs       AuditLog[]
   alertPreference AlertPreference?
   inboundEmails   InboundEmail[]
+  notifications   Notification[]
 
   @@map("companies")
 }
@@ -72,6 +73,7 @@ model User {
   platformAdmin PlatformAdmin?
   notes         Note[]
   auditLogs     AuditLog[]
+  notificationReads NotificationRead[]
 
   @@index([companyId])
   @@map("users")
@@ -141,6 +143,7 @@ model Trademark {
   notes         Note[]
   deadlines     Deadline[]
   inboundEmails InboundEmail[]
+  notifications Notification[]
 
   // company_id is stored on the mark directly (not only via family) so
   // portfolio queries don't need a join. Both FKs indexed.
@@ -303,4 +306,52 @@ model EmailAttachment {
 
   @@index([inboundEmailId])
   @@map("email_attachments")
+}
+
+// Phase 4b (Bree see-in-app). One row per alert Bree actually sends, so the same
+// events surface in the in-app Bree panel. Written by the alert job / status
+// change / digest at send time; the deep link is /?notification={id}. The
+// Deadline.alert_*_sent flags remain the dedupe mechanism (unchanged).
+enum NotificationType {
+  renewal_alert
+  status_change
+  digest
+}
+
+enum NotificationChannel {
+  slack
+  email
+}
+
+model Notification {
+  id          String              @id @default(cuid())
+  companyId   String              @map("company_id")
+  trademarkId String?             @map("trademark_id")
+  type        NotificationType
+  title       String
+  body        String              @db.Text
+  channel     NotificationChannel
+  createdAt   DateTime            @default(now()) @map("created_at")
+
+  company   Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  trademark Trademark?         @relation(fields: [trademarkId], references: [id], onDelete: SetNull)
+  reads     NotificationRead[]
+
+  @@index([companyId, createdAt])
+  @@map("notifications")
+}
+
+// Per-user read state; unread = a company notification with no read for the user.
+model NotificationRead {
+  id             String   @id @default(cuid())
+  notificationId String   @map("notification_id")
+  userId         String   @map("user_id")
+  readAt         DateTime @default(now()) @map("read_at")
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, userId])
+  @@index([userId])
+  @@map("notification_reads")
 }

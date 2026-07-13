@@ -16,6 +16,7 @@ import ReportPanel from '../components/report/ReportPanel';
 import { MarkEditForm } from '../components/detail/MarkEditForm';
 import { AuthControls } from '../components/auth/AuthControls';
 import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
+import BreeWidget from '../components/bree/BreeWidget';
 import { bvFetch } from '../lib/client/acting-company';
 
 function Dashboard() {
@@ -57,6 +58,7 @@ function Dashboard() {
       <DetailPanel />
       <ReportPanel />
       <MarkEditForm />
+      <BreeWidget />
     </div>
   );
 }

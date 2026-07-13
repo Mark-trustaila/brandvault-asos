@@ -8,40 +8,52 @@ export type BreeMessage = { text: string; blocks: Block[] };
 
 const section = (text: string): Block => ({ type: 'section', text: { type: 'mrkdwn', text } });
 const header = (text: string): Block => ({ type: 'header', text: { type: 'plain_text', text, emoji: false } });
-const context = (): Block => ({ type: 'context', elements: [{ type: 'mrkdwn', text: 'Bree · BrandVault' }] });
+const context = (appLink?: string): Block => ({
+  type: 'context',
+  elements: [{ type: 'mrkdwn', text: appLink ? `<${appLink}|See in app →>  ·  Bree · BrandVault` : 'Bree · BrandVault' }],
+});
 
-const withBree = (text: string, blocks: Block[]): BreeMessage => ({ text, blocks: [...blocks, context()] });
+// appLink (when given) adds a single "See in app →" deep link to the footer.
+const withBree = (text: string, blocks: Block[], appLink?: string): BreeMessage => ({ text, blocks: [...blocks, context(appLink)] });
 
 // ---- Outbound alerts ----
 
-export function renewalAlert(o: { markText: string; registry: string; type: string; dueDate: string; daysRemaining: number }): BreeMessage {
+export function renewalAlert(o: { markText: string; registry: string; type: string; dueDate: string; daysRemaining: number; appLink?: string }): BreeMessage {
   return withBree(
     `${o.type} for ${o.markText} (${o.registry}) due in ${o.daysRemaining} days — ${o.dueDate}`,
     [
       header('Renewal approaching'),
       section(`*${o.markText}* · ${o.registry}\n${o.type} due *${o.dueDate}* — *${o.daysRemaining} days* remaining`),
-    ]
+    ],
+    o.appLink
   );
 }
 
-export function statusChange(o: { markText: string; registry: string; from: string; to: string }): BreeMessage {
-  return withBree(`${o.markText} (${o.registry}) status: ${o.from} → ${o.to}`, [
-    section(`*${o.markText}* · ${o.registry}\nStatus changed: *${o.from}* → *${o.to}*`),
-  ]);
+export function statusChange(o: { markText: string; registry: string; from: string; to: string; appLink?: string }): BreeMessage {
+  return withBree(
+    `${o.markText} (${o.registry}) status: ${o.from} → ${o.to}`,
+    [section(`*${o.markText}* · ${o.registry}\nStatus changed: *${o.from}* → *${o.to}*`)],
+    o.appLink
+  );
 }
 
 export function weeklyDigest(o: {
   companyName: string;
   upcoming: { markText: string; registry: string; type: string; dueDate: string; daysRemaining: number }[];
+  appLink?: string;
 }): BreeMessage {
   const lines = o.upcoming.length
     ? o.upcoming.map((u) => `• *${u.markText}* (${u.registry}) — ${u.type} in ${u.daysRemaining}d · ${u.dueDate}`).join('\n')
     : '_Nothing due soon._';
-  return withBree(`Weekly digest for ${o.companyName}: ${o.upcoming.length} upcoming`, [
-    header(`Weekly digest — ${o.companyName}`),
-    section(o.upcoming.length ? `*${o.upcoming.length}* upcoming deadline${o.upcoming.length === 1 ? '' : 's'}:` : 'Nothing due soon.'),
-    section(lines),
-  ]);
+  return withBree(
+    `Weekly digest for ${o.companyName}: ${o.upcoming.length} upcoming`,
+    [
+      header(`Weekly digest — ${o.companyName}`),
+      section(o.upcoming.length ? `*${o.upcoming.length}* upcoming deadline${o.upcoming.length === 1 ? '' : 's'}:` : 'Nothing due soon.'),
+      section(lines),
+    ],
+    o.appLink
+  );
 }
 
 // ---- Slash-command responses ----

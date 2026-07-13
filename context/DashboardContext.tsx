@@ -21,6 +21,8 @@ interface DashboardContextType {
   filteredTrademarks: Trademark[];
   focusedMark: string | null;
   setFocusedMark: (mark: string | null) => void;
+  breeOpen: boolean;
+  setBreeOpen: (open: boolean) => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | null>(null);
@@ -34,6 +36,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
   const [showReport, setShowReport] = useState(false);
   const [focusedMark, setFocusedMark] = useState<string | null>(null);
   const [editTarget, setEditTarget] = useState<Trademark | 'new' | null>(null);
+  const [breeOpen, setBreeOpen] = useState(false);
 
   const filteredTrademarks = useMemo(
     () => data?.trademarks.filter(t => matchesSearch(t, searchQuery)) ?? [],
@@ -50,6 +53,7 @@ export const DashboardProvider = ({ children }: { children: ReactNode }) => {
       editTarget, setEditTarget,
       filteredTrademarks,
       focusedMark, setFocusedMark,
+      breeOpen, setBreeOpen,
     }}>
       {children}
     </DashboardContext.Provider>
