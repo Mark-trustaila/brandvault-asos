@@ -79,6 +79,13 @@ export async function exchangeCode(code: string): Promise<OAuthAccess> {
 
 // Post a message as Bree. Best-effort — callers log/ignore failures so a Slack
 // outage never blocks a DB write. Returns Slack's {ok,error} response.
+//
+// username + icon_url pin the sender's name and avatar so posted messages
+// (digests, alerts) match the Bree app icon shown on slash-command replies,
+// independent of the Slack app's configured name. The icon is self-hosted at
+// public/bree-icon.png so it doesn't depend on a Slack CDN URL.
+const BREE_ICON_URL = `${APP_BASE_URL}/bree-icon.png`;
+
 export async function postToSlack(
   botToken: string,
   channel: string,
@@ -88,7 +95,7 @@ export async function postToSlack(
     const res = await fetch('https://slack.com/api/chat.postMessage', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8', Authorization: `Bearer ${botToken}` },
-      body: JSON.stringify({ channel, text: msg.text, blocks: msg.blocks, username: 'Bree' }),
+      body: JSON.stringify({ channel, text: msg.text, blocks: msg.blocks, username: 'Bree', icon_url: BREE_ICON_URL }),
     });
     return (await res.json()) as { ok: boolean; error?: string };
   } catch (e) {

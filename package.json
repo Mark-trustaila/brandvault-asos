@@ -30,6 +30,7 @@
     "@anthropic-ai/sdk": "^0.110.0",
     "@clerk/nextjs": "^6.39.5",
     "@prisma/client": "^6.19.3",
+    "@vercel/functions": "^3.7.5",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "mailparser": "^3.9.14",
