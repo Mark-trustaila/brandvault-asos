@@ -13,8 +13,7 @@ type BreeMsg = { text: string; blocks: unknown[] };
 
 // Build the reply for a data-backed command (hits the DB). Never throws for the
 // "workspace not connected" case; genuine errors bubble to the caller.
-// Exported for testing.
-export async function buildDataReply(teamId: string, cmd: BreeCommand): Promise<BreeMsg> {
+async function buildDataReply(teamId: string, cmd: BreeCommand): Promise<BreeMsg> {
   const pref = await prisma.alertPreference.findFirst({ where: { slackTeamId: teamId } });
   if (!pref) {
     return {
@@ -94,5 +93,5 @@ export async function POST(req: Request) {
 
   // Ack now; deliver the answer in the background.
   waitUntil(deliverToSlack(responseUrl, () => buildDataReply(teamId, cmd)));
-  return NextResponse.json({ response_type: 'ephemeral', text: '🔎 Looking that up…' });
+  return NextResponse.json({ response_type: 'ephemeral', text: 'One moment…' });
 }

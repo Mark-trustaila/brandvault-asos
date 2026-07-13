@@ -1,12 +1,13 @@
 /**
  * Bree's Slack messages — pure Block Kit formatters (no I/O, fully testable).
  * The assistant is Bree; every message is signed "Bree · BrandVault".
+ * Tone: enterprise. Plain, no decorative emoji; structural headers only.
  */
 type Block = Record<string, unknown>;
 export type BreeMessage = { text: string; blocks: Block[] };
 
 const section = (text: string): Block => ({ type: 'section', text: { type: 'mrkdwn', text } });
-const header = (text: string): Block => ({ type: 'header', text: { type: 'plain_text', text, emoji: true } });
+const header = (text: string): Block => ({ type: 'header', text: { type: 'plain_text', text, emoji: false } });
 const context = (): Block => ({ type: 'context', elements: [{ type: 'mrkdwn', text: 'Bree · BrandVault' }] });
 
 const withBree = (text: string, blocks: Block[]): BreeMessage => ({ text, blocks: [...blocks, context()] });
@@ -17,7 +18,7 @@ export function renewalAlert(o: { markText: string; registry: string; type: stri
   return withBree(
     `${o.type} for ${o.markText} (${o.registry}) due in ${o.daysRemaining} days — ${o.dueDate}`,
     [
-      header('⏰ Renewal approaching'),
+      header('Renewal approaching'),
       section(`*${o.markText}* · ${o.registry}\n${o.type} due *${o.dueDate}* — *${o.daysRemaining} days* remaining`),
     ]
   );
@@ -25,7 +26,7 @@ export function renewalAlert(o: { markText: string; registry: string; type: stri
 
 export function statusChange(o: { markText: string; registry: string; from: string; to: string }): BreeMessage {
   return withBree(`${o.markText} (${o.registry}) status: ${o.from} → ${o.to}`, [
-    section(`🔄 *${o.markText}* · ${o.registry}\nStatus changed: *${o.from}* → *${o.to}*`),
+    section(`*${o.markText}* · ${o.registry}\nStatus changed: *${o.from}* → *${o.to}*`),
   ]);
 }
 
@@ -37,7 +38,7 @@ export function weeklyDigest(o: {
     ? o.upcoming.map((u) => `• *${u.markText}* (${u.registry}) — ${u.type} in ${u.daysRemaining}d · ${u.dueDate}`).join('\n')
     : '_Nothing due soon._';
   return withBree(`Weekly digest for ${o.companyName}: ${o.upcoming.length} upcoming`, [
-    header(`📋 Weekly digest — ${o.companyName}`),
+    header(`Weekly digest — ${o.companyName}`),
     section(o.upcoming.length ? `*${o.upcoming.length}* upcoming deadline${o.upcoming.length === 1 ? '' : 's'}:` : 'Nothing due soon.'),
     section(lines),
   ]);
@@ -47,7 +48,7 @@ export function weeklyDigest(o: {
 
 export function portfolioSummary(o: { companyName: string; total: number; registered: number; pending: number; published: number; needsAttention: number }): BreeMessage {
   return withBree(`${o.companyName}: ${o.total} marks`, [
-    header(`📊 ${o.companyName}`),
+    header(o.companyName),
     section(
       `*${o.total}* marks · *${o.registered}* registered · *${o.pending + o.published}* in prosecution\n` +
         `*${o.needsAttention}* need attention (renewal within 12 months)`
@@ -56,9 +57,9 @@ export function portfolioSummary(o: { companyName: string; total: number; regist
 }
 
 export function renewalsList(o: { items: { markText: string; registry: string; dueDate: string; daysRemaining: number }[] }): BreeMessage {
-  if (o.items.length === 0) return withBree('No upcoming renewals', [section('✅ No renewals coming up.')]);
+  if (o.items.length === 0) return withBree('No upcoming renewals', [section('No renewals coming up.')]);
   const lines = o.items.map((i) => `• *${i.markText}* (${i.registry}) — *${i.daysRemaining}d* · ${i.dueDate}`).join('\n');
-  return withBree(`${o.items.length} upcoming renewals`, [header('🗓️ Next renewals'), section(lines)]);
+  return withBree(`${o.items.length} upcoming renewals`, [header('Next renewals'), section(lines)]);
 }
 
 type StatusRow = { registry: string; status: string; nextDeadline?: { type: string; dueDate: string; daysRemaining: number } };
@@ -80,7 +81,7 @@ export function markStatusMsg(o: { query: string; groups: StatusGroup[] }): Bree
   const regs = o.groups.reduce((n, g) => n + g.rows.length, 0);
   const names = o.groups.length;
   const summary = names === 1 ? `${o.groups[0].markText} — ${regs} registration${regs === 1 ? '' : 's'}` : `${regs} registrations across ${names} marks`;
-  return withBree(summary, [header('🏷️ Mark status'), ...blocks]);
+  return withBree(summary, [header('Mark status'), ...blocks]);
 }
 
 // ---- Inbound-email-driven alerts (Phase 4 Step 3) ----
@@ -103,7 +104,7 @@ const markLine = (markText?: string, registry?: string) =>
 // registration_certificate → mark set Registered + renewal deadline calculated.
 export function emailRegistered(o: { markText: string; registry: string; renewalDate?: string }): BreeMessage {
   return withBree(`${o.markText} registered (${o.registry})`, [
-    header('✅ Registration confirmed'),
+    header('Registration confirmed'),
     section(
       `${markLine(o.markText, o.registry)} is now *Registered* per a registry certificate.` +
         (o.renewalDate ? `\nRenewal deadline set: *${o.renewalDate}*.` : '\n_No renewal date could be calculated (needs data)._')
@@ -114,14 +115,14 @@ export function emailRegistered(o: { markText: string; registry: string; renewal
 // renewal_reminder reconciliation — registry date agrees with ours.
 export function renewalReconcileMatch(o: { markText: string; registry: string; dueDate: string }): BreeMessage {
   return withBree(`${o.markText}: renewal date confirmed by registry (${o.dueDate})`, [
-    section(`✅ ${markLine(o.markText, o.registry)}\nRegistry renewal reminder *matches* our deadline: *${o.dueDate}*. No action needed.`),
+    section(`${markLine(o.markText, o.registry)}\nRegistry renewal reminder *matches* our deadline: *${o.dueDate}*. No action needed.`),
   ]);
 }
 
 // renewal_reminder reconciliation — MISMATCH (data error or engine bug).
 export function renewalReconcileMismatch(o: { markText: string; registry: string; ourDate: string | null; theirDate: string | null }): BreeMessage {
-  return withBree(`⚠️ ${o.markText}: renewal date MISMATCH (registry ${o.theirDate ?? '?'} vs ours ${o.ourDate ?? '?'})`, [
-    header('⚠️ Renewal date mismatch — please check'),
+  return withBree(`${o.markText}: renewal date MISMATCH (registry ${o.theirDate ?? '?'} vs ours ${o.ourDate ?? '?'})`, [
+    header('Renewal date mismatch — please review'),
     section(
       `${markLine(o.markText, o.registry)}\nRegistry says renewal is due *${o.theirDate ?? 'unknown'}*, but our deadline is *${o.ourDate ?? 'none calculated'}*.` +
         `\nThis is either a portfolio-data error or a deadline-engine issue — both worth checking.`
@@ -132,11 +133,11 @@ export function renewalReconcileMismatch(o: { markText: string; registry: string
 // renewal_confirmation → deadline marked complete.
 export function renewalCompleted(o: { markText: string; registry: string; dueDate?: string }): BreeMessage {
   return withBree(`${o.markText}: renewal recorded, deadline cleared`, [
-    section(`✅ ${markLine(o.markText, o.registry)}\nRegistry confirmed the renewal was processed — the renewal deadline${o.dueDate ? ` (${o.dueDate})` : ''} is now complete.`),
+    section(`${markLine(o.markText, o.registry)}\nRegistry confirmed the renewal was processed — the renewal deadline${o.dueDate ? ` (${o.dueDate})` : ''} is now complete.`),
   ]);
 }
 
-// Alert-only types → urgency + deadline + human review.
+// Alert-only types → priority + deadline + human review.
 export function emailAlert(o: {
   type: string;
   urgency: 'high' | 'normal';
@@ -146,21 +147,19 @@ export function emailAlert(o: {
   summary?: string;
 }): BreeMessage {
   const label = TYPE_LABEL[o.type] ?? 'Registry correspondence';
-  const flag = o.urgency === 'high' ? '🔴' : '🔔';
-  const lines = [`${markLine(o.markText, o.registry)} — *${label}*`];
+  const lines: string[] = [];
+  if (o.urgency === 'high') lines.push('*Priority: High.*');
+  lines.push(`${markLine(o.markText, o.registry)} — *${label}*`);
   if (o.deadline) lines.push(`Deadline: *${o.deadline}*`);
   if (o.type === 'cancellation_notice' && o.markText) lines.push(`_Status change reported — please confirm. The record has NOT been changed._`);
   if (o.summary) lines.push(`_${o.summary}_`);
-  return withBree(`${label}${o.markText ? ` — ${o.markText}` : ''}`, [
-    header(`${flag} ${label}`),
-    section(lines.join('\n')),
-  ]);
+  return withBree(`${label}${o.markText ? ` — ${o.markText}` : ''}`, [header(label), section(lines.join('\n'))]);
 }
 
 // A matched reference points at a mark not in the portfolio (feature, not error).
 export function unmatchedNotice(o: { subject: string; refs: string[]; summary?: string }): BreeMessage {
   return withBree(`Correspondence about a mark not in your portfolio`, [
-    header('🔎 Mark not in your portfolio'),
+    header('Mark not in your portfolio'),
     section(
       `Bree found registry correspondence referencing ${o.refs.length ? `*${o.refs.join(', ')}*` : 'a mark'} that isn't in BrandVault yet.` +
         `\n_${o.subject}_` +
@@ -171,12 +170,12 @@ export function unmatchedNotice(o: { subject: string; refs: string[]; summary?: 
 }
 
 export function notFound(query: string): BreeMessage {
-  return withBree(`No mark matching "${query}"`, [section(`🔍 No mark matching *${query}*.`)]);
+  return withBree(`No mark matching "${query}"`, [section(`No mark matching *${query}*.`)]);
 }
 
 export function help(): BreeMessage {
   return withBree('Bree commands', [
-    header("👋 Hi, I'm Bree"),
+    header('Bree commands'),
     section(
       '`/bree portfolio` — portfolio summary\n' +
         '`/bree renewals` — next 5 upcoming renewals\n' +
