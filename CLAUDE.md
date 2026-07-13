@@ -56,9 +56,19 @@ Status (2026-07-06): **Phases 1–4 complete and live in production**
 (brandvault-asos.vercel.app · Azure Database for MySQL · Clerk). See
 `brandvault-mev-build-plan.txt` for the full plan; Phases 5–7 remain.
 
+Bree/Slack **verified live 2026-07-08** (LawPanel workspace): slash commands,
+weekly digest, renewal alerts + `alert_sent` dedup, email-fallback graceful-skip.
+Fixes that session: slash-command cold-start timeout (ack immediately, deliver
+via Slack `response_url` using `@vercel/functions` `waitUntil`); enterprise tone
+(decorative emoji removed); Bree app icon on every message (self-hosted
+`public/bree-icon.png` as `icon_url`, so digests/alerts match the slash-reply
+avatar). Deferred in Phase 3: approval-flow foundation is a stub
+(`/api/slack/interactivity` verifies + acks, but no buttons post to AuditLog
+yet); SMTP email channel not wired (alerts count and skip email gracefully).
+
 1. Backend + Auth + Platform Admin — ✅
 2. Platform Admin tools + Mark Editing (bulk entry, completeness) — ✅
-3. Bree (Slack) + alerts — ✅ (Slack live; SMTP email deferred)
+3. Bree (Slack) + alerts — ✅ live-verified (Slack; SMTP email deferred)
 4. Email Integration (Bree Inbound) — ✅ forwarding-address ingestion
    (Postmark) → content-first classification (Claude, claude-sonnet-4-6) →
    HIGH-confidence auto-actions + renewal reconciliation → Bree Slack alerts →
