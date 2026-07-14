@@ -24,11 +24,11 @@ read when the function executes. `.env.example` documents all of them.
 
 | Variable | Purpose | Needed at | Prod | Preview | Local | Notes |
 |---|---|---|---|---|---|---|
-| `DATABASE_URL` | Prisma → Azure MySQL | runtime | ✅ | ✅ | ✅ | Separate values per scope, but **Preview & Production point at the SAME Azure DB** (`brandvault-mysql…/brandvault`; confirmed by the preview rendering the prod ASOS portfolio). Preview testing writes to prod data — purge test rows before demos. |
+| `DATABASE_URL` | Prisma → Azure MySQL | runtime | ✅ | ✅ | ✅ | Separate values per scope, but Preview & Production point at the **SAME Azure DB** (`brandvault-mysql…/brandvault`). **KNOWN DECISION — accepted for MEV (2026-07-14); SEPARATE THE PREVIEW DB BEFORE THE FIRST EXTERNAL CUSTOMER.** Until then, preview testing writes to prod data — purge test rows before demos. |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk (browser) | **build**+runtime | ✅ | ✅ | ✅ | Missing at build → prerender fails (`Missing publishableKey`). |
 | `CLERK_SECRET_KEY` | Clerk (server/middleware) | runtime | ✅ | ✅ | ✅ | Missing → 500 `MIDDLEWARE_INVOCATION_FAILED`. |
 | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` / `_SIGN_UP_URL` | Clerk routing | build+runtime | ✅ | ✅ | ✅ | `/sign-in`, `/sign-up`. |
-| `ANTHROPIC_API_KEY` | email + Bree-intent classifiers | runtime | ✅ | ✅ | ✅ | Sensitive. Added 2026-07-14 (did not exist before). Absent → email classifier throws (email stays `pending`); intent → graceful `unsupported`. Read ONLY from env (SDK default `new Anthropic()`), no other source. |
+| `ANTHROPIC_API_KEY` | email + Bree-intent classifiers | runtime | ✅ | ✅ | ✅ (`.env`) | Sensitive. **Confirmed added by operator 2026-07-14** (brandvault-asos project only; Prod + Preview). Did NOT exist in any Vercel scope before then — so the deployed email classifier had never run live. Absent → email classifier throws (email stays `pending`); intent → graceful `unsupported`. Read ONLY from env (SDK default `new Anthropic()`), no other source. |
 | `EMAIL_CLASSIFIER_MODEL` | model override | runtime | opt | opt | opt | default `claude-sonnet-4-6`. |
 | `BREE_INTENT_MODEL` | model override | runtime | opt | opt | opt | default `claude-haiku-4-5`. |
 | `SLACK_CLIENT_ID` / `SLACK_CLIENT_SECRET` / `SLACK_SIGNING_SECRET` | Bree OAuth + slash-signature verify | runtime | ✅ | opt | ✅ | Slash/OAuth work where set. |
