@@ -9,9 +9,10 @@ import type { InboundEmailStatus, Prisma } from '@prisma/client';
 import { prisma } from './db';
 import { classifyEmail } from './email-classifier';
 import { AUTO_ACT_TYPES, type Classification, type CommunicationType } from './email-types';
-import { recalcDeadlines } from './deadlines';
 import { writeAudit } from './audit';
 import { sendBree } from './alerts';
+import { autoActEnabled } from './email-config';
+import { proposeApproval, doRegister } from './approvals';
 import * as bree from './bree-messages';
 
 const ALERT_ONLY: CommunicationType[] = [
@@ -125,19 +126,12 @@ export async function processInboundEmail(id: string, now = new Date()): Promise
 
   // 3. Route.
   let status: InboundEmailStatus = 'needs_review';
-  const isAutoAct = AUTO_ACT_TYPES.includes(c.communicationType) && c.confidence === 'high';
+  const isHighAutoType = AUTO_ACT_TYPES.includes(c.communicationType) && c.confidence === 'high';
 
-  if (isAutoAct && mark) {
-    status = 'processed';
-    if (c.communicationType === 'registration_certificate') {
-      const from = mark.status as string;
-      await prisma.trademark.update({ where: { id: mark.id }, data: { status: 'Registered' } });
-      const r = await recalcDeadlines(mark);
-      const renewal = await prisma.deadline.findFirst({ where: { trademarkId: mark.id, type: 'Renewal' }, orderBy: { dueDate: 'asc' } });
-      actions.push(`status ${from}→Registered; deadlines recalculated (${r.persisted})`);
-      await audit('bree.email.registered', 'Trademark', mark.id, { inboundEmailId: id, from, to: 'Registered', refs: c.referenceNumbers });
-      await alert(bree.emailRegistered({ markText: mark.markText, registry: mark.registryName, renewalDate: renewal ? isoDay(renewal.dueDate) : undefined }));
-    } else if (c.communicationType === 'renewal_reminder') {
+  if (isHighAutoType && mark) {
+    if (c.communicationType === 'renewal_reminder') {
+      // Read-only reconciliation — no mark data changes, so it stays automatic.
+      status = 'processed';
       const our = await prisma.deadline.findFirst({ where: { trademarkId: mark.id, type: 'Renewal', completedAt: null }, orderBy: { dueDate: 'asc' } });
       const ourDate = our ? isoDay(our.dueDate) : null;
       const theirDate = firstMentionedDate(c);
@@ -150,16 +144,48 @@ export async function processInboundEmail(id: string, now = new Date()): Promise
         await audit('bree.email.renewal_mismatch', 'Trademark', mark.id, { inboundEmailId: id, ourDate, theirDate });
         await alert(bree.renewalReconcileMismatch({ markText: mark.markText, registry: mark.registryName, ourDate, theirDate }));
       }
+    } else if (c.communicationType === 'registration_certificate' && autoActEnabled('registration_certificate')) {
+      // Promoted to auto-act via AUTO_ACT_REGISTRATION — writes directly.
+      status = 'processed';
+      const r = await doRegister(mark);
+      actions.push(`status ${r.from}→Registered; deadlines recalculated (${r.persisted}) [auto]`);
+      await audit('bree.email.registered', 'Trademark', mark.id, { inboundEmailId: id, from: r.from, to: 'Registered', refs: c.referenceNumbers, mode: 'auto' });
+      await alert(bree.emailRegistered({ markText: mark.markText, registry: mark.registryName, renewalDate: r.renewalDate ?? undefined }));
+    } else if (c.communicationType === 'registration_certificate') {
+      // Default: propose the registration for human approval.
+      status = 'awaiting_approval';
+      const ap = await proposeApproval({
+        companyId, inboundEmailId: id, trademarkId: mark.id, actionType: 'registration_certificate',
+        summary: `Mark ${mark.markText} (${mark.registryName}) → Registered`,
+        payload: { kind: 'registration_certificate', fromStatus: mark.status as string, refs: c.referenceNumbers },
+      });
+      actions.push(`proposed registration for approval (${ap.id})`);
+      await alert(bree.emailApprovalRequest({
+        approvalId: ap.id, action: 'registration_certificate', markText: mark.markText, registry: mark.registryName,
+        detail: `Bree proposes marking this *Registered* (currently *${mark.status}*) and recalculating its renewal deadlines, based on a registry certificate.`,
+      }));
     } else if (c.communicationType === 'renewal_confirmation') {
+      // NEVER auto — completing a renewal deadline silences a live obligation.
       const our = await prisma.deadline.findFirst({ where: { trademarkId: mark.id, type: 'Renewal', completedAt: null }, orderBy: { dueDate: 'asc' } });
       if (our) {
-        await prisma.deadline.update({ where: { id: our.id }, data: { completedAt: now } });
-        actions.push(`renewal deadline ${isoDay(our.dueDate)} marked complete`);
+        status = 'awaiting_approval';
+        const ap = await proposeApproval({
+          companyId, inboundEmailId: id, trademarkId: mark.id, actionType: 'renewal_confirmation',
+          summary: `Complete renewal deadline ${isoDay(our.dueDate)} for ${mark.markText} (${mark.registryName})`,
+          payload: { kind: 'renewal_confirmation', deadlineId: our.id, dueDate: isoDay(our.dueDate) },
+        });
+        actions.push(`proposed renewal completion for approval (${ap.id})`);
+        await alert(bree.emailApprovalRequest({
+          approvalId: ap.id, action: 'renewal_confirmation', markText: mark.markText, registry: mark.registryName,
+          detail: `A registry confirmation reports the renewal (due *${isoDay(our.dueDate)}*) is processed. Approve to mark that deadline complete.`,
+        }));
       } else {
-        actions.push('renewal confirmed but no open renewal deadline found');
+        // Nothing open to complete — don't propose a no-op; flag for review.
+        status = 'needs_review';
+        actions.push('renewal confirmation received but no open renewal deadline found');
+        await audit('bree.email.review', 'InboundEmail', id, { type: c.communicationType, note: 'no open renewal deadline' });
+        await alert(bree.emailAlert({ type: 'other', urgency: 'normal', markText: mark.markText, registry: mark.registryName, summary: c.summary }));
       }
-      await audit('bree.email.renewal_completed', 'Trademark', mark.id, { inboundEmailId: id, deadline: our ? isoDay(our.dueDate) : null });
-      await alert(bree.renewalCompleted({ markText: mark.markText, registry: mark.registryName, dueDate: our ? isoDay(our.dueDate) : undefined }));
     }
   } else if (ALERT_ONLY.includes(c.communicationType)) {
     status = mark ? 'needs_review' : 'unmatched';

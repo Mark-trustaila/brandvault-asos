@@ -142,6 +142,54 @@ export function renewalReconcileMismatch(o: { markText: string; registry: string
   ]);
 }
 
+type ApprovalAction = 'renewal_confirmation' | 'registration_certificate';
+const APPROVAL_HEADING: Record<ApprovalAction, string> = {
+  renewal_confirmation: 'Approval needed — record renewal',
+  registration_certificate: 'Approval needed — mark registered',
+};
+
+// A mark-mutating action Bree wants to take, proposed for human approval.
+// The Approve/Reject buttons carry the approval id; nothing changes until a
+// human clicks Approve (handled by /api/slack/interactivity).
+export function emailApprovalRequest(o: {
+  approvalId: string;
+  action: ApprovalAction;
+  markText: string;
+  registry: string;
+  detail: string;
+}): BreeMessage {
+  const heading = APPROVAL_HEADING[o.action];
+  return withBree(`${heading} — ${o.markText} (${o.registry})`, [
+    header(heading),
+    section(`${markLine(o.markText, o.registry)}\n${o.detail}\n\n_No data has changed yet — Bree will make this change only if you approve._`),
+    {
+      type: 'actions',
+      block_id: `approval:${o.approvalId}`,
+      elements: [
+        { type: 'button', style: 'primary', text: { type: 'plain_text', text: 'Approve', emoji: false }, action_id: 'approval_approve', value: o.approvalId },
+        { type: 'button', style: 'danger', text: { type: 'plain_text', text: 'Reject', emoji: false }, action_id: 'approval_reject', value: o.approvalId },
+      ],
+    },
+  ]);
+}
+
+// The message swapped in (via response_url) once an approval is decided, so the
+// buttons can't be clicked again and the outcome is on the record.
+export function emailApprovalResolved(o: {
+  decision: 'approved' | 'rejected';
+  action: ApprovalAction;
+  markText: string;
+  registry: string;
+  by: string;
+  effect: string;
+}): BreeMessage {
+  const verb = o.decision === 'approved' ? 'Approved' : 'Rejected';
+  return withBree(`${verb} by ${o.by} — ${o.markText} (${o.registry})`, [
+    header(APPROVAL_HEADING[o.action]),
+    section(`${markLine(o.markText, o.registry)}\n*${verb}* by ${o.by}.\n${o.effect}`),
+  ]);
+}
+
 // renewal_confirmation → deadline marked complete.
 export function renewalCompleted(o: { markText: string; registry: string; dueDate?: string }): BreeMessage {
   return withBree(`${o.markText}: renewal recorded, deadline cleared`, [
