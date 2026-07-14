@@ -116,7 +116,8 @@ export default function BreeWidget() {
       {!breeOpen && (
         <button
           onClick={() => setBreeOpen(true)}
-          className="fixed bottom-5 right-5 z-[220] flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-slate-700"
+          style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9999 }}
+          className="flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-slate-700"
         >
           Bree
           {unread > 0 && <span className="rounded-full bg-white px-1.5 text-xs font-bold text-slate-900">{unread}</span>}
@@ -125,7 +126,10 @@ export default function BreeWidget() {
 
       {/* Panel */}
       {breeOpen && (
-        <div className="fixed right-0 top-0 z-[210] flex h-screen w-[360px] flex-col border-l border-slate-200 bg-white shadow-xl">
+        <div
+          style={{ position: 'fixed', top: 0, right: 0, height: '100vh', width: 360, zIndex: 9998 }}
+          className="flex flex-col border-l border-slate-200 bg-white shadow-xl"
+        >
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
             <span className="font-semibold text-slate-900">Bree</span>
             <button onClick={() => setBreeOpen(false)} className="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
