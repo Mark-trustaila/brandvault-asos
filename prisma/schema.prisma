@@ -57,6 +57,7 @@ model Company {
   alertPreference AlertPreference?
   inboundEmails   InboundEmail[]
   notifications   Notification[]
+  breeQueryLogs   BreeQueryLog[]
 
   @@map("companies")
 }
@@ -74,6 +75,7 @@ model User {
   notes         Note[]
   auditLogs     AuditLog[]
   notificationReads NotificationRead[]
+  breeQueryLogs     BreeQueryLog[]
 
   @@index([companyId])
   @@map("users")
@@ -144,6 +146,7 @@ model Trademark {
   deadlines     Deadline[]
   inboundEmails InboundEmail[]
   notifications Notification[]
+  breeQueryLogs BreeQueryLog[]
 
   // company_id is stored on the mark directly (not only via family) so
   // portfolio queries don't need a join. Both FKs indexed.
@@ -354,4 +357,28 @@ model NotificationRead {
   @@unique([notificationId, userId])
   @@index([userId])
   @@map("notification_reads")
+}
+
+// Phase 4b (Bree see-in-app). One row per WEB free-text query, after the
+// intent classifier runs. Includes unsupported results and API-failure
+// fallbacks (fallback=true, resolved_intent='unsupported'). Evidence for a
+// future Phase 5 (what people actually ask). Slack slash commands are NOT
+// logged here — they never pass through the classifier.
+model BreeQueryLog {
+  id                 String   @id @default(cuid())
+  companyId          String   @map("company_id")
+  userId             String   @map("user_id")
+  inputText          String   @db.Text @map("input_text")
+  resolvedIntent     String   @map("resolved_intent")
+  matchedTrademarkId String?  @map("matched_trademark_id")
+  latencyMs          Int      @map("latency_ms")
+  fallback           Boolean  @default(false)
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trademark Trademark? @relation(fields: [matchedTrademarkId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+  @@map("bree_query_logs")
 }

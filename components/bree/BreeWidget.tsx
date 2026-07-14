@@ -18,6 +18,14 @@ type BreeAnswer =
   | { kind: 'renewals'; items: { markText: string; registry: string; dueDate: string; daysRemaining: number }[] }
   | { kind: 'status'; query: string; groups: { markText: string; rows: { registry: string; status: string; nextDeadline?: { type: string; dueDate: string; daysRemaining: number } }[] }[] }
   | { kind: 'help' };
+type BreeReply = BreeAnswer | { kind: 'unsupported' } | { kind: 'clarify'; query: string; options: string[] };
+
+// Single Bree avatar asset (the Slack icon), reused for the toggle, header and
+// response rows so she reads consistently with her Slack appearance.
+const BreeAvatar = ({ size = 20 }: { size?: number }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img src="/bree-icon.png" alt="Bree" width={size} height={size} style={{ width: size, height: size, borderRadius: 9999, flexShrink: 0 }} />
+);
 
 const TYPE_BADGE: Record<Notif['type'], { label: string; cls: string }> = {
   renewal_alert: { label: 'Renewal', cls: 'bg-amber-100 text-amber-800' },
@@ -39,7 +47,7 @@ export default function BreeWidget() {
   const [unread, setUnread] = useState(0);
   const [search, setSearch] = useState('');
   const [input, setInput] = useState('');
-  const [session, setSession] = useState<{ q: string; a: BreeAnswer }[]>([]);
+  const [session, setSession] = useState<{ q: string; a: BreeReply }[]>([]);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
@@ -88,19 +96,25 @@ export default function BreeWidget() {
     })();
   }, [load, setBreeOpen, markRead, openMark]);
 
-  async function send() {
-    const q = input.trim();
-    if (!q || busy) return;
+  const ask = useCallback(async (raw: string) => {
+    const query = raw.trim();
+    if (!query) return;
     setBusy(true);
+    try {
+      const res = await bvFetch('/api/bree', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query }) });
+      const { answer } = await res.json();
+      setSession((s) => [...s, { q: query, a: answer }]);
+    } catch {
+      setSession((s) => [...s, { q: query, a: { kind: 'unsupported' } }]); // never surface a raw error
+    } finally {
+      setBusy(false);
+    }
+  }, []);
+
+  function send() {
+    const q = input;
     setInput('');
-    const res = await bvFetch('/api/bree', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: q }),
-    });
-    const { answer } = await res.json();
-    setSession((s) => [...s, { q, a: answer }]);
-    setBusy(false);
+    ask(q);
   }
 
   const filtered = notifs.filter((n) => {
@@ -117,10 +131,11 @@ export default function BreeWidget() {
         <button
           onClick={() => setBreeOpen(true)}
           style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9999 }}
-          className="flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-slate-700"
+          className="flex items-center gap-2 rounded-full bg-bree px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-bree-hover"
         >
+          <BreeAvatar size={20} />
           Bree
-          {unread > 0 && <span className="rounded-full bg-white px-1.5 text-xs font-bold text-slate-900">{unread}</span>}
+          {unread > 0 && <span className="rounded-full bg-white px-1.5 text-xs font-bold text-bree">{unread}</span>}
         </button>
       )}
 
@@ -131,7 +146,10 @@ export default function BreeWidget() {
           className="flex flex-col border-l border-slate-200 bg-white shadow-xl"
         >
           <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-            <span className="font-semibold text-slate-900">Bree</span>
+            <span className="flex items-center gap-2">
+              <BreeAvatar size={24} />
+              <span className="font-semibold text-bree">Bree</span>
+            </span>
             <button onClick={() => setBreeOpen(false)} className="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
           </div>
 
@@ -174,7 +192,10 @@ export default function BreeWidget() {
               {session.map((x, i) => (
                 <div key={i} className="mb-3 last:mb-0">
                   <div className="text-xs text-slate-500">{x.q}</div>
-                  <div className="mt-1 text-slate-800">{renderAnswer(x.a)}</div>
+                  <div className="mt-1 flex gap-2">
+                    <BreeAvatar size={20} />
+                    <div className="text-slate-800">{renderAnswer(x.a, ask)}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -189,7 +210,7 @@ export default function BreeWidget() {
                 placeholder="Ask Bree: portfolio, renewals, status ACME"
                 className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm"
               />
-              <button onClick={send} disabled={busy} className="rounded-lg bg-slate-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50">
+              <button onClick={send} disabled={busy} className="rounded-lg bg-bree px-3 py-1.5 text-sm font-medium text-white hover:bg-bree-hover disabled:opacity-50">
                 {busy ? '…' : 'Send'}
               </button>
             </div>
@@ -200,20 +221,43 @@ export default function BreeWidget() {
   );
 }
 
-function renderAnswer(a: BreeAnswer) {
+function renderAnswer(a: BreeReply, onAsk: (q: string) => void) {
   switch (a?.kind) {
     case 'portfolio':
       return `${a.companyName}: ${a.total} marks · ${a.registered} registered · ${a.pending + a.published} in prosecution · ${a.needsAttention} need attention`;
     case 'renewals':
-      return a.items.length
-        ? <ul className="list-disc pl-4">{a.items.map((i, k) => <li key={k}>{i.markText} ({i.registry}) — {i.daysRemaining}d · {i.dueDate}</li>)}</ul>
-        : 'No upcoming renewals.';
+      return a.items.length ? (
+        <ul className="list-disc pl-4">
+          {a.items.map((i, k) => (
+            <li key={k}>{i.markText} ({i.registry}) — {i.daysRemaining}d · {i.dueDate}</li>
+          ))}
+        </ul>
+      ) : (
+        'No upcoming renewals.'
+      );
     case 'status':
       return a.groups.length
         ? a.groups.map((g, k) => (
-            <div key={k}><b>{g.markText}</b>: {g.rows.map((r) => `${r.registry} ${r.status}`).join(', ')}</div>
+            <div key={k}>
+              <b>{g.markText}</b>: {g.rows.map((r) => `${r.registry} ${r.status}`).join(', ')}
+            </div>
           ))
         : 'No matching mark.';
+    case 'clarify':
+      return (
+        <div>
+          <div>Which mark did you mean?</div>
+          <div className="mt-1 flex flex-wrap gap-1.5">
+            {a.options.map((opt, k) => (
+              <button key={k} onClick={() => onAsk(`status ${opt}`)} className="rounded border border-bree px-2 py-0.5 text-xs text-bree hover:bg-bree hover:text-white">
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    case 'unsupported':
+      return 'Bree can answer three things: your portfolio summary, upcoming renewals, or a mark’s status.';
     case 'help':
     default:
       return 'Try: portfolio · renewals · status [mark]';
