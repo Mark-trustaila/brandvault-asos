@@ -111,14 +111,17 @@ export default function BreeWidget() {
 
   return (
     <>
-      {/* Toggle */}
-      <button
-        onClick={() => setBreeOpen(!breeOpen)}
-        className="fixed right-4 top-4 z-[220] flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50"
-      >
-        Bree
-        {unread > 0 && <span className="rounded-full bg-slate-900 px-1.5 text-xs font-semibold text-white">{unread}</span>}
-      </button>
+      {/* Toggle — floating bottom-right (clear of the crowded Topbar); hidden
+          while the panel is open (the panel has its own close button). */}
+      {!breeOpen && (
+        <button
+          onClick={() => setBreeOpen(true)}
+          className="fixed bottom-5 right-5 z-[220] flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-lg hover:bg-slate-700"
+        >
+          Bree
+          {unread > 0 && <span className="rounded-full bg-white px-1.5 text-xs font-bold text-slate-900">{unread}</span>}
+        </button>
+      )}
 
       {/* Panel */}
       {breeOpen && (
