@@ -88,6 +88,17 @@ via Slack `response_url` using `@vercel/functions` `waitUntil`); enterprise tone
 `public/bree-icon.png` as `icon_url`, so digests/alerts match the slash-reply
 avatar). SMTP email channel not wired (alerts count and skip email gracefully).
 
+**Live-verified 2026-07-14 (LawPanel workspace, production):**
+- Alert round-trip — a real renewal alert (Slack message → "See in app →" deep
+  link → dashboard lands with the Bree panel open on the mark → notification
+  marked read) and `alert_sent` no-duplicate on a second run. (Triggered
+  legitimately by temporarily widening a threshold, then restored — no fake data.)
+- Inbound email end-to-end — a `renewal_confirmation` email classified HIGH,
+  matched the mark by reference, **proposed** (no mutation), posted a Slack
+  Approve/Reject; on Approve the deployed `/api/slack/interactivity` handler
+  completed the deadline and audited it with proposer `Bree` + approver
+  `Slack:<user>`. Test artifacts purged; the touched deadline was restored.
+
 The Phase-3 approval-flow foundation is now **live for inbound mutations**
 (2026-07-14): `/api/slack/interactivity` handles real Approve/Reject buttons —
 see the Phase 4 note below. SMTP email channel still not wired.
