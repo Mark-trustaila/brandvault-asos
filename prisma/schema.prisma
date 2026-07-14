@@ -58,6 +58,7 @@ model Company {
   inboundEmails   InboundEmail[]
   notifications   Notification[]
   breeQueryLogs   BreeQueryLog[]
+  approvals       Approval[]
 
   @@map("companies")
 }
@@ -147,6 +148,7 @@ model Trademark {
   inboundEmails InboundEmail[]
   notifications Notification[]
   breeQueryLogs BreeQueryLog[]
+  approvals     Approval[]
 
   // company_id is stored on the mark directly (not only via family) so
   // portfolio queries don't need a join. Both FKs indexed.
@@ -259,6 +261,44 @@ enum InboundEmailStatus {
   needs_review
   unmatched
   dismissed
+  // Bree has proposed a mark-mutating action (renewal completion / registration)
+  // and is waiting for a human to approve or reject it in Slack.
+  awaiting_approval
+}
+
+// Propose-and-approve gate for Bree's mark-mutating inbound actions. A HIGH-
+// confidence renewal_confirmation or registration_certificate no longer writes
+// directly — it creates a pending Approval and posts a Slack Approve/Reject
+// message. The write happens only on approval, audited with proposer + approver.
+enum ApprovalStatus {
+  pending
+  approved
+  rejected
+}
+
+model Approval {
+  id             String         @id @default(cuid())
+  companyId      String         @map("company_id")
+  inboundEmailId String?        @map("inbound_email_id")
+  trademarkId    String?        @map("trademark_id")
+  // 'renewal_confirmation' | 'registration_certificate'
+  actionType     String         @map("action_type")
+  summary        String         @db.Text
+  // Everything needed to apply the action (deadlineId / fromStatus / refs).
+  payloadJson    Json           @map("payload_json")
+  status         ApprovalStatus @default(pending)
+  proposedBy     String         @default("Bree") @map("proposed_by")
+  decidedBySlackId   String?    @map("decided_by_slack_id")
+  decidedBySlackName String?    @map("decided_by_slack_name")
+  decidedAt      DateTime?      @map("decided_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+
+  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  inboundEmail InboundEmail? @relation(fields: [inboundEmailId], references: [id], onDelete: SetNull)
+  trademark    Trademark?    @relation(fields: [trademarkId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, status])
+  @@map("approvals")
 }
 
 model InboundEmail {
@@ -287,6 +327,7 @@ model InboundEmail {
   company          Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
   matchedTrademark Trademark?        @relation(fields: [matchedTrademarkId], references: [id], onDelete: SetNull)
   attachments      EmailAttachment[]
+  approvals        Approval[]
 
   // Idempotent ingestion: the same content never lands twice for a company.
   @@unique([companyId, contentHash])

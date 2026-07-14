@@ -30,6 +30,7 @@ read when the function executes. `.env.example` documents all of them.
 | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` / `_SIGN_UP_URL` | Clerk routing | build+runtime | ✅ | ✅ | ✅ | `/sign-in`, `/sign-up`. |
 | `ANTHROPIC_API_KEY` | email + Bree-intent classifiers | runtime | ✅ | ✅ | ✅ (`.env`) | Sensitive. **Confirmed added by operator 2026-07-14** (brandvault-asos project only; Prod + Preview). Did NOT exist in any Vercel scope before then — so the deployed email classifier had never run live. Absent → email classifier throws (email stays `pending`); intent → graceful `unsupported`. Read ONLY from env (SDK default `new Anthropic()`), no other source. |
 | `EMAIL_CLASSIFIER_MODEL` | model override | runtime | opt | opt | opt | default `claude-sonnet-4-6`. |
+| `AUTO_ACT_REGISTRATION` | promote registration_certificate back to auto-act | runtime | opt | opt | opt | **Unset/`false` = propose-and-approve (default).** `true` = a HIGH-confidence registration certificate writes `status→Registered` directly (pre-revision behaviour). `renewal_confirmation` is **never** auto — no flag promotes it. |
 | `BREE_INTENT_MODEL` | model override | runtime | opt | opt | opt | default `claude-haiku-4-5`. |
 | `SLACK_CLIENT_ID` / `SLACK_CLIENT_SECRET` / `SLACK_SIGNING_SECRET` | Bree OAuth + slash-signature verify | runtime | ✅ | opt | ✅ | Slash/OAuth work where set. |
 | `NEXT_PUBLIC_APP_URL` | deep-link + Bree icon base URL | build+runtime | opt | opt | opt | default `https://brandvault-asos.vercel.app`. |
@@ -85,21 +86,53 @@ Fixes that session: slash-command cold-start timeout (ack immediately, deliver
 via Slack `response_url` using `@vercel/functions` `waitUntil`); enterprise tone
 (decorative emoji removed); Bree app icon on every message (self-hosted
 `public/bree-icon.png` as `icon_url`, so digests/alerts match the slash-reply
-avatar). Deferred in Phase 3: approval-flow foundation is a stub
-(`/api/slack/interactivity` verifies + acks, but no buttons post to AuditLog
-yet); SMTP email channel not wired (alerts count and skip email gracefully).
+avatar). SMTP email channel not wired (alerts count and skip email gracefully).
+
+The Phase-3 approval-flow foundation is now **live for inbound mutations**
+(2026-07-14): `/api/slack/interactivity` handles real Approve/Reject buttons —
+see the Phase 4 note below. SMTP email channel still not wired.
 
 1. Backend + Auth + Platform Admin — ✅
 2. Platform Admin tools + Mark Editing (bulk entry, completeness) — ✅
 3. Bree (Slack) + alerts — ✅ live-verified (Slack; SMTP email deferred)
 4. Email Integration (Bree Inbound) — ✅ forwarding-address ingestion
    (Postmark) → content-first classification (Claude, claude-sonnet-4-6) →
-   HIGH-confidence auto-actions + renewal reconciliation → Bree Slack alerts →
-   /inbox human review with corpus feedback. Every auto-action audited as
-   actor="Bree". Spec: `brandvault-phase4-email-integration.txt`.
+   route by confidence + reconcile renewals → Bree Slack alerts →
+   /inbox human review with corpus feedback. Spec:
+   `brandvault-phase4-email-integration.txt`.
+
+   **Auto-act design — REVISED 2026-07-14 (propose-and-approve).** The original
+   "HIGH-confidence auto-actions" design let a matched HIGH-confidence email
+   mutate mark data directly (audit + alert happened *after* the write). This is
+   superseded because the write, not just the notice, is what matters:
+   - `renewal_confirmation` **never** auto-completes a renewal deadline — a
+     wrongly-completed renewal silently silences a live obligation, the worst
+     failure this product can produce. It always creates a pending `Approval`
+     and posts a Slack Approve/Reject message; the deadline is completed only on
+     approval, audited with proposer (`Bree`) **and** approver (`Slack:<user>`).
+   - `registration_certificate` uses the same gate by default, behind
+     `AUTO_ACT_REGISTRATION` (see env table) so it can be promoted back to
+     auto-act once HIGH-confidence precision on real mail is measured.
+   - `renewal_reminder` is reconcile-only (reads + alerts, no mutation) and
+     stays automatic. Alert-only types (examination/opposition/etc.) unchanged.
+   Mechanism: `lib/approvals.ts` (propose/apply/reject, optimistic-lock
+   idempotent) · `lib/email-config.ts` (`autoActEnabled`) · `Approval` model +
+   `inbound_emails.status = 'awaiting_approval'` · `/api/slack/interactivity`.
 
 Post-MEV, not started: 5. CSV self-service import · 6. Bree command surface
 expansion · 7. Multi-jurisdiction rules + teams.
+
+## Outstanding / deferred
+
+- **Inbound sender verification (security).** Nothing currently confirms an
+  inbound email actually came from a registry. `POSTMARK_INBOUND_SECRET`
+  authenticates the *webhook* (Postmark → us), not the *sender* — a spoofed
+  "registry" email forwarded to a company's Bree address would be classified and
+  could drive an approval prompt. Before real customers: verify sender (SPF/DKIM
+  pass on the original, allow-list registry domains, or a trusted-forwarder
+  check) and surface unverified senders in the approval/review UI.
+- SMTP email alert channel not wired (alerts count + skip email gracefully).
+- Shared Preview/Prod Azure DB — separate before the first external customer.
 
 ## Naming
 
