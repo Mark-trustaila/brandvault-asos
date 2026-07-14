@@ -101,6 +101,16 @@ describe('bree message formatters', () => {
     expect(m.text).toContain('30');
   });
 
+  it('appLink adds a "See in app →" footer link; absent by default', () => {
+    const without = bree.renewalAlert({ markText: 'ASOS', registry: 'UKIPO', type: 'Renewal', dueDate: '2026-09-01', daysRemaining: 30 });
+    const footerOf = (m: { blocks: unknown[] }) => (m.blocks[m.blocks.length - 1] as { elements: { text: string }[] }).elements[0].text;
+    expect(footerOf(without)).toBe('Bree · BrandVault'); // unchanged when no link
+    const withLink = bree.renewalAlert({ markText: 'ASOS', registry: 'UKIPO', type: 'Renewal', dueDate: '2026-09-01', daysRemaining: 30, appLink: 'https://x/?notification=abc' });
+    expect(footerOf(withLink)).toContain('See in app →');
+    expect(footerOf(withLink)).toContain('https://x/?notification=abc');
+    expect(footerOf(withLink)).toContain('Bree · BrandVault'); // signature preserved
+  });
+
   it('markStatusMsg lists one line per registry and summarises the count', () => {
     const m = bree.markStatusMsg({
       query: 'asos',

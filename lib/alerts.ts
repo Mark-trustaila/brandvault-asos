@@ -6,6 +6,7 @@
 import { prisma } from './db';
 import { postToSlack } from './slack';
 import * as bree from './bree-messages';
+import { createNotification } from './notifications';
 
 export const DEFAULT_THRESHOLDS = [180, 90, 30];
 
@@ -64,7 +65,7 @@ export async function sendBree(companyId: string, msg: { text: string; blocks?: 
  */
 export async function notifyStatusChange(
   companyId: string,
-  mark: { markText: string; registryName: string },
+  mark: { id: string; markText: string; registryName: string },
   from: string,
   to: string
 ): Promise<void> {
@@ -72,7 +73,15 @@ export async function notifyStatusChange(
   try {
     const p = await prisma.alertPreference.findUnique({ where: { companyId } });
     if (!p?.slackEnabled || !p.slackBotToken || !p.slackChannelId) return;
-    await postToSlack(p.slackBotToken, p.slackChannelId, bree.statusChange({ markText: mark.markText, registry: mark.registryName, from, to }));
+    const notif = await createNotification({
+      companyId,
+      trademarkId: mark.id,
+      type: 'status_change',
+      title: 'Status changed',
+      body: `${mark.markText} (${mark.registryName}): ${from} → ${to}`,
+    });
+    const res = await postToSlack(p.slackBotToken, p.slackChannelId, bree.statusChange({ markText: mark.markText, registry: mark.registryName, from, to, appLink: notif.link }));
+    if (!res.ok) await prisma.notification.delete({ where: { id: notif.id } }).catch(() => {});
   } catch {
     /* best-effort */
   }
@@ -113,12 +122,21 @@ export async function runDailyAlerts(now = new Date()): Promise<Summary> {
       const flag = FLAG_FIELDS[Math.min(bucket, FLAG_FIELDS.length - 1)];
       if ((d as Record<string, unknown>)[flag]) continue; // already alerted at this threshold
 
+      const dueDate = d.dueDate.toISOString().slice(0, 10);
+      const notif = await createNotification({
+        companyId: p.companyId,
+        trademarkId: d.trademark.id,
+        type: 'renewal_alert',
+        title: 'Renewal approaching',
+        body: `${d.type} for ${d.trademark.markText} (${d.trademark.registryName}) due ${dueDate} — ${days} days`,
+      });
       const msg = bree.renewalAlert({
         markText: d.trademark.markText,
         registry: d.trademark.registryName,
         type: d.type,
-        dueDate: d.dueDate.toISOString().slice(0, 10),
+        dueDate,
         daysRemaining: days,
+        appLink: notif.link,
       });
       const res = await postToSlack(token, channel, msg);
       if (res.ok) {
@@ -126,6 +144,8 @@ export async function runDailyAlerts(now = new Date()): Promise<Summary> {
         for (let i = 0; i <= bucket && i < FLAG_FIELDS.length; i++) data[FLAG_FIELDS[i]] = true;
         await prisma.deadline.update({ where: { id: d.id }, data });
         out.alertsSent++;
+      } else {
+        await prisma.notification.delete({ where: { id: notif.id } }).catch(() => {});
       }
     }
 
@@ -138,8 +158,15 @@ export async function runDailyAlerts(now = new Date()): Promise<Summary> {
         daysRemaining: daysUntil(u.dueDate, now),
       }));
       const company = await prisma.company.findUnique({ where: { id: p.companyId } });
-      const res = await postToSlack(token, channel, bree.weeklyDigest({ companyName: company?.name ?? 'your portfolio', upcoming }));
+      const notif = await createNotification({
+        companyId: p.companyId,
+        type: 'digest',
+        title: 'Weekly digest',
+        body: `${upcoming.length} upcoming deadline${upcoming.length === 1 ? '' : 's'}`,
+      });
+      const res = await postToSlack(token, channel, bree.weeklyDigest({ companyName: company?.name ?? 'your portfolio', upcoming, appLink: notif.link }));
       if (res.ok) out.digests++;
+      else await prisma.notification.delete({ where: { id: notif.id } }).catch(() => {});
     }
 
     // Email channel — deliberately skipped until SMTP is configured.

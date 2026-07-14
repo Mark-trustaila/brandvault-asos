@@ -276,7 +276,7 @@ function Timeline({ trademark }: { trademark: Trademark }) {
 }
 
 export default function DetailPanel() {
-  const { selectedTrademark, setSelectedTrademark, setEditTarget } = useDashboard();
+  const { selectedTrademark, setSelectedTrademark, setEditTarget, breeOpen } = useDashboard();
 
   if (!selectedTrademark) return null;
 
@@ -286,7 +286,8 @@ export default function DetailPanel() {
   return (
     <div className={`${styles.overlay} ${styles.overlayOpen}`}>
       <div className={styles.backdrop} onClick={() => setSelectedTrademark(null)} />
-      <div className={styles.panel}>
+      {/* When the Bree panel (360px, right:0) is open, sit alongside it, not over it. */}
+      <div className={styles.panel} style={breeOpen ? { right: 360 } : undefined}>
         <div className={styles.header}>
           <div className={styles.headerBadge} style={{ backgroundColor: BADGE_COLORS[0] }}>
             {selectedTrademark.mark_text.slice(0, 2).toUpperCase()}

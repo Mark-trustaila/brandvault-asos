@@ -56,6 +56,8 @@ model Company {
   auditLogs       AuditLog[]
   alertPreference AlertPreference?
   inboundEmails   InboundEmail[]
+  notifications   Notification[]
+  breeQueryLogs   BreeQueryLog[]
 
   @@map("companies")
 }
@@ -72,6 +74,8 @@ model User {
   platformAdmin PlatformAdmin?
   notes         Note[]
   auditLogs     AuditLog[]
+  notificationReads NotificationRead[]
+  breeQueryLogs     BreeQueryLog[]
 
   @@index([companyId])
   @@map("users")
@@ -141,6 +145,8 @@ model Trademark {
   notes         Note[]
   deadlines     Deadline[]
   inboundEmails InboundEmail[]
+  notifications Notification[]
+  breeQueryLogs BreeQueryLog[]
 
   // company_id is stored on the mark directly (not only via family) so
   // portfolio queries don't need a join. Both FKs indexed.
@@ -303,4 +309,76 @@ model EmailAttachment {
 
   @@index([inboundEmailId])
   @@map("email_attachments")
+}
+
+// Phase 4b (Bree see-in-app). One row per alert Bree actually sends, so the same
+// events surface in the in-app Bree panel. Written by the alert job / status
+// change / digest at send time; the deep link is /?notification={id}. The
+// Deadline.alert_*_sent flags remain the dedupe mechanism (unchanged).
+enum NotificationType {
+  renewal_alert
+  status_change
+  digest
+}
+
+enum NotificationChannel {
+  slack
+  email
+}
+
+model Notification {
+  id          String              @id @default(cuid())
+  companyId   String              @map("company_id")
+  trademarkId String?             @map("trademark_id")
+  type        NotificationType
+  title       String
+  body        String              @db.Text
+  channel     NotificationChannel
+  createdAt   DateTime            @default(now()) @map("created_at")
+
+  company   Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  trademark Trademark?         @relation(fields: [trademarkId], references: [id], onDelete: SetNull)
+  reads     NotificationRead[]
+
+  @@index([companyId, createdAt])
+  @@map("notifications")
+}
+
+// Per-user read state; unread = a company notification with no read for the user.
+model NotificationRead {
+  id             String   @id @default(cuid())
+  notificationId String   @map("notification_id")
+  userId         String   @map("user_id")
+  readAt         DateTime @default(now()) @map("read_at")
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, userId])
+  @@index([userId])
+  @@map("notification_reads")
+}
+
+// Phase 4b (Bree see-in-app). One row per WEB free-text query, after the
+// intent classifier runs. Includes unsupported results and API-failure
+// fallbacks (fallback=true, resolved_intent='unsupported'). Evidence for a
+// future Phase 5 (what people actually ask). Slack slash commands are NOT
+// logged here — they never pass through the classifier.
+model BreeQueryLog {
+  id                 String   @id @default(cuid())
+  companyId          String   @map("company_id")
+  userId             String   @map("user_id")
+  inputText          String   @db.Text @map("input_text")
+  resolvedIntent     String   @map("resolved_intent")
+  matchedTrademarkId String?  @map("matched_trademark_id")
+  latencyMs          Int      @map("latency_ms")
+  fallback           Boolean  @default(false)
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  trademark Trademark? @relation(fields: [matchedTrademarkId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, createdAt])
+  @@map("bree_query_logs")
 }

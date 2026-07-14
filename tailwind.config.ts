@@ -29,6 +29,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Bree's identity accent (indigo) — used only for Bree UI (toggle,
+        // panel header, response marks) so she reads consistently with Slack.
+        bree: '#4F46E5',
+        'bree-hover': '#4338CA',
         // Warm-grey neutrals (the Notion-style base used across the dashboard)
         ink: {
           DEFAULT: '#37352f', // primary text
