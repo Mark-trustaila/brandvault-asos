@@ -89,15 +89,17 @@
   flex-shrink: 0;
 }
 
-.renewalInfo { flex: 1; }
-.renewalTitle { font-size: 13px; font-weight: 500; color: #37352f; }
-.renewalSub { font-size: 11px; color: #9b9a97; }
+.renewalInfo { flex: 1; min-width: 0; }
+.renewalTitle { font-size: 13px; font-weight: 500; color: #37352f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.renewalSub { font-size: 11px; color: #9b9a97; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .renewalDays {
   font-size: 11px;
   font-weight: 600;
   padding: 3px 8px;
   border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .emptyState {
