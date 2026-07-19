@@ -9,7 +9,7 @@
 }
 
 .left { display: flex; align-items: center; gap: 16px; }
-.right { display: flex; align-items: center; gap: 8px; }
+.right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
 .breadcrumb {
   display: flex;

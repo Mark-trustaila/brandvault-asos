@@ -32,6 +32,18 @@ export function PlatformAdminBar() {
   const [open, setOpen] = useState(false);
   const [entries, setEntries] = useState<AuditEntry[]>([]);
   const [orgs, setOrgs] = useState<ClerkOrg[] | null>(null);
+  const [collapsed, setCollapsed] = useState(false); // default expanded; SSR-safe
+
+  // Restore the per-session collapsed preference on the client (after hydration).
+  useEffect(() => {
+    setCollapsed(sessionStorage.getItem('bv:adminBarCollapsed') === '1');
+  }, []);
+  const toggleCollapsed = () =>
+    setCollapsed((c) => {
+      const next = !c;
+      sessionStorage.setItem('bv:adminBarCollapsed', next ? '1' : '0');
+      return next;
+    });
 
   useEffect(() => {
     setActingId(getActingCompany()?.id ?? null);
@@ -110,59 +122,76 @@ export function PlatformAdminBar() {
   };
 
   return (
-    <div className="fixed bottom-3 left-3 z-50 font-sans">
-      <div className="flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 shadow-sm">
-        <span className="rounded bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand">Platform admin</span>
-        <select
-          value={currentId}
-          onChange={onSelect}
-          className="max-w-[190px] rounded border border-line bg-surface px-1.5 py-0.5 text-xs text-ink"
-          title="Act on a company"
-        >
-          {companies.length === 0 && <option value={homeId}>{me.company?.name ?? '—'}</option>}
-          {companies.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.id === homeId ? `${c.name} (my org)` : c.name} · {c.trademarkCount}
-            </option>
-          ))}
-        </select>
+    <div className="fixed bottom-4 left-[calc(var(--sidebar-width)+1rem)] z-50 font-sans">
+      <div className="flex flex-wrap items-center gap-1 rounded-full border border-white/[0.06] bg-admin px-1.5 py-1 text-slate-200 shadow-lg">
+        {/* Badge doubles as the collapse toggle: click to fold the bar to the badge alone. */}
         <button
-          onClick={createCompany}
-          className="text-xs text-ink-muted transition-colors hover:text-ink"
+          onClick={toggleCollapsed}
+          title={collapsed ? 'Expand admin controls' : 'Collapse to badge'}
+          className="rounded-full bg-[#1B2A4E] px-2.5 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-slate-200"
         >
-          + Company
+          Platform admin
         </button>
-        <a href="/admin/bulk" className="text-xs text-ink-muted transition-colors hover:text-ink">
-          Enter marks
-        </a>
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="text-xs text-ink-muted transition-colors hover:text-ink"
-        >
-          {open ? 'Hide activity' : 'Activity'}
-        </button>
+        {!collapsed && (
+          <>
+            <div className="relative">
+              <select
+                value={currentId}
+                onChange={onSelect}
+                title="Act on a company"
+                className="max-w-[190px] cursor-pointer appearance-none rounded-full bg-transparent py-1 pl-2 pr-5 text-xs text-slate-200 transition-colors hover:bg-white/[0.08] focus:outline-none"
+              >
+                {companies.length === 0 && <option value={homeId}>{me.company?.name ?? '—'}</option>}
+                {companies.map((c) => (
+                  <option key={c.id} value={c.id} className="text-ink">
+                    {c.id === homeId ? `${c.name} (my org)` : c.name} · {c.trademarkCount}
+                  </option>
+                ))}
+              </select>
+              <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[9px] text-slate-400">▾</span>
+            </div>
+            <button
+              onClick={createCompany}
+              className="rounded-full px-2.5 py-1 text-xs text-slate-200 transition-colors hover:bg-white/[0.08]"
+            >
+              + Company
+            </button>
+            <a
+              href="/admin/bulk"
+              className="rounded-full px-2.5 py-1 text-xs text-slate-200 transition-colors hover:bg-white/[0.08]"
+            >
+              Enter marks
+            </a>
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className="rounded-full px-2.5 py-1 text-xs text-slate-200 transition-colors hover:bg-white/[0.08]"
+            >
+              {open ? 'Hide activity' : 'Activity'}
+            </button>
+          </>
+        )}
       </div>
 
-      {crossTenant && (
-        <div className="mt-1 inline-block rounded bg-brand/10 px-2 py-0.5 text-[11px] text-brand">
+      {!collapsed && crossTenant && (
+        <div className="mt-1.5 inline-block rounded-full border border-white/[0.06] bg-admin px-2.5 py-0.5 text-[11px] text-slate-400 shadow-lg">
           Acting cross-tenant
         </div>
       )}
 
-      {current && !current.linked && (
-        <div className="mt-1 rounded-md border border-line bg-surface p-2 text-xs shadow-sm">
-          <span className="text-ink-muted">“{current.name}” isn’t linked to a Clerk org — customers won’t see it on login. </span>
+      {!collapsed && current && !current.linked && (
+        <div className="mt-1.5 rounded-xl border border-white/[0.06] bg-admin p-2.5 text-xs text-slate-200 shadow-lg">
+          <span className="text-slate-400">“{current.name}” isn’t linked to a Clerk org — customers won’t see it on login. </span>
           {orgs === null ? (
-            <button onClick={openLink} className="text-brand hover:underline">Link to org</button>
+            <button onClick={openLink} className="text-slate-200 underline-offset-2 hover:underline">Link to org</button>
           ) : (
             <select
-              className="ml-1 rounded border border-line bg-surface px-1 py-0.5 text-xs"
+              className="ml-1 cursor-pointer rounded-full bg-transparent px-1.5 py-0.5 text-xs text-slate-200 hover:bg-white/[0.08] focus:outline-none"
               defaultValue=""
               onChange={(e) => doLink(e.target.value)}
             >
-              <option value="" disabled>Select org…</option>
+              <option value="" disabled className="text-ink">Select org…</option>
               {orgs.map((o) => (
-                <option key={o.id} value={o.id} disabled={!!o.linkedTo}>
+                <option key={o.id} value={o.id} disabled={!!o.linkedTo} className="text-ink">
                   {o.name}{o.linkedTo ? ` (linked: ${o.linkedTo})` : ''}
                 </option>
               ))}
@@ -171,21 +200,21 @@ export function PlatformAdminBar() {
         </div>
       )}
 
-      {open && (
-        <div className="mt-2 max-h-96 w-96 overflow-y-auto rounded-md border border-line bg-surface p-3 shadow-lg">
-          <div className="mb-2 text-xs font-semibold text-ink">Activity log</div>
+      {!collapsed && open && (
+        <div className="mt-2 max-h-96 w-96 overflow-y-auto rounded-xl border border-white/[0.06] bg-admin p-3 text-slate-200 shadow-lg">
+          <div className="mb-2 text-xs font-semibold text-slate-200">Activity log</div>
           {entries.length === 0 ? (
-            <div className="text-xs text-ink-muted">No activity yet</div>
+            <div className="text-xs text-slate-400">No activity yet</div>
           ) : (
             <ul className="space-y-2">
               {entries.map((e) => (
-                <li key={e.id} className="border-b border-line pb-2 text-xs last:border-0 last:pb-0">
+                <li key={e.id} className="border-b border-white/[0.06] pb-2 text-xs last:border-0 last:pb-0">
                   <div>
-                    <span className="font-medium text-ink">{e.actor}</span>
-                    <span className="text-ink-muted"> · {e.action}</span>
+                    <span className="font-medium text-slate-200">{e.actor}</span>
+                    <span className="text-slate-400"> · {e.action}</span>
                   </div>
-                  {e.reason && <div className="text-ink-muted">“{e.reason}”</div>}
-                  <div className="text-ink-subtle">{new Date(e.date).toLocaleString('en-GB')}</div>
+                  {e.reason && <div className="text-slate-400">“{e.reason}”</div>}
+                  <div className="text-slate-500">{new Date(e.date).toLocaleString('en-GB')}</div>
                 </li>
               ))}
             </ul>

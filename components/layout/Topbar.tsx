@@ -1,6 +1,7 @@
 'use client';
 import styles from './Topbar.module.css';
 import { useDashboard } from '../../context/DashboardContext';
+import { AuthControls } from '../auth/AuthControls';
 const IconReport = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{display:'inline-block', verticalAlign:'middle', marginRight:4}}>
     <line x1="18" y1="20" x2="18" y2="10"/>
@@ -25,6 +26,7 @@ export default function Topbar() {
         <button className={styles.btn} onClick={() => setShowReport(true)}><IconReport /> Report</button>
         <button className={`${styles.btn} ${styles.btnDisabled}`}>⚙ Settings</button>
         <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => setEditTarget('new')}>+ New mark</button>
+        <AuthControls />
       </div>
     </header>
   );

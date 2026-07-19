@@ -14,7 +14,6 @@ import ByRegistryTab from '../components/tabs/ByRegistryTab';
 import DetailPanel from '../components/detail/DetailPanel';
 import ReportPanel from '../components/report/ReportPanel';
 import { MarkEditForm } from '../components/detail/MarkEditForm';
-import { AuthControls } from '../components/auth/AuthControls';
 import { PlatformAdminBar } from '../components/admin/PlatformAdminBar';
 import BreeWidget from '../components/bree/BreeWidget';
 import { bvFetch } from '../lib/client/acting-company';
@@ -31,7 +30,6 @@ function Dashboard() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif", fontSize: 14, color: '#37352f' }}>
-      <AuthControls />
       <PlatformAdminBar />
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
