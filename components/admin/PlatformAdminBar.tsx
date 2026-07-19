@@ -110,8 +110,8 @@ export function PlatformAdminBar() {
   };
 
   return (
-    <div className="fixed bottom-3 left-3 z-50 font-sans">
-      <div className="flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-1.5 shadow-sm">
+    <div className="fixed bottom-3 left-[252px] z-50 font-sans">
+      <div className="flex flex-wrap items-center gap-2 max-w-2xl rounded-md border border-line bg-surface px-3 py-1.5 shadow-sm">
         <span className="rounded bg-brand/10 px-2 py-0.5 text-xs font-medium text-brand">Platform admin</span>
         <select
           value={currentId}
