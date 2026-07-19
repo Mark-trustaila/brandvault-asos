@@ -36,7 +36,7 @@ const config: Config = {
         // Platform-admin (operator) chrome — its own deep navy/blue-black so
         // founder/operator tooling reads as distinct from product UI. Chosen to
         // NOT collide with the Bree indigo above, and not to be a stock slate.
-        admin: '#0B1220',
+        admin: '#101C3A',
         // Warm-grey neutrals (the Notion-style base used across the dashboard)
         ink: {
           DEFAULT: '#37352f', // primary text

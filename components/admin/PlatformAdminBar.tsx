@@ -128,7 +128,7 @@ export function PlatformAdminBar() {
         <button
           onClick={toggleCollapsed}
           title={collapsed ? 'Expand admin controls' : 'Collapse to badge'}
-          className="rounded-full bg-slate-800 px-2.5 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-slate-200"
+          className="rounded-full bg-[#1B2A4E] px-2.5 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-slate-200"
         >
           Platform admin
         </button>
