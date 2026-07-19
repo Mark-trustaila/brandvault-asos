@@ -8,3 +8,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Single source for the fixed sidebar width. Consumed by the sidebar itself
+     and by the floating platform-admin bar's left offset, so the bar clears the
+     sidebar without hardcoding the width in two places. */
+  --sidebar-width: 240px;
+}

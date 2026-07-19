@@ -1,6 +1,6 @@
 .sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
   background: #fbfbfa;
   border-right: 1px solid #e8e5e0;
   display: flex;
