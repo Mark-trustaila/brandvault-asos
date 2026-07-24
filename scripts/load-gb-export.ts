@@ -1,98 +1,132 @@
 /**
- * SKELETON — loads a live-GB registry export into the BrandVault schema.
- * =====================================================================
- * Status: structure only. It parses, maps, counts and reports. It does NOT
- * write, and the status-mapping table below is deliberately unfilled.
+ * Transforms a live-GB registry export into the BrandVault schema shape.
+ * ======================================================================
+ * Reports only. There is no write path in this file — no Prisma write call, no
+ * --write flag. The load itself runs only after the plan in
+ * docs/gb-load-plan.md is approved.
  *
- *   npx tsx scripts/load-gb-export.ts <export.json>          # parse + report
- *   npx tsx scripts/load-gb-export.ts <export.json> --json
+ *   npx tsx scripts/load-gb-export.ts ~/lawpanel/scratch/exports/asos-gb-20260724.json
+ *   npx tsx scripts/load-gb-export.ts <export.json> --json    # full mapped output
+ *   npx tsx scripts/load-gb-export.ts <export.json> --excluded  # show what's skipped
  *
- * There is no --write flag and no Prisma write call anywhere in this file. The
- * load itself is not implemented, because two of its inputs do not exist yet:
- *
- *   1. The real export file. Field names, date formats and the actual status
- *      vocabulary are assumptions until a real file is in hand — the interface
- *      below is written from the agreed export spec, not from observed data.
- *   2. An approved load plan. The 33 fabricated UKIPO marks currently in the
- *      database have children (Deadline, Notification, GoodsService, AuditLog,
- *      and possibly Note / InboundEmail / Approval / BreeQueryLog rows). How
- *      each is treated — deleted with its mark, re-pointed, or left alone — is
- *      a decision for review, not something to infer here.
- *
- * Preview and Production share one Azure database, so nothing in this path
- * writes without that plan being signed off first.
+ * Source shape is verbatim GB registry XML flattened to JSON: dates arrive as a
+ * path/value list, applicants and representatives as field/value pair groups,
+ * and mark_text as a list (a mark may have no verbal element at all).
  */
 import { readFileSync } from 'node:fs';
 import { MarkStatus } from '@prisma/client';
+import { getObligationsForTrademark } from '../lib/utils';
+import type { Trademark } from '../types/trademark';
 
 /* ─────────────────────────────────────────────────────────────────
- * Expected export record.
+ * Load scope: applicant-owned marks only.
  *
- * From the agreed export spec: raw registry truth, nothing transformed. Every
- * field is optional because incomplete records are first-class in this schema
- * (minimum required: mark_text, registry_name, status) and the loader must not
- * reject a mark for missing dates — it flags needsData instead.
- *
- * VERIFY AGAINST THE REAL FILE before trusting any of these names.
+ * The export is the result of one ft:search over BOTH the owner and the
+ * representative companion indexes, so it also contains marks where ASOS is
+ * merely the representative on someone else's mark (EIGHT PAW PROJECTS,
+ * Crooked Tongues, Covetique) and a same-name third party (Shenzhen asos
+ * E-Commerce). Those are real register facts but they are not ASOS's portfolio,
+ * so they are reported and skipped, never loaded.
  * ───────────────────────────────────────────────────────────────── */
-interface ExportRecord {
-  application_number?: string;
-  mark_text?: string;
-  /** Verbatim registry vocabulary, unmapped. Drives STATUS_MAP below. */
-  status?: string;
-  application_date?: string;
-  registration_date?: string;
-  expiry_date?: string;
-  publication_date?: string;
-  /** Owner / representative as they appear in the register. */
-  owner_name?: string;
-  owner_country?: string;
-  representative_name?: string;
-  representative_reference?: string;
-  goods_services?: Array<{ class_number?: number; text?: string }>;
-  /** UK000 / UK008 / UK009 — present in the export, re-derived here as a check. */
-  series_prefix?: string;
-  [k: string]: unknown;
-}
+const APPLICANTS_IN_SCOPE = new Set(['ASOS plc', 'ASOS HOLDINGS LIMITED']);
 
 /* ─────────────────────────────────────────────────────────────────
- * STATUS MAPPING — FILL IN AFTER READING THE REAL EXPORT.
+ * STATUS MAPPING
  *
- * Left empty on purpose. The distinct status values are a *finding* of the
- * export (report item 3), not something to guess: a mapping table invented
- * ahead of the data looks authoritative and would be reviewed as if it were
- * real. Populate from the reported distinct values, then review.
+ * Source vocabulary (all four values present in this export, verified against
+ * TradeMark/IPOPublicMarkCurrentStatusCode, which agrees on all 173 marks):
  *
- * Rules this table must satisfy:
- *   - Conservative. Where a registry value could mean either a live or a dead
- *     mark, map to the one that keeps an obligation visible. A mark wrongly
- *     shown as dead silences a renewal deadline — the worst failure this
- *     product can produce.
- *   - Total. Every distinct value in the export gets an explicit entry. An
- *     unmapped value aborts the load rather than defaulting.
- *   - Lossless in practice. The verbatim string is preserved in
- *     registry_status_raw regardless of what it maps to.
+ *   Registered · Withdrawn · Application Published · Examination
  *
- * Enum values available: Registered · Pending · Published · Expired · Abandoned
+ * Total:        every value above has an explicit entry; anything unrecognised
+ *               is reported and would abort the load rather than defaulting.
+ * Conservative: the two live-but-not-yet-registered states map to live enum
+ *               values (Published / Pending), so a pending mark keeps showing
+ *               up in the portfolio and in completeness prompts. Nothing maps
+ *               to a dead value unless the register says the mark is dead.
+ * Lossless:     the verbatim string is written to registry_status_raw for all
+ *               rows regardless of what it maps to.
  *
- * Example of the intended shape (NOT a proposal — do not adopt unreviewed):
- *   'Registered': MarkStatus.Registered,
- *   'Dead':       ???  // Expired vs Abandoned — depends on why it died
+ * Note on Withdrawn → Abandoned: a withdrawn UK application never registered,
+ * so it carries no renewal obligation, and all 6 such marks here have neither a
+ * registration date nor an expiry date — the deadline engine produces nothing
+ * for them either way. Abandoned is the only enum value that means "the
+ * applicant stopped pursuing it", which is what Withdrawn is.
  * ───────────────────────────────────────────────────────────────── */
 const STATUS_MAP: Record<string, MarkStatus> = {
-  // TODO — populate from the export's distinct status values, then review.
+  Registered: MarkStatus.Registered,
+  Withdrawn: MarkStatus.Abandoned,
+  'Application Published': MarkStatus.Published,
+  Examination: MarkStatus.Pending,
 };
 
-/* ─────────────────────────────────────────────────────────────────
- * Transform
- * ───────────────────────────────────────────────────────────────── */
+/** Stand-in for figurative marks with no verbal element — see the load plan. */
+const NO_VERBAL_ELEMENT = '[device mark — no verbal element]';
+
+/* ── source types ─────────────────────────────────────────────── */
+interface FieldPair { field: string; value: string }
+interface ExportMark {
+  application_number: string;
+  mark_text: string[];
+  status: string;
+  series_prefix: string;
+  mark_feature: string;
+  kind_mark: string;
+  doc_name: string;
+  node_id: string;
+  matched_via: string[];
+  matched_owner_strings: string[];
+  dates: Array<{ path: string; value: string }>;
+  goods_services: Array<{ class_number: string; description: string; language_code?: string }>;
+  applicants: FieldPair[][];
+  representatives: FieldPair[][];
+  all_leaf_elements: Array<{ path: string; value: string }>;
+}
+
+/* ── helpers ──────────────────────────────────────────────────── */
+const clean = (v: unknown): string | null => {
+  const s = typeof v === 'string' ? v.trim() : '';
+  return s.length ? s : null;
+};
+
+/**
+ * Take the registry's CALENDAR date, not an instant.
+ *
+ * GB dates arrive in three forms: '2034-07-15Z', '1979-11-13T00:00:00.000Z'
+ * and '1969-07-15T00:00:00.000+01:00'. Parsing the last one with `new Date()`
+ * yields 1969-07-14T23:00Z — the date moves back a day, because BST is +01:00.
+ * 96 of the 173 in-scope marks carry at least one such date, so this is the
+ * common case, not an edge case. A trademark date is a calendar date on the
+ * register, so we take the leading YYYY-MM-DD and pin it to UTC midnight.
+ */
+const regDate = (v: unknown): Date | null => {
+  const s = clean(v);
+  if (!s) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s);
+  if (!m) return null;
+  const d = new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00.000Z`);
+  return Number.isNaN(d.getTime()) ? null : d;
+};
+
+const dateAt = (mk: ExportMark, suffix: string): Date | null =>
+  regDate(mk.dates.find((d) => d.path.endsWith(suffix))?.value);
+
+const pair = (groups: FieldPair[][], suffix: string): string | null => {
+  for (const g of groups) for (const f of g) if (f.field.endsWith(suffix)) return clean(f.value);
+  return null;
+};
+
+const applicantNames = (mk: ExportMark): string[] =>
+  mk.applicants.flatMap((g) => g.filter((f) => f.field.endsWith('Applicant/Name')).map((f) => f.value));
+
+/* ── target shape ─────────────────────────────────────────────── */
 interface MappedMark {
   markText: string;
-  registryName: 'UKIPO';
-  status: MarkStatus | null;
-  /** Verbatim registry status — needs the pending registry_status_raw column. */
-  registryStatusRaw: string | null;
-  applicationNumber: string | null;
+  markTextSynthesised: boolean;
+  registryName: string;
+  status: MarkStatus;
+  registryStatusRaw: string;
+  applicationNumber: string;
   registrationNumber: string | null;
   filingDate: Date | null;
   registrationDate: Date | null;
@@ -102,151 +136,130 @@ interface MappedMark {
   ownerCountry: string | null;
   representativeName: string | null;
   representativeReference: string | null;
-  goodsServices: Array<{ classNumber: number | null; text: string | null }>;
-  seriesPrefix: string | null;
-  /** Set when a date the deadline engine needs is missing. */
+  clientAgentName: string | null;
   needsData: boolean;
+  seriesPrefix: string;
+  goodsServices: Array<{ classNumber: number; description: string }>;
+  projectedDeadlines: number;
 }
 
-const str = (v: unknown): string | null => {
-  const s = typeof v === 'string' ? v.trim() : '';
-  return s.length ? s : null;
-};
+function transform(mk: ExportMark): MappedMark {
+  const filingDate = dateAt(mk, 'TradeMark/ApplicationDateTime');
+  const registrationDate = dateAt(mk, 'TradeMark/RegistrationDate');
+  const verbal = mk.mark_text.map(clean).filter((s): s is string => !!s);
 
-/** Permissive on input, explicit on failure — an unparseable date is not zero. */
-const date = (v: unknown): Date | null => {
-  const s = str(v);
-  if (!s) return null;
-  const d = new Date(s);
-  return Number.isNaN(d.getTime()) ? null : d;
-};
-
-/** UK00009… → UK009. Re-derived rather than trusted, then cross-checked. */
-const seriesOf = (appNo: string | null): string | null => {
-  if (!appNo) return null;
-  const m = /^UK(\d{3})/.exec(appNo.trim().toUpperCase());
-  return m ? `UK${m[1]}` : null;
-};
-
-function transform(rec: ExportRecord): MappedMark {
-  const applicationNumber = str(rec.application_number);
-  const filingDate = date(rec.application_date);
-  const registrationDate = date(rec.registration_date);
-  const rawStatus = str(rec.status);
+  const shaped = {
+    registry_name: 'UKIPO',
+    filing_date: filingDate ? filingDate.toISOString() : undefined,
+    registration_date: registrationDate ? registrationDate.toISOString() : undefined,
+  } as Trademark;
+  const obligations = getObligationsForTrademark(shaped);
 
   return {
-    markText: str(rec.mark_text) ?? '',
+    // A device mark genuinely has no verbal element; that is the nature of the
+    // mark, not missing data, so it does not set needsData.
+    markText: verbal[0] ?? NO_VERBAL_ELEMENT,
+    markTextSynthesised: verbal.length === 0,
     registryName: 'UKIPO',
-    status: rawStatus ? (STATUS_MAP[rawStatus] ?? null) : null,
-    registryStatusRaw: rawStatus,
-    applicationNumber,
-    // The export spec does not carry a separate registration number; GB marks
-    // reuse the application number. Confirm against the real file.
+    status: STATUS_MAP[mk.status],
+    registryStatusRaw: mk.status,
+    applicationNumber: mk.application_number,
+    // GB has no separate registration number — the application number carries
+    // through on registration. Left null rather than duplicated.
     registrationNumber: null,
     filingDate,
     registrationDate,
-    expiryDate: date(rec.expiry_date),
-    publicationDate: date(rec.publication_date),
-    ownerName: str(rec.owner_name),
-    ownerCountry: str(rec.owner_country),
-    representativeName: str(rec.representative_name),
-    representativeReference: str(rec.representative_reference),
-    goodsServices: (rec.goods_services ?? []).map((g) => ({
-      classNumber: typeof g.class_number === 'number' ? g.class_number : null,
-      text: str(g.text),
+    expiryDate: dateAt(mk, 'TradeMark/ExpiryDate'),
+    publicationDate: dateAt(mk, 'PublicationDetails/Publication/PublicationDate'),
+    ownerName: pair(mk.applicants, 'Applicant/Name'),
+    ownerCountry: pair(mk.applicants, 'Applicant/AddressBook/CountryCode'),
+    representativeName: pair(mk.representatives, 'Representative/Name'),
+    // No Representative/Reference exists in GB register data.
+    representativeReference: null,
+    clientAgentName: null,
+    needsData: obligations.some((o) => o.uncertain),
+    seriesPrefix: mk.series_prefix,
+    goodsServices: mk.goods_services.map((g) => ({
+      classNumber: Number.parseInt(g.class_number, 10),
+      description: g.description,
     })),
-    seriesPrefix: seriesOf(applicationNumber),
-    // Mirrors the deadline engine's contract: no filing and no registration
-    // date means no renewal date can be computed.
-    needsData: !filingDate && !registrationDate,
+    projectedDeadlines: obligations.filter((o) => !o.uncertain && o.dueDate).length,
   };
 }
 
-/* ─────────────────────────────────────────────────────────────────
- * Main — parse, map, report. No writes.
- * ───────────────────────────────────────────────────────────────── */
+/* ── main ─────────────────────────────────────────────────────── */
 const argv = process.argv.slice(2);
-const path = argv.find((a) => !a.startsWith('--'));
-const asJson = argv.includes('--json');
-
-if (!path) {
-  console.error('usage: npx tsx scripts/load-gb-export.ts <export.json> [--json]');
+const file = argv.find((a) => !a.startsWith('--'));
+if (!file) {
+  console.error('usage: npx tsx scripts/load-gb-export.ts <export.json> [--json] [--excluded]');
   process.exit(1);
 }
 
-const parsed: unknown = JSON.parse(readFileSync(path, 'utf8'));
+const doc = JSON.parse(readFileSync(file.replace(/^~/, process.env.HOME ?? '~'), 'utf8'));
+const header = doc.export ?? {};
+const all: ExportMark[] = doc.marks ?? [];
 
-// The export carries a header block (source, export date, UK009 coverage note)
-// alongside the marks. Accept either that or a bare array.
-const asRecord = (v: unknown): Record<string, unknown> =>
-  v && typeof v === 'object' ? (v as Record<string, unknown>) : {};
-const root = asRecord(parsed);
-const header = asRecord(root.header ?? root.meta);
-const records: ExportRecord[] = Array.isArray(parsed)
-  ? (parsed as ExportRecord[])
-  : ((root.marks ?? root.trademarks ?? root.records ?? []) as ExportRecord[]);
+const inScope = all.filter((m) => applicantNames(m).some((n) => APPLICANTS_IN_SCOPE.has(n)));
+const excluded = all.filter((m) => !inScope.includes(m));
+const mapped = inScope.map(transform);
 
-if (!Array.isArray(records) || records.length === 0) {
-  console.error(`No records found in ${path}. Top-level keys: ${Object.keys(root).join(', ') || '(none)'}`);
-  process.exit(1);
+const tally = <T>(xs: T[], k: (x: T) => string) =>
+  xs.reduce<Record<string, number>>((a, x) => ((a[k(x)] = (a[k(x)] ?? 0) + 1), a), {});
+
+const unmapped = Object.keys(tally(inScope, (m) => m.status)).filter((s) => !(s in STATUS_MAP));
+
+console.log(`\nExport:      ${file}`);
+console.log(`Source:      ${header.source ?? '(none)'}`);
+console.log(`Exported:    ${header.export_date ?? '(none)'}`);
+console.log(`GB docs:     ${header.gb_database_document_count ?? '(none)'}`);
+if (header.index_scope_caveat) console.log(`Index scope: ${header.index_scope_caveat}`);
+if (header.uk009_coverage_note) console.log(`UK009:       ${header.uk009_coverage_note}`);
+
+console.log(`\n── SCOPE ──`);
+console.log(`  marks in export        ${all.length}`);
+console.log(`  in scope (applicant)   ${inScope.length}`);
+console.log(`  excluded               ${excluded.length}`);
+for (const [k, v] of Object.entries(tally(excluded, (m) => applicantNames(m)[0] ?? '(none)')).sort())
+  console.log(`      ${k.padEnd(32)} ${v}`);
+
+console.log(`\n── STATUS MAPPING ──`);
+for (const [raw, n] of Object.entries(tally(inScope, (m) => m.status)).sort())
+  console.log(`  ${(raw in STATUS_MAP ? '✓' : '✗')} ${raw.padEnd(24)} → ${String(STATUS_MAP[raw] ?? '(UNMAPPED)').padEnd(12)} ${n}`);
+
+console.log(`\n── SERIES ──`);
+for (const [k, v] of Object.entries(tally(mapped, (m) => m.seriesPrefix)).sort())
+  console.log(`  ${k.padEnd(8)} ${v}`);
+
+console.log(`\n── ROWS OUT ──`);
+console.log(`  trademarks             ${mapped.length}`);
+console.log(`  goods_and_services     ${mapped.reduce((n, m) => n + m.goodsServices.length, 0)}`);
+console.log(`  deadlines (projected)  ${mapped.reduce((n, m) => n + m.projectedDeadlines, 0)}`);
+
+console.log(`\n── COMPLETENESS ──`);
+console.log(`  needsData                    ${mapped.filter((m) => m.needsData).length}`);
+console.log(`  synthesised mark text        ${mapped.filter((m) => m.markTextSynthesised).length}`);
+console.log(`  missing filing date          ${mapped.filter((m) => !m.filingDate).length}`);
+console.log(`  missing registration date    ${mapped.filter((m) => !m.registrationDate).length}`);
+console.log(`  missing expiry date          ${mapped.filter((m) => !m.expiryDate).length}`);
+console.log(`  with representative          ${mapped.filter((m) => m.representativeName).length}`);
+console.log(`  owner name present           ${mapped.filter((m) => m.ownerName).length}`);
+console.log(`  bad class numbers            ${mapped.reduce((n, m) => n + m.goodsServices.filter((g) => !Number.isInteger(g.classNumber)).length, 0)}`);
+
+console.log(`\n── OWNER SPLIT ──`);
+for (const [k, v] of Object.entries(tally(mapped, (m) => m.ownerName ?? '(none)')).sort())
+  console.log(`  ${k.padEnd(24)} ${v}`);
+
+if (argv.includes('--excluded')) {
+  console.log(`\n── EXCLUDED MARKS ──`);
+  for (const m of excluded)
+    console.log(`  ${m.application_number}  ${(applicantNames(m)[0] ?? '?').padEnd(30)} via ${m.matched_via.join('+')}  ${m.mark_text.join(' / ')}`);
 }
 
-const mapped = records.map(transform);
-
-const tally = <T>(xs: T[], key: (x: T) => string | null) =>
-  xs.reduce<Record<string, number>>((acc, x) => {
-    const k = key(x) ?? '(none)';
-    acc[k] = (acc[k] ?? 0) + 1;
-    return acc;
-  }, {});
-
-const bySeries = tally(mapped, (m) => m.seriesPrefix);
-const byRawStatus = tally(mapped, (m) => m.registryStatusRaw);
-const unmapped = Object.keys(byRawStatus).filter((s) => s !== '(none)' && !(s in STATUS_MAP));
-
-const summary = {
-  source: path,
-  header,
-  recordsIn: records.length,
-  mapped: mapped.length,
-  bySeries,
-  byRawStatus,
-  unmappedStatuses: unmapped,
-  needsData: mapped.filter((m) => m.needsData).length,
-  missingMarkText: mapped.filter((m) => !m.markText).length,
-  missingApplicationNumber: mapped.filter((m) => !m.applicationNumber).length,
-  withOwner: mapped.filter((m) => m.ownerName).length,
-  withRepresentative: mapped.filter((m) => m.representativeName).length,
-  goodsServiceRows: mapped.reduce((n, m) => n + m.goodsServices.length, 0),
-};
-
-if (asJson) {
-  console.log(JSON.stringify({ summary, marks: mapped }, null, 2));
-} else {
-  console.log(`\nExport: ${path}`);
-  if (Object.keys(header).length) console.log(`Header: ${JSON.stringify(header)}`);
-  console.log(`\nRecords in:            ${summary.recordsIn}`);
-  console.log(`Mapped:                ${summary.mapped}`);
-  console.log(`\nBy series prefix:`);
-  for (const [k, v] of Object.entries(bySeries).sort()) console.log(`  ${k.padEnd(8)} ${v}`);
-  console.log(`\nBy verbatim registry status:`);
-  for (const [k, v] of Object.entries(byRawStatus).sort()) {
-    console.log(`  ${(k in STATUS_MAP ? '✓' : '✗')} ${k.padEnd(28)} ${v}`);
-  }
-  console.log(`\nCompleteness:`);
-  console.log(`  needsData (no filing/registration date): ${summary.needsData}`);
-  console.log(`  missing mark_text:                       ${summary.missingMarkText}`);
-  console.log(`  missing application_number:              ${summary.missingApplicationNumber}`);
-  console.log(`  with owner:                              ${summary.withOwner}`);
-  console.log(`  with representative:                     ${summary.withRepresentative}`);
-  console.log(`  goods/services rows:                     ${summary.goodsServiceRows}`);
-}
+if (argv.includes('--json')) console.log(JSON.stringify({ header, mapped }, null, 2));
 
 if (unmapped.length) {
-  console.error(`\n${unmapped.length} unmapped status value(s) — STATUS_MAP must be filled in and reviewed:`);
-  for (const s of unmapped) console.error(`  "${s}"  (${byRawStatus[s]} marks)`);
+  console.error(`\nUNMAPPED STATUS VALUES — load must not proceed: ${unmapped.join(', ')}`);
+  process.exit(1);
 }
 
-console.error('\nSKELETON — no data was written. The load needs: the real export, a filled-in');
-console.error('STATUS_MAP, the pending registry_status_raw migration applied, and an approved');
-console.error('load plan for the 33 existing fabricated marks and their child rows.');
+console.error('\nReport only — nothing written. Load runs after docs/gb-load-plan.md is approved.');
