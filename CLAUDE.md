@@ -135,6 +135,19 @@ expansion · 7. Multi-jurisdiction rules + teams.
 
 ## Outstanding / deferred
 
+- **Deadline engine does not gate on mark status (post-demo product issue).**
+  `getObligationsForTrademark` derives UKIPO renewals from the **filing** date
+  (`termFrom: filing`) and nothing anywhere — engine, `recalcDeadlines`, or any
+  API caller — checks the mark's status first. So a dead mark with a filing date
+  is given live renewal deadlines. The fabricated seed never exposed this because
+  it contained no dead marks; the 2026-07-24 GB load hit it immediately (6
+  `Withdrawn` marks would have received 12 spurious renewal deadlines).
+  Worked around in `scripts/gb-transform.ts` (`NO_DEADLINE_STATUSES` suppresses
+  generation for `Abandoned`/`Expired`) rather than in the engine, which is
+  preserved code. **This needs fixing in the engine before any further registry
+  import** — the loader gate only protects marks that come through that loader,
+  not marks edited to a dead status in the app.
+
 - **Inbound sender verification (security).** Nothing currently confirms an
   inbound email actually came from a registry. `POSTMARK_INBOUND_SECRET`
   authenticates the *webhook* (Postmark → us), not the *sender* — a spoofed

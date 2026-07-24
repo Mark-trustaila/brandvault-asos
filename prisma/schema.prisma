@@ -117,6 +117,12 @@ model Trademark {
   markText     String     @map("mark_text")
   status       MarkStatus
 
+  // Verbatim status string as the source registry expressed it (e.g. "Withdrawn",
+  // "Application Published"). `status` above holds the conservative mapping onto
+  // our five-value enum; this keeps the original so the mapping stays auditable
+  // and reversible without re-importing. Null for hand-entered marks.
+  registryStatusRaw String? @map("registry_status_raw")
+
   // Optional — incomplete records are first-class citizens
   applicationNumber  String?   @map("application_number")
   registrationNumber String?   @map("registration_number")

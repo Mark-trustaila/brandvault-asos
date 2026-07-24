@@ -1,7 +1,8 @@
 # GB load plan — real ASOS registry data over the fabricated seed
 
-**Status: FOR REVIEW. Nothing has been written.** Every number below was read
-from the live Azure database and the export file; no mutation has been made.
+**Status: APPROVED AND EXECUTED 2026-07-24.** See §11 for the post-load record.
+The plan below is unchanged from what was approved; every number in it was read
+from the live Azure database and the export file before the load ran.
 
 - Branch: `demo/real-gb-data`
 - Export: `~/lawpanel/scratch/exports/asos-gb-20260724.json` (204 marks, 9.4 MB)
@@ -264,3 +265,63 @@ references beyond the two artifacts in §7, so the blast radius is contained.
 **Note on the shared database:** Preview and Production point at the same Azure
 instance. This load changes what production serves. There is no separate preview
 copy to rehearse against.
+
+---
+
+## 11. Execution record — 2026-07-24
+
+Approved with all four decisions and the timezone handling. Executed against the
+shared Azure database (`brandvault-mysql…/brandvault`).
+
+**Predictions vs actual — all matched, nothing off-prediction:**
+
+| Check | Predicted | Actual |
+|---|---:|---:|
+| `trademarks` (asos-plc, total) | 222 | **222** ✓ |
+| `trademarks` (UKIPO) | 173 | **173** ✓ |
+| `goods_and_services` | 999 | **999** ✓ |
+| `deadlines` | 294 | **294** ✓ |
+| `audit_logs` preserved | 2 | **2** ✓ |
+| `bree_query_logs` preserved | 1 (of 7) | **7** ✓ |
+
+**Steps run, in order:**
+
+1. Snapshot → `~/lawpanel/scratch/exports/brandvault-ukipo-snapshot-20260724.json`
+   (32 marks, 45 goods/services, 49 deadlines, 0 notes, plus the referencing
+   history rows). This is the rollback material.
+2. DDL applied (`prisma db execute`), `schema.prisma` patched and
+   `prisma generate` run in the same step — not separated by a deploy.
+3. One transaction: deleted 32 UKIPO marks (cascading 49 deadlines + 45
+   goods/services, nulling 1 `bree_query_logs` FK), inserted 173 marks, 999
+   goods/services, 294 deadlines.
+4. Migration promoted from `migrations-pending/` to `prisma/migrations/` as
+   `20260724120000_trademark_registry_status_raw` and marked applied via
+   `prisma migrate resolve`. Without this, Prisma's history would not have known
+   the column existed and `migrate dev` would have reported drift and offered to
+   reset — a real hazard on a shared production database.
+
+**Verified after the load:**
+
+- Status mapping and passthrough: `Registered←Registered` 165,
+  `Abandoned←Withdrawn` 6, `Pending←Examination` 1,
+  `Published←Application Published` 1.
+- Deadline gate holds: Registered 291, Published 2, Pending 1, **Abandoned 0**.
+- 7 device marks stored as `[device mark — no verbal element] UK000…`,
+  `needsData = false`.
+- Calendar dates preserved: `UK00000945589` ("Miss Selfridge") filed
+  **1969-07-15**, not 1969-07-14.
+- History intact: both audit rows present; the `bree.email.renewal_completed`
+  row still carries `entityId = asos-0001-8777-3077`, now dangling **by design**
+  (see §7). The Bree query log survives with a null mark pointer.
+- Untouched as intended: 49 non-UKIPO marks (EUIPO 24, USPTO 13, WIPO 4,
+  IP Australia 4, IPOS 2, INPI 1, CIPO 1) and Contoso's `UK5000001`.
+- `familyId` null on all 173; `clientAgentName` null on all 173; 31 UK009 marks.
+
+**Recorded for the dangling audit reference:**
+`asos-0001-8777-3077` = `UK0001000` "ASOS" — fabricated seed mark, deleted
+2026-07-24. This is the mark the 2026-07-14 renewal-completion audit entry
+refers to.
+
+**Engine issue logged** in `CLAUDE.md` under Outstanding / deferred: the
+obligation engine does not gate on mark status. The loader-side gate protects
+imported marks only, not marks edited to a dead status in the app.
